@@ -1,47 +1,39 @@
 <template>
   <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
-      <div class="listing-currency__symbol"><strong>{{ currency.symbol }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.amount }} ({{ currency.fiat.price | currency(currency.fiat.prefix) }})</div>
-      <div class="listing-currency__percentage" :class="percentageClass">{{ currency.percentage | percentage }}</div>
+      <div class="listing-currency__symbol"><strong>{{ currency.Currency }}</strong></div>
+      <div class="listing-currency__meta">{{ currency.Available }} <!--({{ currency.fiat.price | currency(currency.fiat.prefix) }})--></div>
+      <div class="listing-currency__percentage" :class="percentageClass"><!--{{ currency.percentage | percentage }}--></div>
     </div>
     <div class="listing-currency__body">
       <div class="listing-currency__controls">
-        <Button :label="'Buy ' + currency.symbol"></Button>
-        <Button :label="'Sell ' + currency.symbol"></Button>
-        <table>
-          <tbody>
-            <tr>
-              <td>Amount</td>
-              <td>1212</td>
-            </tr>
-            <tr>
-              <td>Costs</td>
-              <td>1212</td>
-            </tr>
-            <tr>
-              <td>Worth</td>
-              <td>1212</td>
-            </tr>
-          </tbody>
-        </table>
+        <Button :label="'Sell ' + currency.Currency" :type="'danger'" @click.native="handleClick('sell')"></Button>
+        <Button :label="'Buy ' + currency.Currency" @click.native="handleClick('buy')"></Button>
+        <OrderTable v-if="orderHistory" v-for="(order, index) in orderHistory(currency.Currency)" :key="index" :order="order"></OrderTable>
       </div>
     </div>
+    <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
   </div>
 </template>
 
 <script>
 import Button from '@/components/Button.vue'
+import OrderTable from '@/components/OrderTable.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: 'Listing',
   props: ['currency'],
   components: {
-    Button
+    Button,
+    OrderTable,
+    Modal
   },
   data () {
     return {
-      isExpanded: false
+      isExpanded: false,
+      modalType: null,
+      showModal: false
     }
   },
   computed: {
@@ -58,6 +50,17 @@ export default {
   methods: {
     toggleExpand () {
       this.isExpanded = !this.isExpanded
+    },
+    handleClick (type) {
+      console.log(type)
+      this.modalType = type
+      this.showModal = true
+    },
+    orderHistory (currency) {
+      const orderHistory = this.$store.getters['orders/getAllHistory']
+      return orderHistory.filter(order => {
+        return order.Exchange === `BTC-${currency}` // TODO: market (BTC) can be different, make dynamic
+      })
     }
   },
   filters: {
@@ -90,18 +93,18 @@ export default {
   .listing-currency__header {
     display: flex;
     position: relative;
-    padding: 12px 40px 12px 15px;
+    padding: 15px 45px 15px 15px;
 
     &:after {
       content: "";
-      height: 40px;
-      width: 40px;
+      height: 50px;
+      width: 50px;
       background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M225.813 48.907L128 146.72 30.187 48.907 0 79.093l128 128 128-128z"/></svg>');
       position: absolute;
-      right: 3px;
+      right: -2px;
       top: 0;
       bottom: 0;
-      background-size: 35%;
+      background-size: 25%;
       background-repeat: no-repeat;
       background-position: center center;
     }
@@ -138,11 +141,11 @@ export default {
   .listing-currency__body {
     display: none;
     text-align: left;
-    padding: 12px 15px;
+    padding: 0 15px 12px 15px;
 
     > div {
       border-top: 1px #DFE1E3 solid;
-      padding: 12px 0;
+      padding: 12px 0 0 0;
     }
   }
 

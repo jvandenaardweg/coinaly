@@ -5,8 +5,17 @@
 </template>
 
 <script>
+
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    console.log('get orders')
+    console.log('get balances')
+    console.log('run tickers')
+    // this.$store.dispatch('tickers/getAll')
+    this.$store.dispatch('balances/getAll')
+    this.$store.dispatch('orders/getAllHistory')
+  }
 }
 </script>
 
@@ -14,6 +23,10 @@ export default {
 html {
   font-size: 62.5%;
   background: #F8F9FA;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body {

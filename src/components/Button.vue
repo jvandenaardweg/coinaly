@@ -1,13 +1,11 @@
 <template>
-  <span>
-    <button type="button" class="button">{{ label }}</button>
-  </span>
+  <button type="button" class="button" :class="{ 'button--primary': !type, 'button--danger': type === 'danger', 'button--success': type === 'success', 'button--warning': type === 'warning'}">{{ label }}</button>
 </template>
 
 <script>
 export default {
   name: 'Button',
-  props: ['href', 'label']
+  props: ['href', 'label', 'type']
 }
 </script>
 
@@ -22,5 +20,17 @@ export default {
   border: 0;
   font-size: 1.4rem;
   font-weight: bold;
+
+  &.button--danger {
+    background: red;
+  }
+
+  &.button--success {
+    background: green;
+  }
+
+  &.button--warning {
+    background: orange;
+  }
 }
 </style>
