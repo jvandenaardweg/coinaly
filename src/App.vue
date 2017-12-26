@@ -11,6 +11,17 @@ export default {
 </script>
 
 <style>
+html {
+  font-size: 62.5%;
+  background: #F8F9FA;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

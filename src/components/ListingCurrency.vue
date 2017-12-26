@@ -6,15 +6,39 @@
       <div class="listing-currency__percentage" :class="percentageClass">{{ currency.percentage | percentage }}</div>
     </div>
     <div class="listing-currency__body">
-      <p>More info</p>
+      <div class="listing-currency__controls">
+        <Button :label="'Buy ' + currency.symbol"></Button>
+        <Button :label="'Sell ' + currency.symbol"></Button>
+        <table>
+          <tbody>
+            <tr>
+              <td>Amount</td>
+              <td>1212</td>
+            </tr>
+            <tr>
+              <td>Costs</td>
+              <td>1212</td>
+            </tr>
+            <tr>
+              <td>Worth</td>
+              <td>1212</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from '@/components/Button.vue'
+
 export default {
   name: 'Listing',
   props: ['currency'],
+  components: {
+    Button
+  },
   data () {
     return {
       isExpanded: false
@@ -50,28 +74,36 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .listing-currency {
-  padding: 8px 15px;
+  background-color: #fff;
 
   &.is-expanded {
     .listing-currency__body {
       display: block;
+    }
+    .listing-currency__header {
+      &:after {
+        transform: rotate(-180deg);
+      }
     }
   }
 
   .listing-currency__header {
     display: flex;
     position: relative;
-    padding-right: 35px;
+    padding: 12px 40px 12px 15px;
 
     &:after {
       content: "";
       height: 40px;
       width: 40px;
-      background: red;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M225.813 48.907L128 146.72 30.187 48.907 0 79.093l128 128 128-128z"/></svg>');
       position: absolute;
-      right: -15px;
-      top: -8px;
+      right: 3px;
+      top: 0;
       bottom: 0;
+      background-size: 35%;
+      background-repeat: no-repeat;
+      background-position: center center;
     }
   }
 
@@ -105,6 +137,17 @@ export default {
 
   .listing-currency__body {
     display: none;
+    text-align: left;
+    padding: 12px 15px;
+
+    > div {
+      border-top: 1px #DFE1E3 solid;
+      padding: 12px 0;
+    }
+  }
+
+  .listing-currency__controls {
+    text-align: right;
   }
 
 }

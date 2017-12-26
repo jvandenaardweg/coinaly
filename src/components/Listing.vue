@@ -46,7 +46,7 @@ export default {
         {
           symbol: 'XRP',
           amount: 2312,
-          percentage: 23.21,
+          percentage: 4.32,
           fiat: {
             symbol: 'EUR',
             prefix: '€',
@@ -71,10 +71,10 @@ export default {
 
   .listing__body {
     > div {
-      border-bottom: 1px #ccc solid;
+      border-bottom: 1px #DFE1E3 solid;
 
       &:first-child {
-        border-top: 1px #ccc solid;
+        border-top: 1px #DFE1E3 solid;
       }
     }
   }
