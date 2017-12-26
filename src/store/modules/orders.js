@@ -28,7 +28,7 @@ export default {
   actions: {
     getAllHistory (context) {
       context.commit('startLoading')
-      return axios.get(`http://localhost:5000/api/orderhistory`)
+      return axios.get(`api/orderhistory`)
       .then(response => {
         context.commit('addAllHistory', response.data)
       })
