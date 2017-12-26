@@ -1,4 +1,6 @@
 var axios = require('axios')
+require('promise.prototype.finally')
+
 let baseUrl = ''
 
 if (process.env.NODE_ENV === 'development') {
