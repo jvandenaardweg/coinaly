@@ -1,13 +1,18 @@
 <template>
   <div id="app">
+    <Loader></Loader>
     <router-view/>
   </div>
 </template>
 
 <script>
+import Loader from '@/components/Loader.vue'
 
 export default {
   name: 'app',
+  components: {
+    Loader
+  },
   created () {
     console.log('get orders')
     console.log('get balances')
@@ -45,4 +50,6 @@ body {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
 </style>

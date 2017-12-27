@@ -22,6 +22,10 @@ export default {
   font-weight: bold;
   border: 1px transparent solid;
 
+  &[disabled] {
+    opacity: 0.5;
+  }
+
   &.button--danger {
     background: red;
   }

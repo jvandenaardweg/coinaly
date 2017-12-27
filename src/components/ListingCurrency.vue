@@ -14,7 +14,7 @@
       </div>
       <div class="listing-currency__controls">
         <Button :type="'outlined'" :label="`Toggle order history (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
-        <Button :label="'Sell ' + currency.Currency" :type="'danger'" @click.native="handleClick('sell')"></Button>
+        <Button :label="'Sell ' + currency.Currency" :type="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
         <Button :label="'Buy ' + currency.Currency" @click.native="handleClick('buy')"></Button>
         <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
       </div>

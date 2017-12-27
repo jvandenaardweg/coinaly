@@ -18,6 +18,11 @@ export default {
     }
   },
   getters: {
+    getOpenOrders: state => {
+      return state.history.filter(order => {
+        return order.QuantityRemaining <= order.Quantity
+      })
+    },
     getAllHistory: state => {
       return state.history
     },

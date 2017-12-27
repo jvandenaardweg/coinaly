@@ -3,7 +3,7 @@
     <div class="modal-popup">
       <header class="modal-popup__header">
         <h2>{{ readableType }} {{ currency.Currency }}</h2>
-        <small v-if="type === 'sell'">{{ currency.amount }} available</small>
+        <small v-if="type === 'sell'">{{ currency.Available }} available</small>
       </header>
       <div class="modal-popup__body">
         <div>
@@ -11,7 +11,7 @@
           <input type="text" name="amount" />
         </div>
         <div>
-          <label>Amount</label>
+          <label>Price</label>
           <input type="text" name="amount" />
         </div>
       </div>

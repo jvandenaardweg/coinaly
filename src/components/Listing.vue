@@ -1,11 +1,7 @@
 <template>
   <div class="listing">
-    <span v-if="this.$store.getters['balances/isLoading']">Loading balances...</span>
-    <span v-if="this.$store.getters['orders/isLoading']">Loading orders...</span>
-    <span v-if="this.$store.getters['deposits/isLoading']">Loading deposits...</span>
-    <span v-if="this.$store.getters['withdrawals/isLoading']">Loading withdrawals...</span>
     <header class="listing__header">
-      <h2>My balance</h2>
+      <h2>{{ title }}</h2>
     </header>
     <div class="listing__body">
       <ListingCurrency v-for="(currency, index) in currencies" :key="index" :currency="currency"></ListingCurrency>
@@ -18,6 +14,7 @@ import ListingCurrency from '@/components/ListingCurrency'
 
 export default {
   name: 'Listing',
+  props: ['title'],
   components: {
     ListingCurrency
   },
@@ -29,6 +26,9 @@ export default {
   computed: {
     currencies () {
       return this.$store.getters['balances/allCurrencies']
+    },
+    openOrders () {
+      return this.$store.getters['orders/allOpenOrders']
     }
   }
 }
