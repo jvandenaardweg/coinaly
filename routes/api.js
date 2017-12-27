@@ -45,4 +45,12 @@ router.get('/deposithistory', function (request, response, next) {
   })
 })
 
+router.get('/openorders', function (request, response, next) {
+  bittrex.getopenorders({}, (data) => {
+    if (data.success) {
+      response.json(data.result)
+    }
+  })
+})
+
 module.exports = router
