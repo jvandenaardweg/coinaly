@@ -5,8 +5,23 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import VueCookie from 'vue-cookie'
+
+Vue.use(VueCookie)
 
 Vue.config.productionTip = false
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'Balances' || to.name === 'Orders' || to.name === 'History') {
+    if (Vue.cookie.get('access')) {
+      next()
+    } else {
+      window.alert('You dont have access.')
+    }
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
