@@ -7,7 +7,7 @@
       </div>
     </header>
     <div class="listing__body">
-      <ListingCurrency v-for="(currency, index) in currencies" :key="currency.Currency" :currency="currency"></ListingCurrency>
+      <ListingCurrency v-for="currency in currencies" :key="currency.Currency" :currency="currency"></ListingCurrency>
     </div>
   </div>
 </template>
@@ -70,7 +70,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .listing {
-  // border: 1px red solid;
+  text-align: left;
+  margin-bottom: 15px;
+  border-bottom: 1px #DFE1E3 solid;
 
   .listing__header {
     text-align: left;
@@ -90,7 +92,7 @@ export default {
   }
 
   .listing__body {
-    padding: 0 15px;
+    padding: 0 15px 15px 15px;
 
     > div {
       margin-bottom: 5px;

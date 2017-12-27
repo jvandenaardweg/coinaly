@@ -299,12 +299,12 @@ export default {
 
         &:first-child {
           strong {
-            color: blue;
+            color: #0077FF;
           }
         }
         &:nth-child(2) {
           strong {
-            color: orange;
+            color: #F4BC5F;
           }
         }
       }
@@ -313,7 +313,6 @@ export default {
 
   .listing-currency__symbol {
     width: 80px;
-    background-attachment: green;
     text-align: left;
   }
 
@@ -327,15 +326,15 @@ export default {
     margin-left: auto;
 
     &.is-negative {
-      color: red;
+      color: #DC3A4E;
     }
 
     &.is-positive {
-      color: green;
+      color: #9DD532;
     }
 
     &.is-warning {
-      color: orange;
+      color: #F4BC5F;
     }
   }
 

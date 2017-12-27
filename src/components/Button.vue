@@ -22,6 +22,7 @@ export default {
   font-weight: bold;
   border: 1px transparent solid;
   outline: none;
+  appearance: none;
 
   &[disabled] {
     opacity: 0.5;

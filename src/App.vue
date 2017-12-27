@@ -1,17 +1,20 @@
 <template>
   <div id="app">
+    <Navigation></Navigation>
     <Loader></Loader>
     <router-view/>
   </div>
 </template>
 
 <script>
-import Loader from '@/components/Loader.vue'
+import Loader from '@/components/Loader'
+import Navigation from '@/components/Navigation'
 
 export default {
   name: 'app',
   components: {
-    Loader
+    Loader,
+    Navigation
   },
   created () {
     console.log('get orders')
@@ -51,7 +54,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  padding-top: 50px;
+  padding-top: 80px;
 }
 
 

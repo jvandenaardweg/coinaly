@@ -4,16 +4,29 @@
       <div class="order__symbol">
         <strong>{{ order.Exchange }}</strong>
       </div>
-      <div class="order__header-meta">
+      <div class="order__meta">
         <ul>
           <li><span>{{ order.Quantity }} @ {{ order.Limit }} (BTC)</span></li>
         </ul>
       </div>
+      <div class="order__percentage">
+        <span>{{ filledPercentage }}%</span>
+      </div>
     </div>
     <div class="order__stats">
-      <Progress :blue="0" :orange="0" :green="50"></Progress>
+      <Progress :blue="0" :orange="0" :green="filledPercentage"></Progress>
     </div>
     <div class="order__body">
+      <ul>
+        <li><small>Quantity</small><span>{{ order.Quantity }}</span></li>
+        <li><small>Remaining</small><span>{{ order.QuantityRemaining }}</span></li>
+        <li><small>Price</small><span>{{ order.Price }}</span></li>
+        <li><small>Limit</small><span>{{ order.Limit }}</span></li>
+        <li><small>Target</small><span>{{ order.ConditionTarget }}</span></li>
+        <li><small>Condition</small><span>{{ order.Condition }}</span></li>
+
+      </ul>
+
       <div class="order__footer">
         <Button :type="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
         <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
@@ -43,6 +56,11 @@ export default {
     }
   },
   computed: {
+    filledPercentage () {
+      const difference = this.order.QuantityRemaining - this.order.Quantity
+      const filledPercentage = (difference / this.order.Quantity) * 100
+      return Math.ceil(filledPercentage)
+    },
     cancelLabel () {
       if (this.cancelLoading) {
         return 'Cancelling...'
@@ -118,12 +136,55 @@ export default {
     }
   }
 
+  .order__percentage {
+    align-self: right;
+    margin-left: auto;
+
+    &.is-negative {
+      color: red;
+    }
+
+    &.is-positive {
+      color: green;
+    }
+
+    &.is-warning {
+      color: orange;
+    }
+  }
+
   .order__symbol {
     width: 80px;
   }
 
   .order__body {
     display: none;
+    padding: 15px 15px 0 15px;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: flex-start;
+
+      li {
+        padding-right: 15px;
+        width: 33.333333%;
+        margin-bottom: 10px;
+
+        small {
+          font-size: 1.2rem;
+          opacity: 0.5;
+          display: block;
+        }
+        span {
+          display: block;
+        }
+      }
+    }
   }
 
   .order__footer {
@@ -135,7 +196,7 @@ export default {
     padding: 0 15px;
   }
 
-  .order__header-meta {
+  .order__meta {
 
     ul {
       display: flex;
