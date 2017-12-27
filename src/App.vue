@@ -20,6 +20,7 @@ export default {
     // this.$store.dispatch('tickers/getAll')
     this.$store.dispatch('balances/getAll')
     this.$store.dispatch('orders/getAllHistory')
+    this.$store.dispatch('orders/getOpenOrders')
     this.$store.dispatch('deposits/getAllHistory')
     this.$store.dispatch('withdrawals/getAllHistory')
   }
@@ -43,12 +44,14 @@ body {
 }
 
 #app {
+  max-width: 800px;
+  margin: 0 auto;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 50px;
 }
 
 

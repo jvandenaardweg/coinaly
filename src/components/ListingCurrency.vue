@@ -2,20 +2,27 @@
   <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
       <div class="listing-currency__symbol"><strong>{{ currency.Currency }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.Balance }} <!--({{ currency.fiat.price | currency(currency.fiat.prefix) }})--></div>
+      <div class="listing-currency__meta">{{ currency.Available }} <!--({{ currency.fiat.price | currency(currency.fiat.prefix) }})--></div>
       <div class="listing-currency__percentage" :class="percentageClass"><!--{{ currency.percentage | percentage }}--></div>
     </div>
-    <div class="listing-currency__body">
-      <div>
-        Balance: {{ currency.Balance }}, Available: {{ currency.Available }}, Sold: {{ totalSell(currency.Currency) }}, Bought: {{ totalBuy(currency.Currency) }}, Diff: {{ buySellDifference(currency.Currency) }}, Withdrawl: {{ totalWithdrawalByCurrency(currency.Currency)}}, Deposit: {{ totalDepositByCurrency(currency.Currency)}}
+    <div class="listing-currency__stats">
+      <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
+      <div class="listing-currency__legenda">
+        <ul>
+          <li><span>Available:</span> <strong>{{ currency.Available }}</strong></li>
+          <li><span>In open orders:</span> <strong>{{ difference }}</strong></li>
+          <!-- Sold: {{ totalSell(currency.Currency) }}, Bought: {{ totalBuy(currency.Currency) }}, Diff: {{ buySellDifference(currency.Currency) }}, Withdrawl: {{ totalWithdrawalByCurrency(currency.Currency)}}, Deposit: {{ totalDepositByCurrency(currency.Currency)}} -->
+        </ul>
       </div>
+    </div>
+    <div class="listing-currency__body">
       <div v-if="currency.Balance < buySellDifference(currency.Currency)">
         <p>{{ buySellDifference(currency.Currency) }} {{ currency.Currency }} is transfered from Bittrex to something else.</p>
       </div>
       <div class="listing-currency__controls">
-        <Button :type="'outlined'" :label="`Toggle order history (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
-        <Button :label="'Sell ' + currency.Currency" :type="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
-        <Button :label="'Buy ' + currency.Currency" @click.native="handleClick('buy')"></Button>
+        <Button v-if="totalOrderHistory(currency.Currency)" :type="'outlined'" :label="`History (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
+        <Button :label="'Sell'" :type="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
+        <Button :label="'Buy'" @click.native="handleClick('buy')"></Button>
         <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
       </div>
     </div>
@@ -24,9 +31,10 @@
 </template>
 
 <script>
-import Button from '@/components/Button.vue'
-import OrderTable from '@/components/OrderTable.vue'
-import Modal from '@/components/Modal.vue'
+import Button from '@/components/Button'
+import OrderTable from '@/components/OrderTable'
+import Modal from '@/components/Modal'
+import Progress from '@/components/Progress'
 
 export default {
   name: 'Listing',
@@ -34,7 +42,8 @@ export default {
   components: {
     Button,
     OrderTable,
-    Modal
+    Modal,
+    Progress
   },
   data () {
     return {
@@ -45,6 +54,56 @@ export default {
     }
   },
   computed: {
+    stats () {
+      const balance = this.currency.Balance // Total (excluding open orders)
+      const available = this.currency.Available // Available (minus open orders)
+      const difference = (balance - available)
+      const availablePercentage = Math.ceil((available / balance) * 100)
+      const differencePercentage = Math.ceil((difference / balance) * 100)
+
+      return {
+        first: availablePercentage || 0,
+        second: differencePercentage || 0
+      }
+    },
+    difference () {
+      const difference = (this.currency.Balance - this.currency.Available)
+
+      if (difference === 0) {
+        return 0
+      } else {
+        return difference.toFixed(8)
+      }
+    },
+    // openOrdersAmount () {
+    //   let total = 0
+    //   const openOrders = this.$store.getters['orders/getOpenOrders']
+
+    //   const openOrdersForCurrency = openOrders.filter(order => {
+    //     return order.Exchange === `BTC-${this.currency.Currency}` // TODO: make dynamic, BTC can be something different
+    //   })
+    //   console.log(openOrdersForCurrency)
+
+    //   const amounts = openOrdersForCurrency.map(order => {
+    //     return order.Quantity * order.Limit
+    //   })
+
+    //   if (amounts.length) {
+    //     total = amounts.reduce((prev, curr) => {
+    //       return prev + curr
+    //     })
+    //   }
+
+    //   return total
+    // },
+    // openOrdersTotal () {
+    //   const openOrders = this.$store.getters['orders/getOpenOrders']
+    //   const openOrdersForCurrency = openOrders.filter(order => {
+    //     return order.Exchange === 'BTC-XRP' // TODO: make dynamic, BTC can be something different
+    //   })
+
+    //   return openOrdersForCurrency.length
+    // },
     percentageClass () {
       if (this.currency.percentage < 0) {
         return 'is-negative'
@@ -178,6 +237,8 @@ export default {
 <style lang="scss" scoped>
 .listing-currency {
   background-color: #fff;
+  border-radius: 3px;
+  border: 1px #DFE1E3 solid;
 
   &.is-expanded {
     .listing-currency__body {
@@ -188,12 +249,16 @@ export default {
         transform: rotate(-180deg);
       }
     }
+
+    .listing-currency__legenda {
+      display: block;
+    }
   }
 
   .listing-currency__header {
     display: flex;
     position: relative;
-    padding: 15px 45px 15px 15px;
+    padding: 15px 45px 10px 15px;
 
     &:after {
       content: "";
@@ -207,6 +272,42 @@ export default {
       background-size: 25%;
       background-repeat: no-repeat;
       background-position: center center;
+    }
+  }
+
+  .listing-currency__stats {
+    padding: 0 15px 15px 15px;
+  }
+
+  .listing-currency__legenda {
+    display: none;
+    font-size: 1.1rem;
+    padding-top: 10px;
+
+    ul {
+      margin: 0;
+      list-style: none;
+      padding: 0;
+      display: flex;
+
+      li {
+        margin-right: 10px;
+
+        span {
+          opacity: 0.5;
+        }
+
+        &:first-child {
+          strong {
+            color: blue;
+          }
+        }
+        &:nth-child(2) {
+          strong {
+            color: orange;
+          }
+        }
+      }
     }
   }
 

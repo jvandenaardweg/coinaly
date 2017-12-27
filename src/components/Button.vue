@@ -21,21 +21,22 @@ export default {
   font-size: 1.4rem;
   font-weight: bold;
   border: 1px transparent solid;
+  outline: none;
 
   &[disabled] {
     opacity: 0.5;
   }
 
   &.button--danger {
-    background: red;
+    background: #DC3A4E;
   }
 
   &.button--success {
-    background: green;
+    background: #9DD532;
   }
 
   &.button--warning {
-    background: orange;
+    background: #F4BC5F;
   }
 
   &.button--outlined {

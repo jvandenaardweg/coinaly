@@ -43,6 +43,9 @@ export default {
     }
   },
   actions: {
+    cancelOrder (context, uuid) {
+      return axios.get(`api/market/cancel?uuid=${uuid}`)
+    },
     getAllHistory (context) {
       context.commit('startLoading')
       return axios.get(`api/orderhistory`)

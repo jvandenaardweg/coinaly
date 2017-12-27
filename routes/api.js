@@ -53,4 +53,21 @@ router.get('/openorders', function (request, response, next) {
   })
 })
 
+router.get('/market/cancel', function (request, response, next) {
+  const uuid = request.query.uuid
+
+  if (!uuid) {
+    response.status(500).json({'message': 'Please provide an uuid'})
+    return
+  }
+
+  bittrex.cancel({ uuid: uuid }, (data) => {
+    if (data && data.success) {
+      response.json(data.result)
+    } else {
+      response.status(500).json({'message': data})
+    }
+  })
+})
+
 module.exports = router
