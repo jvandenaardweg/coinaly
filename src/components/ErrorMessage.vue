@@ -52,6 +52,11 @@ export default {
     color: #fff;
     font-size: 3rem;
     text-align: center;
+    display: inline-block;
+    border: 0;
+    outline: none;
+    appearance: none;
+    background: none;
   }
 }
 </style>

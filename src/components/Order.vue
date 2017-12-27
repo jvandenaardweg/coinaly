@@ -24,8 +24,9 @@
         <li><small>Limit</small><span>{{ order.Limit }}</span></li>
         <li><small>Target</small><span>{{ order.ConditionTarget }}</span></li>
         <li><small>Condition</small><span>{{ order.Condition }}</span></li>
-
       </ul>
+
+      <p>{{ readableOrder }}</p>
     </div>
     <div class="order__footer">
       <Button :type="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
@@ -55,6 +56,11 @@ export default {
     }
   },
   computed: {
+    readableOrder () {
+      const readableCondition = (this.order.Condition === 'LESS_THAN' ? 'less than' : 'more than')
+      const readableOrderType = (this.order.OrderType === 'LIMIT_BUY' ? 'buy' : 'sell')
+      return `If market price is ${readableCondition} ${this.order.ConditionTarget} then ${readableOrderType} ${this.order.Quantity} ${this.order.Exchange} for ${this.order.Limit}`
+    },
     filledPercentage () {
       const difference = this.order.QuantityRemaining - this.order.Quantity
       const filledPercentage = (difference / this.order.Quantity) * 100
