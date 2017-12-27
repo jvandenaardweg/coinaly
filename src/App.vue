@@ -15,6 +15,8 @@ export default {
     // this.$store.dispatch('tickers/getAll')
     this.$store.dispatch('balances/getAll')
     this.$store.dispatch('orders/getAllHistory')
+    this.$store.dispatch('deposits/getAllHistory')
+    this.$store.dispatch('withdrawals/getAllHistory')
   }
 }
 </script>

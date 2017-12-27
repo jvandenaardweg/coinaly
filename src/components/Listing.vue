@@ -2,6 +2,8 @@
   <div class="listing">
     <span v-if="this.$store.getters['balances/isLoading']">Loading balances...</span>
     <span v-if="this.$store.getters['orders/isLoading']">Loading orders...</span>
+    <span v-if="this.$store.getters['deposits/isLoading']">Loading deposits...</span>
+    <span v-if="this.$store.getters['withdrawals/isLoading']">Loading withdrawals...</span>
     <header class="listing__header">
       <h2>My balance</h2>
     </header>

@@ -21,16 +21,6 @@ export default {
     getAllHistory: state => {
       return state.history
     },
-    getAllBuyHistory: state => {
-      return state.history.filter(order => {
-        return order.OrderType === 'LIMIT_BUY'
-      })
-    },
-    getAllSellHistory: state => {
-      return state.history.filter(order => {
-        return order.OrderType === 'LIMIT_SELL'
-      })
-    },
     isLoading: state => {
       return state.isLoading
     }
@@ -38,12 +28,12 @@ export default {
   actions: {
     getAllHistory (context) {
       context.commit('startLoading')
-      return axios.get(`api/orderhistory`)
+      return axios.get(`api/deposithistory`)
       .then(response => {
         context.commit('addAllHistory', response.data)
       })
       .catch(error => {
-        console.error('Failed to get the order history.', error)
+        console.error('Failed to get the deposithistory history.', error)
       })
       .finally(() => {
         context.commit('stopLoading')
