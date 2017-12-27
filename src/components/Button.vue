@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="button" :class="{ 'button--primary': !type, 'button--danger': type === 'danger', 'button--success': type === 'success', 'button--warning': type === 'warning'}">{{ label }}</button>
+  <button type="button" class="button" :class="{ 'button--primary': !type, 'button--danger': type === 'danger', 'button--success': type === 'success', 'button--warning': type === 'warning', 'button--outlined': type === 'outlined'}">{{ label }}</button>
 </template>
 
 <script>
@@ -20,6 +20,7 @@ export default {
   border: 0;
   font-size: 1.4rem;
   font-weight: bold;
+  border: 1px transparent solid;
 
   &.button--danger {
     background: red;
@@ -31,6 +32,12 @@ export default {
 
   &.button--warning {
     background: orange;
+  }
+
+  &.button--outlined {
+    background: white;
+    color: #0077FF;
+    border-color: #0077FF;
   }
 }
 </style>

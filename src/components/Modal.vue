@@ -2,7 +2,7 @@
   <div class="modal" :class="{'is-visible': visible }" @click="handleOutsideClick($event)">
     <div class="modal-popup">
       <header class="modal-popup__header">
-        <h2>{{ readableType }} {{ currency.symbol }}</h2>
+        <h2>{{ readableType }} {{ currency.Currency }}</h2>
         <small v-if="type === 'sell'">{{ currency.amount }} available</small>
       </header>
       <div class="modal-popup__body">

@@ -13,9 +13,10 @@
         <p>{{ buySellDifference(currency.Currency) }} {{ currency.Currency }} is transfered from Bittrex to something else.</p>
       </div>
       <div class="listing-currency__controls">
+        <Button :type="'outlined'" :label="`Toggle order history (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
         <Button :label="'Sell ' + currency.Currency" :type="'danger'" @click.native="handleClick('sell')"></Button>
         <Button :label="'Buy ' + currency.Currency" @click.native="handleClick('buy')"></Button>
-        <OrderTable v-if="orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
+        <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
       </div>
     </div>
     <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
@@ -39,7 +40,8 @@ export default {
     return {
       isExpanded: false,
       modalType: null,
-      showModal: false
+      showModal: false,
+      showOrderHistory: false
     }
   },
   computed: {
@@ -54,6 +56,9 @@ export default {
     }
   },
   methods: {
+    totalOrderHistory (currency) {
+      return this.orderHistoryByCurrency(currency).length
+    },
     toggleExpand () {
       this.isExpanded = !this.isExpanded
     },
@@ -153,6 +158,9 @@ export default {
     },
     buySellDifference (currency) {
       return this.totalBuy(currency) - this.totalSell(currency)
+    },
+    toggleShowOrderHistory () {
+      this.showOrderHistory = !this.showOrderHistory
     }
   },
   filters: {
