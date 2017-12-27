@@ -3,7 +3,7 @@
     <header class="orders__header">
       <h2 class="orders__header-title">Open orders</h2>
       <div class="orders__header-control">
-        <Button :type="'outlined'" :label="'New order'"></Button>
+        <Button :label="'New order'"></Button>
       </div>
     </header>
     <div class="orders__body">

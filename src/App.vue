@@ -30,7 +30,7 @@ export default {
 <style>
 html {
   font-size: 62.5%;
-  background: #F8F9FA;
+  background: #f4f5f7;
   box-sizing: border-box;
 }
 *, *:before, *:after {

@@ -90,12 +90,32 @@ export default {
     .order__body {
       display: block;
     }
+    .order__header {
+      &:after {
+        transform: rotate(-180deg);
+      }
+    }
   }
 
   .order__header {
     padding: 15px 45px 10px 15px;
     display: flex;
     width: 100%;
+    position: relative;
+
+    &:after {
+      content: "";
+      height: 50px;
+      width: 50px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M225.813 48.907L128 146.72 30.187 48.907 0 79.093l128 128 128-128z"/></svg>');
+      position: absolute;
+      right: -2px;
+      top: 0;
+      bottom: 0;
+      background-size: 25%;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
   }
 
   .order__symbol {

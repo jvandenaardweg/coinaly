@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="button" :class="{ 'button--primary': !type, 'button--danger': type === 'danger', 'button--success': type === 'success', 'button--warning': type === 'warning', 'button--outlined': type === 'outlined'}">{{ label }}</button>
+  <button type="button" class="button" :class="{ 'button--primary': !type, 'button--danger': type === 'danger', 'button--success': type === 'success', 'button--warning': type === 'warning', 'button--outlined': type === 'outlined', 'button--link': type === 'link'}">{{ label }}</button>
 </template>
 
 <script>
@@ -40,9 +40,28 @@ export default {
   }
 
   &.button--outlined {
-    background: white;
+    background: transparent;
     color: #0077FF;
     border-color: #0077FF;
+  }
+
+  &.button--link {
+    background: transparent;
+    color: #0077FF;
+    padding-right: 0;
+    padding-left: 0;
+    position: relative;
+    font-weight: normal;
+
+    &:after {
+      content: "";
+      height: 1px;
+      bottom: 8px;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background: #0077FF;
+    }
   }
 }
 </style>
