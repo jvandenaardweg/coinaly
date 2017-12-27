@@ -26,11 +26,10 @@
         <li><small>Condition</small><span>{{ order.Condition }}</span></li>
 
       </ul>
-
-      <div class="order__footer">
-        <Button :type="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
-        <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
-      </div>
+    </div>
+    <div class="order__footer">
+      <Button :type="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
+      <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
     </div>
   </div>
 </template>
@@ -105,7 +104,8 @@ export default {
   padding: 0 0 15px 0;
 
   &.is-expanded {
-    .order__body {
+    .order__body,
+    .order__footer {
       display: block;
     }
     .order__header {
@@ -190,6 +190,7 @@ export default {
   .order__footer {
     padding: 15px 15px 0 15px;
     text-align: right;
+    display: none;
   }
 
   .order__stats {

@@ -9,8 +9,8 @@
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
       <div class="listing-currency__legenda">
         <ul>
-          <li><span>Available:</span> <strong>{{ currency.Available }}</strong></li>
-          <li><span>In open orders:</span> <strong>{{ difference }}</strong></li>
+          <li><span>Available:</span> <p>{{ currency.Available }}</p></li>
+          <li><span>In open orders:</span> <p>{{ difference }}</p></li>
           <!-- Sold: {{ totalSell(currency.Currency) }}, Bought: {{ totalBuy(currency.Currency) }}, Diff: {{ buySellDifference(currency.Currency) }}, Withdrawl: {{ totalWithdrawalByCurrency(currency.Currency)}}, Deposit: {{ totalDepositByCurrency(currency.Currency)}} -->
         </ul>
       </div>
@@ -297,13 +297,18 @@ export default {
           opacity: 0.5;
         }
 
+        p {
+          margin: 0;
+          display: inline-block;
+        }
+
         &:first-child {
-          strong {
+          p {
             color: #0077FF;
           }
         }
         &:nth-child(2) {
-          strong {
+          p {
             color: #F4BC5F;
           }
         }
