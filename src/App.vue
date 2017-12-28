@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 html {
   font-size: 62.5%;
   background: #f4f5f7;
@@ -62,5 +62,24 @@ body {
   padding-top: 80px;
 }
 
+label {
+  font-weight: bold;
+  display: block;
+  line-height: 2.4rem;
+}
+
+input[type="text"] {
+  border-radius: 3px;
+  font-size: 1.4rem;
+  height: 4rem;
+  padding: 0 15px;
+  line-height: 4rem;
+  border: 1px #DFE1E3 solid;
+  width: 100%;
+
+  &:focus {
+    border-color: #0077FF;
+  }
+}
 
 </style>
