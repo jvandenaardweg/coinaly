@@ -5,9 +5,7 @@
         <strong>{{ order.Exchange }}</strong>
       </div>
       <div class="order__meta">
-        <ul>
-          <li><span>{{ order.Quantity }} @ {{ order.Limit }} (BTC)</span></li>
-        </ul>
+        <span>{{ order.Quantity }} @ {{ order.Limit }} (BTC)</span>
       </div>
       <div class="order__percentage">
         <Label v-if="order.OrderType === 'LIMIT_SELL'" :text="'Sell'" :color="'red'"></Label>
@@ -148,8 +146,11 @@ export default {
   }
 
   .order__percentage {
-    align-self: right;
-    margin-left: auto;
+    // align-self: right;
+    // margin-left: auto;
+    flex-basis: 50px;
+    flex-shrink: 0;
+    text-align: right;
 
     &.is-negative {
       color: red;
@@ -165,7 +166,14 @@ export default {
   }
 
   .order__symbol {
-    width: 80px;
+    // width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // display: inline-block;
+
+    flex-basis: 90px;
+    flex-shrink: 0;
   }
 
   .order__body {
@@ -209,25 +217,14 @@ export default {
   }
 
   .order__meta {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 
-    ul {
-      display: flex;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      width: 100%;
-
-      li {
-        margin-right: 10px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        span {
-          opacity: 0.5;
-        }
-      }
+    span {
+      opacity: 0.5;
     }
   }
 }
