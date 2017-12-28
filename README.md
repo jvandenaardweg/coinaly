@@ -1,12 +1,16 @@
-# simpletrade
+# Simpletrade
 
-> A Vue.js project
+An easy too use mobile "on the go" trade interface for Bittrex.
 
-## Build Setup
+## Why?
+I find the Bittrex website not easy to use. The mobile version of their website is horrible to use. It's cluttered with information and does not visualize the things I want to know on a daily/hourly basis. With their API we can do things a little better.
+
+## Setup
+See `package.json` engines for the required dependency versions
 
 ``` bash
 # install dependencies
-npm install
+yarn install
 
 # serve with hot reload at localhost:8080
 npm run dev
