@@ -7,6 +7,8 @@
       </form>
     </div>
     <div v-if="hasAccess">
+      <Button :type="'outlined'" :label="'Show example chart'" @click.native="openChart = true"></Button>
+      <ChartOverlay v-show="openChart" @close="openChart = false"></ChartOverlay>
       <History></History>
     </div>
   </div>
@@ -14,15 +16,20 @@
 
 <script>
 import History from '@/components/History'
+import ChartOverlay from '@/components/ChartOverlay'
+import Button from '@/components/Button'
 
 export default {
   name: 'HomePage',
   components: {
-    History
+    History,
+    ChartOverlay,
+    Button
   },
   data () {
     return {
-      hasAccess: this.$cookie.get('access') || false
+      hasAccess: this.$cookie.get('access') || false,
+      openChart: false
     }
   },
   methods: {
