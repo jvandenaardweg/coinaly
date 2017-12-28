@@ -2,6 +2,7 @@
 
 An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex did a horrible job in providing a mobile friendly website.
 
+<img src="https://www.dropbox.com/s/vfejrm8ofeble0j/IMG_2868.jpg?raw=1" width="256" title="Github Logo">
 ![Image](https://www.dropbox.com/s/vfejrm8ofeble0j/IMG_2868.jpg?raw=1 | width=100)
 ![Image](https://www.dropbox.com/s/riygwc067ddykqs/IMG_2869.jpg?raw=1 | width=100)
 
