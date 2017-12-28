@@ -24,13 +24,13 @@ export default {
   min-width: 42px;
 
   &.label--red {
-    color: red;
-    border-color: red;
+    color: #DC3A4E;
+    border-color: #DC3A4E;
   }
 
   &.label--green {
-    color: green;
-    border-color: green;
+    color: #23CF5F;
+    border-color: #23CF5F;
   }
 }
 </style>

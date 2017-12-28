@@ -7,7 +7,7 @@
       </form>
     </div>
     <div v-if="hasAccess">
-      <Button :type="'outlined'" :label="'Show example chart'" @click.native="openChart = true"></Button>
+      <Button :type="'outlined'" :icon="'chart'" @click.native="openChart = true"></Button></div>
       <ChartOverlay v-show="openChart" @close="openChart = false"></ChartOverlay>
       <History></History>
     </div>

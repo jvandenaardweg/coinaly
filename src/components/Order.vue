@@ -16,6 +16,9 @@
       <Progress :blue="0" :orange="0" :green="filledPercentage"></Progress>
     </div>
     <div class="order__body">
+      <div v-if="isClosedBuy" class="order__panel" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false, 'is-neutral': isPositiveDelta === null }">
+        <strong>Worth:</strong> <span>{{ currentWorth }} ({{ delta }}%)</span>
+      </div>
       <ul>
         <li><small>Quantity</small><span>{{ order.Quantity }}</span></li>
         <li><small>Remaining</small><span>{{ order.QuantityRemaining }}</span></li>
@@ -63,6 +66,9 @@ export default {
     isSell () {
       return this.order.OrderType === 'LIMIT_SELL'
     },
+    isClosedBuy () {
+      return this.isBuy && !this.order.QuantityRemaining
+    },
     currentWorth () {
       if (this.isBuy) {
         let currentWorth = null
@@ -87,6 +93,13 @@ export default {
         return percentage
       } else {
         return '-'
+      }
+    },
+    isPositiveDelta () {
+      if (this.delta > 0) {
+        return true
+      } else {
+        return false
       }
     },
     readableOrder () {
@@ -240,6 +253,25 @@ export default {
           display: block;
         }
       }
+    }
+  }
+
+  .order__panel {
+    padding: 10px 15px;
+    border: 1px #DFE1E3 solid;
+    border-radius: 3px;
+    margin-bottom: 15px;
+
+    &.is-positive {
+      background-color: #23CF5F;
+      color: #fff;
+      border-color: #23CF5F;
+    }
+
+    &.is-negative {
+      background-color: #DC3A4E;
+      color: #fff;
+      border-color: #DC3A4E;
     }
   }
 
