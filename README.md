@@ -10,16 +10,19 @@ I find the Bittrex website not easy to use. The mobile version of their website 
 Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. But their website could use a little help.
 
 ## Features
-- Instantly see the current status of your balances. Am I making a profit? Or am I losing money?
-- Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin.
-- Optimized for mobile screens and mobile performance. Always there with you.
-- Overview open orders. How are my orders performing? Should I cancel or adjust them?
+- Instantly see the current status of your balances. Am I making a profit? Or am I losing money? (in progress)
+- Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin. (in progress)
+- Optimized for mobile screens and mobile performance. Always there with you. (in progress)
+- Overview open orders. How are my orders performing? Should I cancel or adjust them? (in progress)
+- Better live candlestick chart by [TradingView.com](https://www.tradingview.com/) (in progress)
 
 ### Future
 - Receive a notification when an order closed or cancelled
 - Receive a notification when a coin is losing me money
 - Track a single trade. You bought a coin and want to know how thát trade is performing.
-- Try out with other exchanges
+
+### Far future
+- Other exchanges
 
 ## Donations
 I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](https://www.linkedin.com/in/jvandenaardweg/) using my spare time to create this. A donation of any size is very welcome!
