@@ -2,13 +2,9 @@ const bittrex = require('node-bittrex-api')
 const express = require('express')
 const router = express.Router()
 
-// TODO: move this to environment vars
-const API_KEY = '7fb245cfe8d3474381cffae570dcca51'
-const API_SECRET = '44264389978e40c0ac665fb9d3334d21'
-
 bittrex.options({
-  'apikey': API_KEY,
-  'apisecret': API_SECRET,
+  'apikey': process.env.BITTREX_API_KEY,
+  'apisecret': process.env.BITTREX_API_SECRET,
   verbose: true
 })
 

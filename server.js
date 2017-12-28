@@ -1,9 +1,16 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const slashes = require('connect-slashes')
 const serveStatic = require('serve-static')
 const router = express.Router()
+
+// Check if we have the right environment vars
+if (!process.env.BITTREX_API_KEY || !process.env.BITTREX_API_SECRET) {
+  console.warn('IMPORTANT! Please add your BITTREX_API_KEY and BITTREX_API_SECRET to the .env file.')
+  return
+}
 
 const routesApi = require('./routes/api')
 
