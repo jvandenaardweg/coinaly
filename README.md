@@ -2,8 +2,8 @@
 
 An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex did a horrible job in providing a mobile friendly website.
 
-![Image](https://www.dropbox.com/s/vfejrm8ofeble0j/IMG_2868.jpg?raw=1)
-![Image](https://www.dropbox.com/s/riygwc067ddykqs/IMG_2869.jpg?dl=0?raw=1)
+![Image](https://www.dropbox.com/s/vfejrm8ofeble0j/IMG_2868.jpg?raw=1 | width=100)
+![Image](https://www.dropbox.com/s/riygwc067ddykqs/IMG_2869.jpg?raw=1 | width=100)
 
 ## Why?
 I find the Bittrex website not easy to use. The mobile version of their website is horrible. It's cluttered with information and does not visualize the things I want to know on a daily/hourly basis. With their API we can do things a little better.
