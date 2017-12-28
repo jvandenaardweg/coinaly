@@ -30,7 +30,7 @@ export default {
     // TODO: do with websockets
     setInterval(() => {
       this.$store.dispatch('markets/getAll')
-    }, 1000)
+    }, 2000)
   }
 }
 </script>
@@ -49,6 +49,7 @@ body {
   padding: 0;
   margin: 0;
   font-size: 1.4rem;
+  line-height: 1.5;
 }
 
 #app {

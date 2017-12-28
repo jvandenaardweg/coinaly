@@ -2,7 +2,7 @@
   <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
       <div class="listing-currency__symbol"><strong>{{ currency.Currency }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.Available }} ({{ currentWorth(currency.Available, currency.Currency) }}) <!--({{ currency.fiat.price | currency(currency.fiat.prefix) }})--></div>
+      <div class="listing-currency__meta">{{ currency.Available }} <span v-if="allMarkets">({{ currentWorth(currency.Available, currency.Currency) }})</span></div>
       <div class="listing-currency__percentage" :class="percentageClass"><!--{{ currency.percentage | percentage }}--></div>
     </div>
     <div class="listing-currency__stats">
@@ -75,35 +75,9 @@ export default {
         return difference.toFixed(8)
       }
     },
-    // openOrdersAmount () {
-    //   let total = 0
-    //   const openOrders = this.$store.getters['orders/getOpenOrders']
-
-    //   const openOrdersForCurrency = openOrders.filter(order => {
-    //     return order.Exchange === `BTC-${this.currency.Currency}` // TODO: make dynamic, BTC can be something different
-    //   })
-    //   console.log(openOrdersForCurrency)
-
-    //   const amounts = openOrdersForCurrency.map(order => {
-    //     return order.Quantity * order.Limit
-    //   })
-
-    //   if (amounts.length) {
-    //     total = amounts.reduce((prev, curr) => {
-    //       return prev + curr
-    //     })
-    //   }
-
-    //   return total
-    // },
-    // openOrdersTotal () {
-    //   const openOrders = this.$store.getters['orders/getOpenOrders']
-    //   const openOrdersForCurrency = openOrders.filter(order => {
-    //     return order.Exchange === 'BTC-XRP' // TODO: make dynamic, BTC can be something different
-    //   })
-
-    //   return openOrdersForCurrency.length
-    // },
+    allMarkets () {
+      return this.$store.getters['markets/allMarkets']
+    },
     percentageClass () {
       if (this.currency.percentage < 0) {
         return 'is-negative'
@@ -225,24 +199,34 @@ export default {
       let worth = 0
       let worthBtc = 0
       let worthUsd = 0
-      const markets = this.$store.getters['markets/allMarkets']
-      const currencyMarket = markets.filter(market => {
-        return market.MarketName === `BTC-${currency}` // TODO: make dynamic, BTC can be something else
-      })
-      const usdMarket = markets.filter(market => {
-        return market.MarketName === `USDT-BTC` // TODO: make dynamic, BTC can be something else
-      })
 
-      if (currency === 'BTC') {
-        const worth = (amount * usdMarket[0].Last).toFixed(2)
-        return `$${worth}`
-      } else {
-        if (currencyMarket[0] && usdMarket[0]) {
-          worthBtc = amount * currencyMarket[0].Last
-          worthUsd = (worthBtc * usdMarket[0].Last).toFixed(2)
-          return `$${worthUsd}`
+      // Check if the markets are already in the store, because we load them async
+      if (this.allMarkets.length) {
+        // Get market date for selected currency
+
+        // TODO: optimize performance, this is slow
+        const currencyMarket = this.allMarkets.filter(market => {
+          return market.MarketName === `BTC-${currency}` // TODO: make dynamic, BTC can be something else
+        })[0]
+
+        // Get the USD market data for BTC
+        // TODO: optimize performance, this is slow
+        const usdMarket = this.allMarkets.filter(market => {
+          return market.MarketName === `USDT-BTC` // TODO: make dynamic, BTC can be something else
+        })[0]
+
+        // If the currency is just BTC, show the USD market data
+        if (currency === 'BTC') {
+          const worth = (amount * usdMarket.Last).toFixed(2)
+          return `$${worth}`
         } else {
-          return worth
+          if (currencyMarket && usdMarket) {
+            worthBtc = amount * currencyMarket.Last
+            worthUsd = (worthBtc * usdMarket.Last).toFixed(2)
+            return `$${worthUsd}`
+          } else {
+            return worth
+          }
         }
       }
     }
@@ -283,7 +267,8 @@ export default {
   .listing-currency__header {
     display: flex;
     position: relative;
-    padding: 15px 45px 10px 15px;
+    padding: 15px 45px 15px 15px;
+    height: 50px;
 
     &:after {
       content: "";
@@ -302,6 +287,7 @@ export default {
 
   .listing-currency__stats {
     padding: 0 15px 15px 15px;
+    margin-top: -6px;
   }
 
   .listing-currency__legenda {
@@ -360,7 +346,7 @@ export default {
     }
 
     &.is-positive {
-      color: #9DD532;
+      color: #23CF5F;
     }
 
     &.is-warning {

@@ -36,11 +36,7 @@ export default {
   }
 
   .progress__green {
-    background-color: #9DD532;
-  }
-
-  .progress__third {
-    background-color: green;
+    background-color: #23CF5F;
   }
 }
 </style>

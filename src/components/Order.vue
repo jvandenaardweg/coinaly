@@ -12,7 +12,7 @@
         <Label v-if="order.OrderType === 'LIMIT_BUY'" :text="'Buy'" :color="'green'"></Label>
       </div>
     </div>
-    <div class="order__stats">
+    <div class="order__stats" v-if="order.QuantityRemaining">
       <Progress :blue="0" :orange="0" :green="filledPercentage"></Progress>
     </div>
     <div class="order__body">
@@ -23,9 +23,9 @@
         <li><small>Limit</small><span>{{ order.Limit }}</span></li>
         <li><small>Target</small><span>{{ order.ConditionTarget }}</span></li>
         <li><small>Condition</small><span>{{ order.Condition }}</span></li>
+        <!-- <li v-if="isBuy"><small>Worth</small><span>{{ currentWorth }} ({{ delta }}%)</span></li> -->
       </ul>
-
-      <p>{{ readableOrder }}</p>
+      <p v-if="order.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>
     <div v-if="order.QuantityRemaining" class="order__footer">
       <Button :type="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
@@ -57,6 +57,38 @@ export default {
     }
   },
   computed: {
+    isBuy () {
+      return this.order.OrderType === 'LIMIT_BUY'
+    },
+    isSell () {
+      return this.order.OrderType === 'LIMIT_SELL'
+    },
+    currentWorth () {
+      if (this.isBuy) {
+        let currentWorth = null
+        const markets = this.$store.getters['markets/allMarkets']
+        const currentMarket = markets.filter(market => {
+          return market.MarketName === this.order.Exchange // TODO: make BTC dynamic, can be something else
+        })
+
+        if (currentMarket.length) {
+          const lastPricePerUnit = currentMarket[0].Last
+          currentWorth = (lastPricePerUnit * this.order.Quantity).toFixed(8)
+        }
+
+        return currentWorth
+      } else {
+        return '-'
+      }
+    },
+    delta () {
+      if (this.isBuy) {
+        const percentage = ((this.currentWorth - this.order.Price) / this.order.Price * 100).toFixed(2)
+        return percentage
+      } else {
+        return '-'
+      }
+    },
     readableOrder () {
       const readableCondition = (this.order.Condition === 'LESS_THAN' ? 'less than' : 'more than')
       const readableOrderType = (this.order.OrderType === 'LIMIT_BUY' ? 'buy' : 'sell')
@@ -106,10 +138,9 @@ export default {
 <style lang="scss" scoped>
 .order {
   background-color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border: 1px #DFE1E3 solid;
   border-radius: 3px;
-  padding: 0 0 15px 0;
   text-align: left;
 
   &.is-expanded {
@@ -125,10 +156,11 @@ export default {
   }
 
   .order__header {
-    padding: 15px 45px 10px 15px;
+    padding: 15px 45px 15px 15px;
     display: flex;
     width: 100%;
     position: relative;
+    height: 50px;
 
     &:after {
       content: "";
@@ -163,6 +195,11 @@ export default {
     &.is-warning {
       color: orange;
     }
+
+    .label {
+      position: relative;
+      top: -1px;
+    }
   }
 
   .order__symbol {
@@ -178,7 +215,7 @@ export default {
 
   .order__body {
     display: none;
-    padding: 15px 15px 0 15px;
+    padding: 15px 15px 10px 15px;
 
     ul {
       list-style: none;
@@ -207,13 +244,13 @@ export default {
   }
 
   .order__footer {
-    padding: 15px 15px 0 15px;
+    padding: 0 15px 0 15px;
     text-align: right;
     display: none;
   }
 
   .order__stats {
-    padding: 0 15px;
+    padding: 0 15px 15px 15px;
   }
 
   .order__meta {

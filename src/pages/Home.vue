@@ -1,7 +1,5 @@
 <template>
   <div id="home">
-    <p>Home, go navigate</p>
-    <p>On the homepage we will show the most important information first.</p>
     <div v-if="!hasAccess">
       <form @submit.prevent="handleForm()">
         <input type="text" v-model="access" name="access" placeholder="Password" />
@@ -10,7 +8,6 @@
     </div>
     <div v-if="hasAccess">
       <History></History>
-      <p>You now have access</p>
     </div>
   </div>
 </template>

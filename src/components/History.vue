@@ -3,7 +3,16 @@
     <header class="history__header">
       <h2 class="history__header-title">Order history</h2>
       <div class="history__header-control">
-        <Button :label="'New order'"></Button>
+        <!-- <Button :label="'New order'"></Button> -->
+        <!-- <div>
+          <label>Order by</label>
+          <select v-model="orderBy">
+            <option disabled value="">Order by...</option>
+            <option value="dateDesc">Date</option>
+            <option value="currencyDesc">Currency</option>
+          </select>
+        </div> -->
+
       </div>
     </header>
     <div class="history__body">
@@ -21,6 +30,11 @@ export default {
   components: {
     Button,
     Order
+  },
+  data () {
+    return {
+      orderBy: 'dateDesc'
+    }
   },
   computed: {
     historyOrders () {

@@ -33,7 +33,7 @@ export default {
   }
 
   &.button--success {
-    background: #9DD532;
+    background: #23CF5F;
   }
 
   &.button--warning {
