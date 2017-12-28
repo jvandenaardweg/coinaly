@@ -44,6 +44,7 @@ export default {
   }
 
   .orders__empty {
+    padding-top: 30px;
     font-size: 1.6rem;
     opacity: 0.5;
     font-weight: normal;
