@@ -16,6 +16,7 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 ### Future
 - Receive a notification when an order closed or cancelled
 - Receive a notification when a coin is losing me money
+- Track a single trade. You bought a coin and want to know how thát trade is performing.
 - Try out with other exchanges
 
 ## Donations
