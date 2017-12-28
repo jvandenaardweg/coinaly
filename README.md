@@ -13,6 +13,11 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 - Optimized for mobile screens and mobile performance. Always there with you.
 - Overview open orders. How are my orders performing? Should I cancel or adjust them?
 
+### Future
+- Receive a notification when an order closed or cancelled
+- Receive a notification when a coin is losing me money
+- Try out with other exchanges
+
 ## Donations
 I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](https://www.linkedin.com/in/jvandenaardweg/) using my spare time to create this. A donation of any size is very welcome!
 
