@@ -7,6 +7,12 @@ I find the Bittrex website not easy to use. The mobile version of their website 
 
 Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. But their website could use a little help.
 
+## Features
+- Instantly see the current status of your balances. Am I making a profit? Or am I losing money?
+- Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin.
+- Optimized for mobile screens and mobile performance. Always there with you.
+- Overview open orders. How are my orders performing? Should I cancel or adjust them?
+
 ## Donations
 I'am not affiliated with Bittrex in any way. I'm just a freelance developer using my spare time to create this. A donation of any size is very welcome!
 
