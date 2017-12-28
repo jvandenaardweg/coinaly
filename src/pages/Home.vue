@@ -9,14 +9,20 @@
       </form>
     </div>
     <div v-if="hasAccess">
+      <History></History>
       <p>You now have access</p>
     </div>
   </div>
 </template>
 
 <script>
+import History from '@/components/History'
+
 export default {
   name: 'HomePage',
+  components: {
+    History
+  },
   data () {
     return {
       hasAccess: this.$cookie.get('access') || false

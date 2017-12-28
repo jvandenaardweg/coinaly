@@ -29,7 +29,7 @@
 
       <p>{{ readableOrder }}</p>
     </div>
-    <div class="order__footer">
+    <div v-if="order.QuantityRemaining" class="order__footer">
       <Button :type="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
       <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
     </div>
@@ -112,6 +112,7 @@ export default {
   border: 1px #DFE1E3 solid;
   border-radius: 3px;
   padding: 0 0 15px 0;
+  text-align: left;
 
   &.is-expanded {
     .order__body,
