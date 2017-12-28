@@ -1,9 +1,11 @@
 # Simpletrade
 
-An easy too use mobile "on the go" trade interface for Bittrex.
+An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex did a horrible job in providing a mobile friendly website.
 
 ## Why?
-I find the Bittrex website not easy to use. The mobile version of their website is horrible to use. It's cluttered with information and does not visualize the things I want to know on a daily/hourly basis. With their API we can do things a little better.
+I find the Bittrex website not easy to use. The mobile version of their website is horrible. It's cluttered with information and does not visualize the things I want to know on a daily/hourly basis. With their API we can do things a little better.
+
+Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. But their website could use a little help.
 
 ## Setup
 See `package.json` engines for the required dependency versions
