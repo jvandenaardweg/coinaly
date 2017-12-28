@@ -14,7 +14,7 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 - Overview open orders. How are my orders performing? Should I cancel or adjust them?
 
 ## Donations
-I'am not affiliated with Bittrex in any way. I'm just a freelance developer using my spare time to create this. A donation of any size is very welcome!
+I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](https://www.linkedin.com/in/jvandenaardweg/) using my spare time to create this. A donation of any size is very welcome!
 
 - BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 - ETH: 0xCa342CF5b76cbCf9298Fe59510Ca17267f2Fa583
