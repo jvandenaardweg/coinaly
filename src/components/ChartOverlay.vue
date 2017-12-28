@@ -1,7 +1,7 @@
 <template>
   <div class="chart">
     <div class="chart__header">
-      <h2>BTCXRP</h2>
+      <h2>{{ currencyPair }}</h2>
       <button type="button" @click="$emit('close')" class="chart__header-control">&times;</button>
     </div>
     <div class="chart__body" id="chart"></div>
@@ -13,6 +13,7 @@ const moment = require('moment-timezone')
 
 export default {
   name: 'ChartOverlay',
+  props: ['exchange', 'currencyPair'],
   created () {
     const userTimezone = moment.tz.guess() || 'Europe/Paris'
 
@@ -21,7 +22,7 @@ export default {
       this.widget = new window.TradingView.widget({
         'container_id': 'chart',
         'autosize': true,
-        'symbol': 'BITTREX:XRPBTC',
+        'symbol': `${this.exchange}:${this.currencyPair}`,
         'interval': '60', // D = 1 day, 60 = 1hr
         'timezone': userTimezone,
         'theme': 'Light',
@@ -31,9 +32,8 @@ export default {
         'enable_publishing': false,
         'save_image': false,
         'hideideas': true,
-        'hidevolume': false,
-        'hide_side_toolbar': true,
-        'referral_id': '7376'
+        'referral_id': '7376',
+        'allow_symbol_change': false
       })
 
       /*

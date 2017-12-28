@@ -2,7 +2,7 @@
   <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
       <div class="listing-currency__symbol"><strong>{{ currency.Currency }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.Available }} <span v-if="allMarkets">({{ currentWorth(currency.Available, currency.Currency) }})</span></div>
+      <div class="listing-currency__meta">{{ currency.Balance }} <span v-if="allMarkets">({{ currentWorth(currency.Balance, currency.Currency) }})</span></div>
       <div class="listing-currency__percentage" :class="percentageClass"><!--{{ currency.percentage | percentage }}--></div>
     </div>
     <div class="listing-currency__stats">
@@ -20,6 +20,7 @@
         <p>{{ buySellDifference(currency.Currency) }} {{ currency.Currency }} is transfered from Bittrex to something else.</p>
       </div>
       <div class="listing-currency__controls">
+        <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
         <Button v-if="totalOrderHistory(currency.Currency)" :type="'outlined'" :label="`History (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
         <Button :label="'Sell'" :type="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
         <Button :label="'Buy'" @click.native="handleClick('buy')"></Button>
@@ -27,30 +28,36 @@
       </div>
     </div>
     <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
+    <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="`${currency.Currency}BTC`"></ChartOverlay>
   </div>
 </template>
 
 <script>
 import Button from '@/components/Button'
+import ButtonIcon from '@/components/ButtonIcon'
 import OrderTable from '@/components/OrderTable'
 import Modal from '@/components/Modal'
 import Progress from '@/components/Progress'
+import ChartOverlay from '@/components/ChartOverlay'
 
 export default {
   name: 'Listing',
   props: ['currency'],
   components: {
     Button,
+    ButtonIcon,
     OrderTable,
     Modal,
-    Progress
+    Progress,
+    ChartOverlay
   },
   data () {
     return {
       isExpanded: false,
       modalType: null,
       showModal: false,
-      showOrderHistory: false
+      showOrderHistory: false,
+      openChart: false
     }
   },
   computed: {
