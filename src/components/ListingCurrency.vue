@@ -28,7 +28,7 @@
       </div>
     </div>
     <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
-    <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="`${currency.Currency}BTC`"></ChartOverlay>
+    <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
   </div>
 </template>
 
@@ -61,6 +61,14 @@ export default {
     }
   },
   computed: {
+    currencyPair () {
+      const currency = this.currency.Currency
+      if (currency === 'BTC') {
+        return 'BTC'
+      } else {
+        return `${currency}BTC`
+      }
+    },
     stats () {
       const balance = this.currency.Balance // Total (excluding open orders)
       const available = this.currency.Available // Available (minus open orders)

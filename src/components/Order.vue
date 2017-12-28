@@ -1,13 +1,14 @@
 <template>
-  <div class="order" :class="{ 'is-expanded': isExpanded }">
+  <div class="order" :class="{'is-expanded': isExpanded}">
     <div class="order__header" @click.prevent="toggleExpand()">
       <div class="order__symbol">
         <strong>{{ order.Exchange }}</strong>
       </div>
       <div class="order__meta">
-        <span>{{ order.Quantity }} @ {{ order.Limit }} (BTC)</span>
+        <span>{{ order.Quantity }}</span>
       </div>
-      <div class="order__percentage">
+      <div class="order__percentage" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false}">
+        <span v-if="isBuy">{{ delta }}%</span>
         <Label v-if="order.OrderType === 'LIMIT_SELL'" :text="'Sell'" :color="'red'"></Label>
         <Label v-if="order.OrderType === 'LIMIT_BUY'" :text="'Buy'" :color="'green'"></Label>
       </div>
@@ -26,6 +27,7 @@
         <li><small>Limit</small><span>{{ order.Limit }}</span></li>
         <li><small>Target</small><span>{{ order.ConditionTarget }}</span></li>
         <li><small>Condition</small><span>{{ order.Condition }}</span></li>
+        <li><small>Until target</small><span>-120%</span></li>
         <!-- <li v-if="isBuy"><small>Worth</small><span>{{ currentWorth }} ({{ delta }}%)</span></li> -->
       </ul>
       <p v-if="order.Condition !== 'NONE'">{{ readableOrder }}</p>
@@ -122,10 +124,11 @@ export default {
   },
   methods: {
     handleCancel (uuid) {
-      this.cancelLoading = true
       this.errorMessage = false
 
       if (window.confirm('Do you really want to cancel this order?')) {
+        this.cancelLoading = true
+
         this.$store.dispatch('orders/cancelOrder', uuid)
         .then(response => {
           this.$store.dispatch('balances/getAll')
@@ -191,22 +194,25 @@ export default {
   }
 
   .order__percentage {
-    // align-self: right;
-    // margin-left: auto;
-    flex-basis: 50px;
+    flex-basis: 110px;
     flex-shrink: 0;
     text-align: right;
 
     &.is-negative {
-      color: red;
+      span {
+        color: #DC3A4E;
+      }
     }
 
     &.is-positive {
-      color: green;
+      span {
+        color: #23CF5F;
+      }
     }
 
-    &.is-warning {
-      color: orange;
+    span {
+      display: inline-block;
+      padding-right: 5px;
     }
 
     .label {
@@ -276,7 +282,7 @@ export default {
   }
 
   .order__footer {
-    padding: 0 15px 0 15px;
+    padding: 0 15px 15px 15px;
     text-align: right;
     display: none;
   }
