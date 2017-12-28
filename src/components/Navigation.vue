@@ -31,6 +31,7 @@ $navigation-height: 60px;
   background-color: #0077FF;
   padding: 0 15px;
   display: flex;
+  z-index: 99;
 
   .navigation__logo {
     padding: 10px 0;
