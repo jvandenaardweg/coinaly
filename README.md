@@ -2,6 +2,8 @@
 
 An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex did a horrible job in providing a mobile friendly website.
 
+<img src="https://www.dropbox.com/s/vfejrm8ofeble0j/IMG_2868.jpg?raw=1" width="256">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/riygwc067ddykqs/IMG_2869.jpg?raw=1" width="256">
+
 ## Why?
 I find the Bittrex website not easy to use. The mobile version of their website is horrible. It's cluttered with information and does not visualize the things I want to know on a daily/hourly basis. With their API we can do things a little better.
 
@@ -16,6 +18,7 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 ### Future
 - Receive a notification when an order closed or cancelled
 - Receive a notification when a coin is losing me money
+- Track a single trade. You bought a coin and want to know how thát trade is performing.
 - Try out with other exchanges
 
 ## Donations
