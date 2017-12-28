@@ -10,7 +10,8 @@
         </ul>
       </div>
       <div class="order__percentage">
-        <span>{{ filledPercentage }}%</span>
+        <Label v-if="order.OrderType === 'LIMIT_SELL'" :text="'Sell'" :color="'red'"></Label>
+        <Label v-if="order.OrderType === 'LIMIT_BUY'" :text="'Buy'" :color="'green'"></Label>
       </div>
     </div>
     <div class="order__stats">
@@ -39,6 +40,7 @@
 import Button from '@/components/Button'
 import Progress from '@/components/Progress'
 import ErrorMessage from '@/components/ErrorMessage'
+import Label from '@/components/Label'
 
 export default {
   name: 'Order',
@@ -46,7 +48,8 @@ export default {
   components: {
     Button,
     Progress,
-    ErrorMessage
+    ErrorMessage,
+    Label
   },
   data () {
     return {
