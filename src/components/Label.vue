@@ -21,6 +21,7 @@ export default {
   color: black;
   border-radius: 3px;
   display: inline-block;
+  min-width: 42px;
 
   &.label--red {
     color: red;

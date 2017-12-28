@@ -342,7 +342,7 @@ export default {
   }
 
   .listing-currency__symbol {
-    width: 80px;
+    width: 50px;
     text-align: left;
   }
 
