@@ -2,7 +2,7 @@
   <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
       <div class="listing-currency__symbol"><strong>{{ currency.Currency }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.Available }} <!--({{ currency.fiat.price | currency(currency.fiat.prefix) }})--></div>
+      <div class="listing-currency__meta">{{ currency.Available }} ({{ currentWorth(currency.Available, currency.Currency) }}) <!--({{ currency.fiat.price | currency(currency.fiat.prefix) }})--></div>
       <div class="listing-currency__percentage" :class="percentageClass"><!--{{ currency.percentage | percentage }}--></div>
     </div>
     <div class="listing-currency__stats">
@@ -220,6 +220,31 @@ export default {
     },
     toggleShowOrderHistory () {
       this.showOrderHistory = !this.showOrderHistory
+    },
+    currentWorth (amount, currency) {
+      let worth = 0
+      let worthBtc = 0
+      let worthUsd = 0
+      const markets = this.$store.getters['markets/allMarkets']
+      const currencyMarket = markets.filter(market => {
+        return market.MarketName === `BTC-${currency}` // TODO: make dynamic, BTC can be something else
+      })
+      const usdMarket = markets.filter(market => {
+        return market.MarketName === `USDT-BTC` // TODO: make dynamic, BTC can be something else
+      })
+
+      if (currency === 'BTC') {
+        const worth = (amount * usdMarket[0].Last).toFixed(2)
+        return `$${worth}`
+      } else {
+        if (currencyMarket[0] && usdMarket[0]) {
+          worthBtc = amount * currencyMarket[0].Last
+          worthUsd = (worthBtc * usdMarket[0].Last).toFixed(2)
+          return `$${worthUsd}`
+        } else {
+          return worth
+        }
+      }
     }
   },
   filters: {

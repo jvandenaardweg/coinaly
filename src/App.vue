@@ -26,6 +26,11 @@ export default {
     this.$store.dispatch('orders/getOpenOrders')
     this.$store.dispatch('deposits/getAllHistory')
     this.$store.dispatch('withdrawals/getAllHistory')
+
+    // TODO: do with websockets
+    setInterval(() => {
+      this.$store.dispatch('markets/getAll')
+    }, 1000)
   }
 }
 </script>

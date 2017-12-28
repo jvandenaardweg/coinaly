@@ -70,4 +70,17 @@ router.get('/market/cancel', function (request, response, next) {
   })
 })
 
+// TODO: do with websocker
+router.get('/ticker', function (request, response, next) {
+  bittrex.getticker({}, ticker => {
+    response.json(ticker)
+  })
+})
+
+router.get('/marketsummaries', function (request, response, next) {
+  bittrex.getmarketsummaries((data, error) => {
+    response.json(data.result)
+  })
+})
+
 module.exports = router

@@ -6,6 +6,7 @@ import TickersStore from './modules/tickers'
 import BalancesStore from './modules/balances'
 import withdrawalsStore from './modules/withdrawals'
 import depositsStore from './modules/deposits'
+import marketsStore from './modules/markets'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     tickers: TickersStore,
     balances: BalancesStore,
     withdrawals: withdrawalsStore,
-    deposits: depositsStore
+    deposits: depositsStore,
+    markets: marketsStore
   }
 })
