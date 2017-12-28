@@ -8,6 +8,9 @@
     </header>
     <div class="orders__body">
       <Order v-if="openOrders" v-for="order in openOrders" :key="order.OrderUuid" :order="order"></Order>
+      <div v-if="!openOrders.length" class="orders__empty">
+        <p>No open orders found.</p>
+      </div>
     </div>
   </div>
 </template>
@@ -34,10 +37,17 @@ export default {
 .orders {
   text-align: left;
   margin-bottom: 15px;
-  border-bottom: 1px #DFE1E3 solid;
+  // border-bottom: 1px #DFE1E3 solid;
 
   .orders__body {
     padding: 0 15px 15px 15px;
+  }
+
+  .orders__empty {
+    font-size: 1.6rem;
+    opacity: 0.5;
+    font-weight: normal;
+    text-align: center;
   }
 
   .orders__header {
