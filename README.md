@@ -7,6 +7,12 @@ I find the Bittrex website not easy to use. The mobile version of their website 
 
 Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. But their website could use a little help.
 
+## Donations
+I'am not affiliated with Bittrex in any way. I'm just a freelance developer using my spare time to create this. A donation of any size is very welcome!
+
+BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
+ETH: 0xCa342CF5b76cbCf9298Fe59510Ca17267f2Fa583
+
 ## Setup
 See `package.json` engines for the required dependency versions
 
