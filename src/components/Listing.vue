@@ -72,7 +72,7 @@ export default {
 .listing {
   text-align: left;
   margin-bottom: 15px;
-  border-bottom: 1px #DFE1E3 solid;
+  // border-bottom: 1px #DFE1E3 solid;
 
   .listing__header {
     text-align: left;
