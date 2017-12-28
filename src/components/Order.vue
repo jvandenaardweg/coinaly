@@ -83,10 +83,11 @@ export default {
       this.errorMessage = false
 
       if (window.confirm('Do you really want to cancel this order?')) {
-        console.log('cancel order')
         this.$store.dispatch('orders/cancelOrder', uuid)
         .then(response => {
-          alert('done!')
+          this.$store.dispatch('balances/getAll')
+          this.$store.dispatch('orders/getAllHistory')
+          this.$store.dispatch('orders/getOpenOrders')
         })
         .catch(error => {
           console.error('errorrrr', error)
