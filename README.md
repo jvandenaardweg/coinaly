@@ -51,6 +51,7 @@ Where "XXX" is your Bittrex API key and secret which can be created here: [https
 4. Run: `npm run dev`
 
 After started successfully, the website is in development mode and available at http://localhost:8080.
+The API is available at http://localhost:5000.
 
 **Password**
 As a temporary security measure we have a simple login on the homepage. Use `jordy` as the password to gain access.
