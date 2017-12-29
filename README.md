@@ -38,7 +38,7 @@ Currently the setup is a self hosted solution, untill we figured out the most se
 ### Bittrex API permissions
 **Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
 
-[View example](https://www.dropbox.com/s/3yk5nqh00rijhlu/bittrexapikeypermissions.png?raw=1)
+[View example](https://www.dropbox.com/s/h6d7r3qdox0fvt7/bittrexapikeypermissions.png?raw=1)
 
 **!! Important !!**
 We don't need **Withdrawal** permissions, so please leave that one off.
