@@ -48,9 +48,9 @@ BITTREX_API_SECRET=XXX
 Where "XXX" is your Bittrex API key and secret which can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
 
 3. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
-4. Run: `npm start`
+4. Run: `npm run dev`
 
-After started successfully, the website is available at http://localhost:8080
+After started successfully, the website is in development mode and available at http://localhost:8080
 
 ### Run development mode
 ``` bash
@@ -65,6 +65,9 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+
+# run in production
+npm start
 ```
 
 ### Run tests
