@@ -7,7 +7,7 @@
       <li><router-link to="/" exact>Home</router-link></li>
       <li><router-link :to="'balances'">Balances</router-link></li>
       <li><router-link :to="'orders'">Orders</router-link></li>
-      <li><router-link :to="'history'">History</router-link></li>
+      <li><router-link :to="'markets'">Markets</router-link></li>
     </ul>
   </nav>
 </template>

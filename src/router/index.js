@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import HomePage from '@/pages/Home'
 import BalancesPage from '@/pages/Balances'
 import OrdersPage from '@/pages/Orders'
-import HistoryPage from '@/pages/History'
+import MarketsPage from '@/pages/Markets'
 
 Vue.use(Router)
 
@@ -25,9 +25,9 @@ export default new Router({
       component: OrdersPage
     },
     {
-      path: '/history',
-      name: 'History',
-      component: HistoryPage
+      path: '/markets',
+      name: 'Markets',
+      component: MarketsPage
     }
   ],
   linkActiveClass: 'is-active',
