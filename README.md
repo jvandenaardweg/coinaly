@@ -43,8 +43,12 @@ BITTREX_API_SECRET=XXX
 ```
 Where "XXX" is your Bittrex API key and secret which can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
 
-*API permissions*
-Important: We don't need "withdrawl" permissions, so you can leave that switch off. "Read info" is the minimal permission, so we can read your balances and orders. If you enable "Trade limit" and "Trade market" you can also trade from within the website. But if you don't feel comfortable enabling that, we understand, you can leave it off.
+### Bittrex API permissions
+**Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
+
+#### Important!
+We don't need **Withdrawal** permissions, so please leave that one off.
+
 <img src="https://www.dropbox.com/s/3yk5nqh00rijhlu/bittrexapikeypermissions.png?raw=1" />
 
 3. Install all the dependencies: `yarn install`
