@@ -36,6 +36,8 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets.
 
 ### Bittrex API permissions
+In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
+
 **Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
 
 [View example](https://www.dropbox.com/s/h6d7r3qdox0fvt7/bittrexapikeypermissions.png?raw=1)
