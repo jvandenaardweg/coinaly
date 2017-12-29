@@ -43,6 +43,9 @@ For this setup we used the standard VueJS Webpack template. For a detailed expla
 BITTREX_API_KEY=XXX
 BITTREX_API_SECRET=XXX
 ```
+Where "XXX" is your Bittrex API key and secret. We don't need "withdrawl" permissions, so you can leave that switch off.
+<img src="https://www.dropbox.com/s/3yk5nqh00rijhlu/bittrexapikeypermissions.png?raw=1" />
+
 3. Install all the dependencies: `yarn install`
 4. Run in development mode: `npm run dev`
 
