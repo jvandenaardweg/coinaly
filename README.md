@@ -28,7 +28,8 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](https://www.linkedin.com/in/jvandenaardweg/) using my spare time to create this. A donation of any size is very welcome!
 
 - BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
-- ETH: 0xCa342CF5b76cbCf9298Fe59510Ca17267f2Fa583
+- ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
+- BCH: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 
 ## Setup
 See `package.json` engines for the required dependency versions
