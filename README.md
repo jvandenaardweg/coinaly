@@ -25,10 +25,10 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 - BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 - ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
 
-## Setup
-Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets.
+# Setup
+Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets. Since this project is in early development, using this in an production environment is at your own risk.
 
-### Bittrex API permissions
+## Bittrex API permissions
 In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
 
 **Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
@@ -38,7 +38,7 @@ In order to use this you need to have a Bittrex API key so we can read your orde
 **!! Important !!**
 We don't need **Withdrawal** permissions, so please leave that one off.
 
-### Installation
+## Installation
 1. Download this Git repo
 2. In that repo folder create a `.env` file with the contents:
 ```
@@ -53,16 +53,16 @@ Where "XXX" is your Bittrex API key and secret which can be created here: [https
 After started successfully, the website is in development mode and available at http://localhost:8080.
 The API is available at http://localhost:5000.
 
-#### Password
+### Password
 As a temporary security measure we have a simple login on the homepage. Use `jordy` as the password to gain access.
 
-### Run development mode
+## Run development mode
 ``` bash
 # serve with hot reload at localhost:8080
 npm run dev
 ```
 
-### Build for production
+## Build for production
 ``` bash
 # build for production with minification
 npm run build
@@ -74,7 +74,7 @@ npm run build --report
 npm start
 ```
 
-### Run tests
+## Run tests
 ``` bash
 # run unit tests
 npm run unit
