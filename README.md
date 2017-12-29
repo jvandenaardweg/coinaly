@@ -49,6 +49,7 @@ Where "XXX" is your Bittrex API key and secret which can be created here: [https
 
 3. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
 4. Run: `npm run dev`
+5. As a temporary security measure we have a simple login on the homepage. Use `jordy` as the password to gain access.
 
 After started successfully, the website is in development mode and available at http://localhost:8080
 
