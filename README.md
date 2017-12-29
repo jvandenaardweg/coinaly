@@ -37,6 +37,15 @@ Currently the setup is a self hosted solution, untill we figured out the most se
 
 For this setup we used the standard VueJS Webpack template. For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+1. Download this Git repo
+2. In that repo folder create a `.env` file with the contents:
+```
+BITTREX_API_KEY=XXX
+BITTREX_API_SECRET=XXX
+```
+3. Install all the dependencies: `yarn install`
+4. Run in development mode: `npm run dev`
+
 ### Dependencies
 See `package.json` engines for the required dependency versions.
 
