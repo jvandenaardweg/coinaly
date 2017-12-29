@@ -6,6 +6,7 @@
         <small v-if="type === 'sell'">{{ currency.Available }} available</small>
       </header>
       <div class="modal-popup__body">
+        <strong>This is a work in progress.<br/><br/><br/></strong>
         <div>
           <label>Amount</label>
           <input type="text" name="amount" />

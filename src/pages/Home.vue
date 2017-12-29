@@ -23,7 +23,8 @@ export default {
   data () {
     return {
       hasAccess: this.$cookie.get('access') || false,
-      openChart: false
+      openChart: false,
+      access: null
     }
   },
   methods: {

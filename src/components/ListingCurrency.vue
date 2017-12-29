@@ -16,16 +16,18 @@
       </div>
     </div>
     <div class="listing-currency__body">
-      <div v-if="currency.Balance < buySellDifference(currency.Currency)">
+      <!-- <div v-if="currency.Balance < buySellDifference(currency.Currency)">
         <p>{{ buySellDifference(currency.Currency) }} {{ currency.Currency }} is transfered from Bittrex to something else.</p>
-      </div>
+      </div> -->
       <div class="listing-currency__controls">
         <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
-        <Button v-if="totalOrderHistory(currency.Currency)" :type="'outlined'" :label="`History (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
         <Button :label="'Sell'" :type="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
         <Button :label="'Buy'" @click.native="handleClick('buy')"></Button>
-        <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
       </div>
+      <div class="listing-currency__history">
+          <Button v-if="totalOrderHistory(currency.Currency)" :type="'link'" :label="`View history (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
+          <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
+        </div>
     </div>
     <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
     <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
@@ -284,6 +286,7 @@ export default {
     position: relative;
     padding: 15px 45px 15px 15px;
     height: 50px;
+    cursor: pointer;
 
     &:after {
       content: "";
@@ -303,6 +306,12 @@ export default {
   .listing-currency__stats {
     padding: 0 15px 15px 15px;
     margin-top: -6px;
+  }
+
+  .listing-currency__history {
+    text-align: center;
+    border-top: 1px #DFE1E3 solid;
+    padding-top: 5px;
   }
 
   .listing-currency__legenda {
@@ -373,15 +382,18 @@ export default {
     display: none;
     text-align: left;
     padding: 0 15px 12px 15px;
-
-    > div {
-      border-top: 1px #DFE1E3 solid;
-      padding: 12px 0 0 0;
-    }
   }
 
   .listing-currency__controls {
     text-align: right;
+    padding: 0 0 15px 0;
+    display: flex;
+    flex-direction: row;
+   justify-content: flex-end;
+
+    .button {
+      margin-left: 5px;
+    }
   }
 
 }

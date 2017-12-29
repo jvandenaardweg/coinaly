@@ -3,7 +3,7 @@
     <header class="orders__header">
       <h2 class="orders__header-title">Open orders</h2>
       <div class="orders__header-control">
-        <Button :label="'New order'"></Button>
+        <Button :label="'New order'" @click.native="showOrderModal()"></Button>
       </div>
     </header>
     <div class="orders__body">
@@ -28,6 +28,12 @@ export default {
   computed: {
     openOrders () {
       return this.$store.getters['orders/getOpenOrders']
+    }
+  },
+  methods: {
+    showOrderModal () {
+      console.log('show')
+      window.alert('This feature does not work yet, sorry!')
     }
   }
 }

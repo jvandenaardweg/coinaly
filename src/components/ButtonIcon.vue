@@ -21,15 +21,13 @@ export default {
 <style lang="scss" scoped>
 .button-icon {
   display: inline-block;
-  padding: 0 20px;
+  padding: 0 12px;
   height: 39px;
   border-radius: 3px;
-  // background: #0077FF;
-  // color: white;
   border: 0;
   font-size: 1.4rem;
   font-weight: bold;
-  border: 1px #DFE1E3 solid;
+  border: 1px #0077FF solid;
   outline: none;
   appearance: none;
   background: none;
@@ -42,11 +40,10 @@ export default {
     width: 24px;
     height: 24px;
     display: inline-block;
-    // height: 37px;
 
     svg {
       width: 100%;
-      fill: #000;
+      fill: #0077FF;
     }
   }
 }

@@ -27,7 +27,7 @@
         <li><small>Limit</small><span>{{ order.Limit }}</span></li>
         <li><small>Target</small><span>{{ order.ConditionTarget }}</span></li>
         <li><small>Condition</small><span>{{ order.Condition }}</span></li>
-        <li><small>Until target</small><span>-120%</span></li>
+        <!-- <li><small>Until target</small><span>-120%</span></li> -->
         <!-- <li v-if="isBuy"><small>Worth</small><span>{{ currentWorth }} ({{ delta }}%)</span></li> -->
       </ul>
       <p v-if="order.Condition !== 'NONE'">{{ readableOrder }}</p>
