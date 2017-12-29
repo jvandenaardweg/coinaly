@@ -54,18 +54,10 @@ BITTREX_API_SECRET=XXX
 ```
 Where "XXX" is your Bittrex API key and secret which can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
 
-3. Install all the dependencies: `yarn install`
+3. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
 4. Run: `npm start`
 
 After started successfully, the website is available at http://localhost:8080
-
-### Dependencies
-See `package.json` engines for the required dependency versions.
-
-``` bash
-# install dependencies
-yarn install
-```
 
 ### Run development mode
 ``` bash
