@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <header class="history__header">
-      <h2 class="history__header-title">Order history</h2>
+      <h2 class="history__header-title">Order activity</h2>
       <div class="history__header-control">
         <!-- <Button :label="'New order'"></Button> -->
         <!-- <div>
