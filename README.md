@@ -35,6 +35,15 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 ## Setup
 Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets.
 
+### Bittrex API permissions
+**Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
+
+[View example](https://www.dropbox.com/s/3yk5nqh00rijhlu/bittrexapikeypermissions.png?raw=1)
+
+**!! Important !!**
+We don't need **Withdrawal** permissions, so please leave that one off.
+
+### Installation
 1. Download this Git repo
 2. In that repo folder create a `.env` file with the contents:
 ```
@@ -42,14 +51,6 @@ BITTREX_API_KEY=XXX
 BITTREX_API_SECRET=XXX
 ```
 Where "XXX" is your Bittrex API key and secret which can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
-
-### Bittrex API permissions
-**Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
-
-#### Important!
-We don't need **Withdrawal** permissions, so please leave that one off.
-
-<img src="https://www.dropbox.com/s/3yk5nqh00rijhlu/bittrexapikeypermissions.png?raw=1" />
 
 3. Install all the dependencies: `yarn install`
 4. Run in development mode: `npm run dev`
