@@ -32,21 +32,35 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 - BCH: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 
 ## Setup
-See `package.json` engines for the required dependency versions
+Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets.
+
+For this setup we used the standard VueJS Webpack template. For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+### Dependencies
+See `package.json` engines for the required dependency versions.
 
 ``` bash
 # install dependencies
 yarn install
+```
 
+### Run development mode
+``` bash
 # serve with hot reload at localhost:8080
 npm run dev
+```
 
+### Build for production
+``` bash
 # build for production with minification
 npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+```
 
+### Run tests
+``` bash
 # run unit tests
 npm run unit
 
@@ -56,5 +70,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
