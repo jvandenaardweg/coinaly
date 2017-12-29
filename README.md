@@ -35,15 +35,16 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 ## Setup
 Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets.
 
-For this setup we used the standard VueJS Webpack template. For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
 1. Download this Git repo
 2. In that repo folder create a `.env` file with the contents:
 ```
 BITTREX_API_KEY=XXX
 BITTREX_API_SECRET=XXX
 ```
-Where "XXX" is your Bittrex API key and secret. We don't need "withdrawl" permissions, so you can leave that switch off.
+Where "XXX" is your Bittrex API key and secret which can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
+
+*API permissions*
+Important: We don't need "withdrawl" permissions, so you can leave that switch off. "Read info" is the minimal permission, so we can read your balances and orders. If you enable "Trade limit" and "Trade market" you can also trade from within the website. But if you don't feel comfortable enabling that, we understand, you can leave it off.
 <img src="https://www.dropbox.com/s/3yk5nqh00rijhlu/bittrexapikeypermissions.png?raw=1" />
 
 3. Install all the dependencies: `yarn install`
@@ -83,3 +84,5 @@ npm run e2e
 # run all tests
 npm test
 ```
+
+For this setup we used the standard VueJS Webpack template. For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
