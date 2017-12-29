@@ -24,7 +24,6 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 
 - BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 - ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
-- BCH: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 
 ## Setup
 Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets.
