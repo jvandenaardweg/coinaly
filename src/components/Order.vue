@@ -8,7 +8,7 @@
         <span>{{ order.Quantity }}</span>
       </div>
       <div class="order__percentage" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false}">
-        <span v-if="isBuy">{{ delta }}%</span>
+        <span v-if="isBuy && delta !== null">{{ delta }}%</span>
         <Label v-if="order.OrderType === 'LIMIT_SELL'" :text="'Sell'" :color="'red'"></Label>
         <Label v-if="order.OrderType === 'LIMIT_BUY'" :text="'Buy'" :color="'green'"></Label>
       </div>
@@ -71,11 +71,13 @@ export default {
     isClosedBuy () {
       return this.isBuy && !this.order.QuantityRemaining
     },
+    allMarkets () {
+      return this.$store.getters['markets/allMarkets']
+    },
     currentWorth () {
       if (this.isBuy) {
         let currentWorth = null
-        const markets = this.$store.getters['markets/allMarkets']
-        const currentMarket = markets.filter(market => {
+        const currentMarket = this.allMarkets.filter(market => {
           return market.MarketName === this.order.Exchange // TODO: make BTC dynamic, can be something else
         })
 
@@ -90,11 +92,15 @@ export default {
       }
     },
     delta () {
-      if (this.isBuy) {
-        const percentage = ((this.currentWorth - this.order.Price) / this.order.Price * 100).toFixed(2)
-        return percentage
+      if (this.allMarkets.length) {
+        if (this.isBuy) {
+          const percentage = ((this.currentWorth - this.order.Price) / this.order.Price * 100).toFixed(2)
+          return percentage
+        } else {
+          return '-'
+        }
       } else {
-        return '-'
+        return null
       }
     },
     isPositiveDelta () {
