@@ -24,7 +24,6 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 
 - BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 - ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
-- BCH: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 
 ## Setup
 Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets.
@@ -49,9 +48,9 @@ BITTREX_API_SECRET=XXX
 Where "XXX" is your Bittrex API key and secret which can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
 
 3. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
-4. Run: `npm start`
+4. Run: `npm run dev`
 
-After started successfully, the website is available at http://localhost:8080
+After started successfully, the website is in development mode and available at http://localhost:8080
 
 ### Run development mode
 ``` bash
@@ -66,6 +65,9 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+
+# run in production
+npm start
 ```
 
 ### Run tests
