@@ -53,6 +53,9 @@ export default {
     }
   },
   computed: {
+    searchQueryInLowerCase () {
+      return (this.searchQuery ? this.searchQuery.toLowerCase().trim() : null)
+    },
     allFilledCurrenciesInBalance () {
       return this.$store.getters['balances/allFilledCurrencies']
     },
@@ -61,36 +64,36 @@ export default {
 
       if (currency === 'BTC') {
         const btcMarkets = this.$store.getters['markets/allBtcMarkets']
-        if (this.searchQuery) {
+        if (this.searchQueryInLowerCase) {
           return btcMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQuery)
+            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return btcMarkets
         }
       } else if (currency === 'ETH') {
         const ethMarkets = this.$store.getters['markets/allEthMarkets']
-        if (this.searchQuery) {
+        if (this.searchQueryInLowerCase) {
           return ethMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQuery)
+            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return ethMarkets
         }
       } else if (currency === 'USD') {
         const usdMarkets = this.$store.getters['markets/allUsdMarkets']
-        if (this.searchQuery) {
+        if (this.searchQueryInLowerCase) {
           return usdMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQuery)
+            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return usdMarkets
         }
       } else {
         const allMarkets = this.$store.getters['markets/allMarkets']
-        if (this.searchQuery) {
+        if (this.searchQueryInLowerCase) {
           return allMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQuery)
+            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return allMarkets
