@@ -26,6 +26,7 @@ export default {
     this.$store.dispatch('orders/getOpenOrders')
     this.$store.dispatch('deposits/getAllHistory')
     this.$store.dispatch('withdrawals/getAllHistory')
+    this.$store.dispatch('markets/getAll')
 
     // TODO: do with websockets
     setInterval(() => {
