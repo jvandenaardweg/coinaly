@@ -40,21 +40,12 @@ We don't need **Withdrawal** permissions, so please leave that one off.
 
 ## Installation
 1. Download this Git repo
-2. In that repo folder create a `.env` file with the contents:
-```
-BITTREX_API_KEY=XXX
-BITTREX_API_SECRET=XXX
-```
-Where "XXX" is your Bittrex API key and secret which can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). 
-
-3. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
-4. Run: `npm run dev`
+2. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
+3. Run: `npm run dev`
 
 After started successfully, the website is in development mode and available at http://localhost:8080.
-The API is available at http://localhost:5000.
 
-### Password
-As a temporary security measure we have a simple login on the homepage. Use `jordy` as the password to gain access.
+The API is available at http://localhost:5000.
 
 ## Run development mode
 ``` bash
