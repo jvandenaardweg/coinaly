@@ -1,34 +1,37 @@
 require('dotenv').config()
 const express = require('express')
+const cookieParser = require('cookie-parser')
+
 const app = express()
+app.use(cookieParser())
 const bodyParser = require('body-parser')
 const slashes = require('connect-slashes')
 const serveStatic = require('serve-static')
+
 const router = express.Router()
-
-// Check if we have the right environment vars
-if (!process.env.BITTREX_API_KEY || !process.env.BITTREX_API_SECRET) {
-  console.warn('IMPORTANT! Please add your BITTREX_API_KEY and BITTREX_API_SECRET to the .env file.')
-  return
-}
-
 const routesApi = require('./routes/api')
 
 app.use(bodyParser.json())
 app.use(slashes(false))
+app.use(serveStatic(__dirname + '/dist'))
 
+// Disable CORS
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
+  if (process.env.NODE_ENV === 'production') {
+    res.header('Access-Control-Allow-Origin', 'http://simpletrade.herokuapp')
+  } else {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  }
+  res.header('Access-Control-Allow-Credentials', 'true')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
 
+// Make sure Google doesnt index
 router.get('*', function (request, response, next) {
   response.setHeader('X-Robots-Tag', 'googlebot: noindex, nofollow')
   next()
 })
-
-app.use(serveStatic(__dirname + '/dist'))
 
 app.use('/api', routesApi)
 

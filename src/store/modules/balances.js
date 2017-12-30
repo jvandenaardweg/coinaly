@@ -4,7 +4,8 @@ export default {
   namespaced: true,
   state: {
     currencies: [],
-    isLoading: false
+    isLoading: false,
+    hasError: false
   },
   mutations: {
     addAll (state, items) {
@@ -15,6 +16,12 @@ export default {
     },
     stopLoading (state) {
       state.isLoading = false
+    },
+    setError (state) {
+      state.hasError = true
+    },
+    removeError (state) {
+      state.hasError = false
     }
   },
   getters: {
@@ -36,9 +43,6 @@ export default {
       return axios.get(`api/balances`)
       .then(response => {
         context.commit('addAll', response.data)
-      })
-      .catch(error => {
-        console.error('Failed to get the balances.', error)
       })
       .finally(() => {
         context.commit('stopLoading')

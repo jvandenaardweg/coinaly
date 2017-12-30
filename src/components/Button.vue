@@ -1,27 +1,20 @@
 <template>
-  <button type="button" class="button" :class="{
-    'button--primary': !type,
-    'button--danger': type === 'danger',
-    'button--success': type === 'success',
-    'button--warning': type === 'warning',
-    'button--outlined': type === 'outlined',
-    'button--link': type === 'link',
-    'button--icon': icon
+  <button :type="(!typeName ? 'button': typeName)" class="button" :class="{
+    'button--primary': !className,
+    'button--danger': className === 'danger',
+    'button--success': className === 'success',
+    'button--warning': className === 'warning',
+    'button--outlined': className === 'outlined',
+    'button--link': className === 'link'
   }">
     {{ label }}
-    <span class="button__icon" v-if="icon === 'chart'">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <path d="M488.399 492h-21.933V173.536c0-14.823-12.06-26.882-26.882-26.882H390.56c-14.823 0-26.882 12.06-26.882 26.882V492h-55.692V317.825c0-14.823-12.059-26.882-26.882-26.882H232.08c-14.823 0-26.882 12.06-26.882 26.882V492h-55.692v-90.204c0-14.823-12.06-26.882-26.882-26.882H73.599c-14.823 0-26.882 12.06-26.882 26.882V492H23.601c-5.523 0-10 4.477-10 10s4.477 10 10 10h464.798c5.523 0 10-4.477 10-10s-4.477-10-10-10zm-358.895 0H66.716v-90.204c0-3.795 3.087-6.882 6.882-6.882h49.024c3.795 0 6.882 3.087 6.882 6.882V492zm158.481 0h-62.788V317.825c0-3.795 3.087-6.882 6.882-6.882h49.024c3.794 0 6.882 3.087 6.882 6.882V492zm158.481 0h-62.788V173.536c0-3.795 3.087-6.882 6.882-6.882h49.024c3.795 0 6.882 3.087 6.882 6.882V492zm19.976-481.484c.14-2.729-.82-5.504-2.904-7.588-2.084-2.084-4.859-3.045-7.588-2.904-.161-.007-.32-.024-.484-.024h-60.5c-5.523 0-10 4.477-10 10s4.477 10 10 10h37.357l-98.857 98.858-37.28-37.28c-1.875-1.875-4.419-2.929-7.071-2.929s-5.196 1.054-7.071 2.929l-179.769 179.77c-3.905 3.905-3.905 10.237 0 14.143 1.953 1.951 4.512 2.927 7.071 2.927s5.119-.976 7.071-2.929L289.115 102.79l37.28 37.28c3.905 3.905 10.237 3.905 14.143 0L446.466 34.143v33.81c0 5.523 4.477 10 10 10s10-4.477 10-10V11c0-.163-.017-.322-.024-.484z"/>
-        <circle cx="75.64" cy="303.31" r="10"/>
-      </svg>
-    </span>
   </button>
 </template>
 
 <script>
 export default {
   name: 'Button',
-  props: ['href', 'label', 'type', 'icon']
+  props: ['label', 'typeName', 'className']
 }
 </script>
 

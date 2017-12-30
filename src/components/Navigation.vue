@@ -3,7 +3,7 @@
     <div class="navigation__logo">
       <router-link to="/" exact>S</router-link>
     </div>
-    <ul class="navigation__items">
+    <ul class="navigation__items" v-if="isAuthorized">
       <li><router-link to="/" exact>Home</router-link></li>
       <li><router-link to="/balances">Balances</router-link></li>
       <li><router-link to="/orders">Orders</router-link></li>
@@ -14,7 +14,12 @@
 
 <script>
 export default {
-  name: 'Navigation'
+  name: 'Navigation',
+  computed: {
+    isAuthorized () {
+      return this.$store.getters['auth/isAuthorized']
+    }
+  }
 }
 </script>
 

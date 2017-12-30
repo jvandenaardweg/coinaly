@@ -3,35 +3,79 @@
     <Navigation></Navigation>
     <Loader></Loader>
     <router-view/>
+    <div class="footer" v-if="isAuthorized">
+      <ErrorMessage v-if="message" :message="message"></ErrorMessage>
+      <Button :label="'Logout'" :className="'outlined'" @click.native="handleLogout()"></Button>
+    </div>
   </div>
 </template>
 
 <script>
 import Loader from '@/components/Loader'
 import Navigation from '@/components/Navigation'
+import Button from '@/components/Button'
+import ErrorMessage from '@/components/ErrorMessage'
 
 export default {
   name: 'app',
   components: {
     Loader,
-    Navigation
+    Navigation,
+    Button,
+    ErrorMessage
+  },
+  data () {
+    return {
+      message: null
+    }
+  },
+  computed: {
+    isAuthorized () {
+      return this.$store.getters['auth/isAuthorized']
+    }
   },
   created () {
-    console.log('get orders')
-    console.log('get balances')
-    console.log('run tickers')
-    // this.$store.dispatch('tickers/getAll')
-    this.$store.dispatch('balances/getAll')
-    this.$store.dispatch('orders/getAllHistory')
-    this.$store.dispatch('orders/getOpenOrders')
-    this.$store.dispatch('deposits/getAllHistory')
-    this.$store.dispatch('withdrawals/getAllHistory')
-    this.$store.dispatch('markets/getAll')
+    if (this.isAuthorized) {
+      this.getAllData()
+    }
+  },
+  methods: {
+    handleLogout () {
+      this.$store.dispatch('auth/removeApiKey')
+      window.clearInterval(this.marketInterval)
+      this.$router.push('Home')
+    },
+    getAllData () {
+      this.message = false
+      this.$store.dispatch('balances/getAll')
+      .then(response => {
+        this.$store.dispatch('balances/getAll')
+        this.$store.dispatch('orders/getAllHistory')
+        this.$store.dispatch('orders/getOpenOrders')
+        this.$store.dispatch('deposits/getAllHistory')
+        this.$store.dispatch('withdrawals/getAllHistory')
+        this.$store.dispatch('markets/getAll')
 
-    // TODO: do with websockets
-    setInterval(() => {
-      this.$store.dispatch('markets/getAll')
-    }, 2000)
+        // TODO: do with websockets
+        this.marketInterval = setInterval(() => {
+          this.$store.dispatch('markets/getAll')
+        }, 2000)
+      })
+      .catch(error => {
+        this.message = `The given API key and secret seem to be invalid.`
+        console.error(error)
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
+    }
+  },
+  watch: {
+    isAuthorized: function (newValue) {
+      if (newValue === true) {
+        this.getAllData()
+      }
+    }
   }
 }
 </script>
@@ -82,6 +126,15 @@ input[type="text"] {
   &:focus {
     border-color: #0077FF;
   }
+}
+
+a {
+  color: #0077FF;
+}
+
+.footer {
+  text-align: center;
+  margin: 50px 0;
 }
 
 </style>

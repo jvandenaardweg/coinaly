@@ -3,7 +3,7 @@
     <header class="listing__header">
       <h2 class="listing__header-title">{{ title }}</h2>
       <div class="listing__header-control">
-        <Button :type="'link'" @click.native="toggleShowAll()" :label="showAllLabel"></Button>
+        <Button :className="'link'" @click.native="toggleShowAll()" :label="showAllLabel"></Button>
       </div>
     </header>
     <div class="listing__body">

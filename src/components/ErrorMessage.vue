@@ -33,6 +33,7 @@ export default {
   position: relative;
   text-align: left;
   overflow: hidden;
+  margin-bottom: 15px;
 
   &.is-hidden {
     display: none;

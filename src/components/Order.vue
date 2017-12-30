@@ -33,7 +33,7 @@
       <p v-if="order.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>
     <div v-if="order.QuantityRemaining" class="order__footer">
-      <Button :type="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
+      <Button :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
       <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
     </div>
   </div>

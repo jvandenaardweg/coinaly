@@ -21,11 +21,11 @@
       </div> -->
       <div class="listing-currency__controls">
         <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
-        <Button :label="'Sell'" :type="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
+        <Button :label="'Sell'" :className="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
         <Button :label="'Buy'" @click.native="handleClick('buy')"></Button>
       </div>
       <div class="listing-currency__history">
-          <Button v-if="totalOrderHistory(currency.Currency)" :type="'link'" :label="`View history (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
+          <Button v-if="totalOrderHistory(currency.Currency)" :className="'link'" :label="`View history (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
           <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
         </div>
     </div>

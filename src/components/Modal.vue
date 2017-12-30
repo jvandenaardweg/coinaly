@@ -17,8 +17,8 @@
         </div>
       </div>
       <div class="modal-popup__footer">
-        <Button :label="'Cancel'" :type="'danger'" @click.native="$emit('close')"></Button>
-        <Button :label="readableType" :type="'success'"></Button>
+        <Button :label="'Cancel'" :className="'danger'" @click.native="$emit('close')"></Button>
+        <Button :label="readableType" :className="'success'"></Button>
       </div>
     </div>
   </div>

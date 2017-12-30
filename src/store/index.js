@@ -7,6 +7,7 @@ import BalancesStore from './modules/balances'
 import withdrawalsStore from './modules/withdrawals'
 import depositsStore from './modules/deposits'
 import marketsStore from './modules/markets'
+import authStore from './modules/auth'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     balances: BalancesStore,
     withdrawals: withdrawalsStore,
     deposits: depositsStore,
-    markets: marketsStore
+    markets: marketsStore,
+    auth: authStore
   }
 })

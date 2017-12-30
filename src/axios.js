@@ -8,7 +8,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 var axiosInstance = axios.create({
-  baseURL: baseUrl
+  baseURL: baseUrl,
+  withCredentials: true
 })
 
 module.exports = axiosInstance
