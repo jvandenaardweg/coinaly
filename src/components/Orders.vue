@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     showOrderModal () {
-      console.log('show')
       window.alert('This feature does not work yet, sorry!')
     }
   }

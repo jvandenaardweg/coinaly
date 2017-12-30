@@ -113,7 +113,6 @@ export default {
       this.isExpanded = !this.isExpanded
     },
     handleClick (type) {
-      console.log(type)
       this.modalType = type
       this.showModal = true
     },

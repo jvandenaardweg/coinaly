@@ -14,7 +14,7 @@ export default {
     getAll (context) {
       return axios.get(`/`)
       .then(response => {
-        console.log(response)
+        // console.log(response)
         // context.commit('addAll', response.data.data)
       })
       .catch(error => {

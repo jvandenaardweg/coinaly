@@ -12,22 +12,14 @@ Vue.use(VueCookie)
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  // if (to.name !== 'Home') {
   if (store.getters['auth/isAuthorized']) {
     next()
   } else {
     if (to.name !== 'Home') {
       router.push({path: '/'})
-      console.log('you should auth first')
     } else {
       next()
     }
-    // console.log(to.name, from.name)
-    // if (to.name !== 'Home') {
-    //   // window.alert('You dont have access. Please set your API credentials first at the homepage.')
-    //   router.push('Home')
-    // }
-    // next()
   }
 })
 
