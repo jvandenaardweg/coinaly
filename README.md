@@ -42,6 +42,7 @@ We don't need **Withdrawal** permissions, so please leave that one off.
 1. Download this Git repo
 2. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
 3. Run: `npm run dev`
+4. Fill in your API key and secret on the homepage
 
 After started successfully, the website is in development mode and available at http://localhost:8080.
 
