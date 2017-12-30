@@ -21,6 +21,21 @@ export default {
     allMarkets: state => {
       return state.markets
     },
+    allBtcMarkets: state => {
+      return state.markets.filter(market => {
+        return market.MarketName.includes('BTC-')
+      })
+    },
+    allEthMarkets: state => {
+      return state.markets.filter(market => {
+        return market.MarketName.includes('ETH-')
+      })
+    },
+    allUsdMarkets: state => {
+      return state.markets.filter(market => {
+        return market.MarketName.includes('USDT-')
+      })
+    },
     isLoading: state => {
       return state.isLoading
     }

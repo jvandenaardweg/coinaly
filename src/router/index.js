@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import HomePage from '@/pages/Home'
 import BalancesPage from '@/pages/Balances'
 import OrdersPage from '@/pages/Orders'
-import MarketsPage from '@/pages/Markets'
+import MarketsHomePage from '@/pages/markets/Home'
+import MarketsCurrencyPage from '@/pages/markets/Currency'
 
 Vue.use(Router)
 
@@ -27,7 +28,14 @@ export default new Router({
     {
       path: '/markets',
       name: 'Markets',
-      component: MarketsPage
+      component: MarketsHomePage,
+      children: [
+        {
+          path: ':currency/:keyword?',
+          name: 'MarketsCurrency',
+          component: MarketsCurrencyPage
+        }
+      ]
     }
   ],
   linkActiveClass: 'is-active',

@@ -38,6 +38,7 @@ export default {
   transition: 500ms all;
   opacity: 1;
   pointer-events: none;
+  text-align: center;
 
   &.is-hidden {
     opacity: 0;

@@ -5,9 +5,9 @@
     </div>
     <ul class="navigation__items">
       <li><router-link to="/" exact>Home</router-link></li>
-      <li><router-link :to="'balances'">Balances</router-link></li>
-      <li><router-link :to="'orders'">Orders</router-link></li>
-      <li><router-link :to="'markets'">Markets</router-link></li>
+      <li><router-link to="/balances">Balances</router-link></li>
+      <li><router-link to="/orders">Orders</router-link></li>
+      <li><router-link to="/markets">Markets</router-link></li>
     </ul>
   </nav>
 </template>
@@ -35,6 +35,7 @@ $navigation-height: 60px;
 
   .navigation__logo {
     padding: 10px 0;
+    text-align: center;
 
     a {
       display: block;
