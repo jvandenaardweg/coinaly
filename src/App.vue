@@ -4,7 +4,6 @@
     <Loader></Loader>
     <router-view/>
     <div class="footer" v-if="isAuthorized">
-      <ErrorMessage v-if="message" :message="message"></ErrorMessage>
       <Button :label="'Logout'" :className="'outlined'" @click.native="handleLogout()"></Button>
     </div>
   </div>
@@ -14,20 +13,13 @@
 import Loader from '@/components/Loader'
 import Navigation from '@/components/Navigation'
 import Button from '@/components/Button'
-import ErrorMessage from '@/components/ErrorMessage'
 
 export default {
   name: 'app',
   components: {
     Loader,
     Navigation,
-    Button,
-    ErrorMessage
-  },
-  data () {
-    return {
-      message: null
-    }
+    Button
   },
   computed: {
     isAuthorized () {
@@ -47,6 +39,9 @@ export default {
     },
     getAllData () {
       this.message = false
+
+      // First we do an API call to check if the credentials are valid
+      // If that API call returns an error, the API key and secret seem to be invalid
       this.$store.dispatch('balances/getAll')
       .then(response => {
         this.$store.dispatch('balances/getAll')
@@ -62,7 +57,9 @@ export default {
         }, 2000)
       })
       .catch(error => {
-        this.message = `The given API key and secret seem to be invalid.`
+        this.$store.dispatch('auth/removeApiKey')
+        this.$store.dispatch('auth/setError', 'The given API key and secret seem to be invalid.')
+        this.$router.push('/')
         console.error(error)
       })
       .finally(() => {

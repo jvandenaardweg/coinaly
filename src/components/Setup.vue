@@ -15,6 +15,7 @@
     </div>
 
     <div class="form__footer">
+      <ErrorMessage v-if="message" :message="message" @close="removeError()"></ErrorMessage>
       <Button :label="'Save'" :typeName="'submit'"></Button>
     </div>
   </form>
@@ -22,11 +23,13 @@
 
 <script>
 import Button from '@/components/Button'
+import ErrorMessage from '@/components/ErrorMessage'
 
 export default {
   name: 'Setup',
   components: {
-    Button
+    Button,
+    ErrorMessage
   },
   data () {
     return {
@@ -36,6 +39,9 @@ export default {
     }
   },
   computed: {
+    message () {
+      return this.$store.getters['auth/error']
+    },
     saveLabel () {
       if (this.isLoading) {
         return 'Saving...'
@@ -46,7 +52,11 @@ export default {
   },
   methods: {
     handleForm () {
+      this.removeError()
       this.$store.dispatch('auth/setApiKey', { apiKey: this.apiKey, apiSecret: this.apiSecret })
+    },
+    removeError () {
+      this.$store.dispatch('auth/removeError')
     }
   }
 }

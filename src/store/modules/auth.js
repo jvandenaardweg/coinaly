@@ -12,9 +12,16 @@ export default {
     bittrex: {
       apiKey: apiKey,
       apiSecret: apiSecret
-    }
+    },
+    error: null
   },
   mutations: {
+    addError (state, message) {
+      state.error = message
+    },
+    removeError (state) {
+      state.error = null
+    },
     setApiKey (state, apiCredentials) {
       state.bittrex.apiKey = apiCredentials.apiKey
       state.bittrex.apiSecret = apiCredentials.apiSecret
@@ -27,9 +34,18 @@ export default {
   getters: {
     isAuthorized (state) {
       return Boolean(state.bittrex.apiKey && state.bittrex.apiSecret)
+    },
+    error (state) {
+      return state.error
     }
   },
   actions: {
+    removeError (context) {
+      context.commit('removeError')
+    },
+    setError (context, message) {
+      context.commit('addError', message)
+    },
     setApiKey (context, apiCredentials) {
       context.commit('setApiKey', apiCredentials)
       Vue.cookie.set('bittrexApiKey', apiCredentials.apiKey, { expires: '99Y' })
