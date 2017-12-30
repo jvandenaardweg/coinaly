@@ -1,7 +1,10 @@
 <template>
   <form class="form" @submit.prevent="handleForm()">
-    <h1>Setup</h1>
-    <p>Please provide your Bittrex API key and secret. They can be created <a href="https://bittrex.com/Manage#sectionApi" target="_blank">here</a>. Your API key and secret is saved only in your browser.</p>
+    <header class="form__header">
+      <h1 class="form__header-title">Setup</h1>
+      <p>Please provide your Bittrex API key and secret. They can be created <a href="https://bittrex.com/Manage#sectionApi" target="_blank">here</a>. Your API key and secret is saved only in your browser.</p>
+    </header>
+
     <div class="input-group">
       <label>API Key</label>
       <input type="text" v-model="apiKey" name="apiKey" placeholder="Bittrex API key" />
@@ -51,7 +54,15 @@ export default {
 
 <style lang="scss" scoped>
 .form {
+  padding: 0 15px;
+}
 
+.form__header {
+  margin-bottom: 15px;
+}
+
+.form__header-title {
+  margin: 0;
 }
 
 .input-group {
