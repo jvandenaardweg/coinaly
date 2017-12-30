@@ -8,7 +8,7 @@
         <span>{{ order.Quantity }}</span>
       </div>
       <div class="order__percentage" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false}">
-        <span v-if="isBuy && delta !== null">{{ delta }}%</span>
+        <span v-if="isClosedBuy && delta !== null">{{ delta }}%</span>
         <Label v-if="order.OrderType === 'LIMIT_SELL'" :text="'Sell'" :color="'red'"></Label>
         <Label v-if="order.OrderType === 'LIMIT_BUY'" :text="'Buy'" :color="'green'"></Label>
       </div>
@@ -69,7 +69,7 @@ export default {
       return this.order.OrderType === 'LIMIT_SELL'
     },
     isClosedBuy () {
-      return this.isBuy && !this.order.QuantityRemaining
+      return this.isBuy && this.order.Closed
     },
     allMarkets () {
       return this.$store.getters['markets/allMarkets']
