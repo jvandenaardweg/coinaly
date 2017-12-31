@@ -27,8 +27,10 @@
         <li><small>Limit</small><span>{{ order.Limit }}</span></li>
         <li><small>Target</small><span>{{ order.ConditionTarget }}</span></li>
         <li><small>Condition</small><span>{{ order.Condition }}</span></li>
-        <!-- <li><small>Until target</small><span>-120%</span></li> -->
-        <!-- <li v-if="isBuy"><small>Worth</small><span>{{ currentWorth }} ({{ delta }}%)</span></li> -->
+      </ul>
+      <ul v-if="!isClosed">
+        <li><small>Market price</small><span>{{ currentMarket.Last }}</span></li>
+        <li><small>Order difference</small><span :class="{'is-positive': differencePercentage > 5, 'is-negative': differencePercentage < 0, 'is-warning': differencePercentage < 5}">{{ differencePercentage }}%</span></li>
       </ul>
       <p v-if="order.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>
@@ -62,6 +64,12 @@ export default {
     }
   },
   computed: {
+    mainPair () {
+      return this.order.Exchange.replace(/-.*/, '')
+    },
+    coinName () {
+      return this.order.Exchange.replace(/.*-/, '')
+    },
     isBuy () {
       return this.order.OrderType === 'LIMIT_BUY'
     },
@@ -71,21 +79,34 @@ export default {
     isClosedBuy () {
       return this.isBuy && this.order.Closed
     },
+    isClosed () {
+      return this.order.Closed
+    },
     allMarkets () {
       return this.$store.getters['markets/allMarkets']
+    },
+    currentMarket () {
+      return this.allMarkets.filter(market => {
+        return market.MarketName === this.order.Exchange
+      })[0]
+    },
+    difference () {
+      const currentMarket = this.currentMarket
+      return (currentMarket.Last - this.order.Limit).toFixed(8)
+    },
+    differencePercentage () {
+      const marketPrice = this.currentMarket.Last
+      const limit = this.order.Limit
+      const diff = this.difference
+      return (((marketPrice - limit) / limit) * 100).toFixed(2)
     },
     currentWorth () {
       if (this.isBuy) {
         let currentWorth = null
-        const currentMarket = this.allMarkets.filter(market => {
-          return market.MarketName === this.order.Exchange // TODO: make BTC dynamic, can be something else
-        })
-
-        if (currentMarket.length) {
-          const lastPricePerUnit = currentMarket[0].Last
+        if (this.currentMarket) {
+          const lastPricePerUnit = this.currentMarket.Last
           currentWorth = (lastPricePerUnit * this.order.Quantity).toFixed(8)
         }
-
         return currentWorth
       } else {
         return '-'
@@ -250,6 +271,12 @@ export default {
       flex-wrap: wrap;
       flex-direction: row;
       justify-content: flex-start;
+      border-bottom: 1px #DFE1E3 solid;
+      margin-bottom: 10px;
+
+      // &:last-child {
+      //   border-bottom: 0;
+      // }
 
       li {
         padding-right: 15px;
