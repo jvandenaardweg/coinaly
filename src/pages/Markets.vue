@@ -61,7 +61,6 @@ export default {
           return btcMarkets.filter(market => {
             return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
           })
-
         } else {
           return btcMarkets
         }
