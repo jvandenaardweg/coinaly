@@ -25,11 +25,10 @@
     </ul>
 
     <div class="search-box">
-      <input type="search" name="search" v-model="searchQuery" placeholder="Search..." />
+      <input type="search" name="search" v-model="searchQuery" placeholder="Search markets..." />
     </div>
 
     <Markets :filteredMarkets="filteredMarkets"></Markets>
-
   </div>
 </template>
 
@@ -179,7 +178,7 @@ export default {
 
   input[type="search"] {
     border: 1px #DFE1E3 solid;
-    adding: 0 15px;
+    padding: 0 15px;
     background-color: #fff;
     border-radius: 3px;
     color: #000;
