@@ -15,12 +15,13 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 
 ## Features
 - Instantly see the current status of your balances and orders. Am I making a profit? Or am I losing money?
-- Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin. (in progress)
-- Optimized for mobile screens and mobile performance. Always there with you.
+- Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin (in progress)
+- Optimized for mobile screens and mobile performance. Always there with you
 - Overview open orders. How are my orders performing? Should I cancel or adjust them?
+- Easily see how far an open order is from the current market price
 - Better live candlestick chart by [TradingView.com](https://www.tradingview.com/)
-- Live updates all market data. No need to refresh yourself.
-- Easily browse all available market.
+- Live updates all market data. No need to refresh yourself
+- Easily browse all available market
 
 ## Donations
 I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](https://www.linkedin.com/in/jvandenaardweg/) using my spare time to create this. A donation of any size is very welcome!
