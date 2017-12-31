@@ -6,8 +6,14 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueCookie from 'vue-cookie'
+import VueAnalytics from 'vue-analytics'
 
 Vue.use(VueCookie)
+
+Vue.use(VueAnalytics, {
+  id: 'A-258356-37',
+  router
+})
 
 Vue.config.productionTip = false
 

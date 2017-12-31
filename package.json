@@ -83,6 +83,7 @@
     "uglifyjs-webpack-plugin": "^0.4.6",
     "url-loader": "^0.5.8",
     "vue": "^2.5.13",
+    "vue-analytics": "^5.8.0",
     "vue-cookie": "^1.1.4",
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
