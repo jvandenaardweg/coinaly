@@ -11,7 +11,7 @@ import VueAnalytics from 'vue-analytics'
 Vue.use(VueCookie)
 
 Vue.use(VueAnalytics, {
-  id: 'A-258356-37',
+  id: 'UA-258356-37',
   router
 })
 
