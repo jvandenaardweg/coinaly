@@ -1,5 +1,17 @@
 import axios from '../../axios'
 
+function filterMarkets (array, currency) {
+  return array.filter(market => {
+    return market.MarketName.includes(`${currency}-`)
+  })
+}
+
+function reduceBaseVolume (array) {
+  return array.reduce((total, number) => {
+    return total + number.BaseVolume
+  }, 0)
+}
+
 export default {
   namespaced: true,
   state: {
@@ -22,19 +34,44 @@ export default {
       return state.markets
     },
     allBtcMarkets: state => {
-      return state.markets.filter(market => {
-        return market.MarketName.includes('BTC-')
-      })
+      return filterMarkets(state.markets, 'BTC')
     },
     allEthMarkets: state => {
-      return state.markets.filter(market => {
-        return market.MarketName.includes('ETH-')
-      })
+      return filterMarkets(state.markets, 'ETH')
     },
     allUsdMarkets: state => {
-      return state.markets.filter(market => {
-        return market.MarketName.includes('USDT-')
-      })
+      return filterMarkets(state.markets, 'USDT')
+    },
+    totalVolume: state => {
+      if (state.markets.length) {
+        return reduceBaseVolume(state.markets)
+      } else {
+        return null
+      }
+    },
+    totalBtcVolume: state => {
+      if (state.markets.length) {
+        const filteredMarkets = filterMarkets(state.markets, 'BTC')
+        return reduceBaseVolume(filteredMarkets)
+      } else {
+        return null
+      }
+    },
+    totalEthVolume: state => {
+      if (state.markets.length) {
+        const filteredMarkets = filterMarkets(state.markets, 'ETH')
+        return reduceBaseVolume(filteredMarkets)
+      } else {
+        return null
+      }
+    },
+    totalUsdVolume: state => {
+      if (state.markets.length) {
+        const filteredMarkets = filterMarkets(state.markets, 'USDT')
+        return reduceBaseVolume(filteredMarkets)
+      } else {
+        return null
+      }
     },
     isLoading: state => {
       return state.isLoading

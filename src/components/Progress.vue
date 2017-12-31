@@ -3,13 +3,14 @@
     <div class="progress__blue" :style="{ 'width': `${blue}%` }"></div>
     <div class="progress__orange" :style="{ 'width': `${orange}%` }"></div>
     <div class="progress__green" :style="{ 'width': `${green}%` }"></div>
+    <div class="progress__black" :style="{ 'width': `${black}%` }"></div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Progress',
-  props: ['blue', 'orange', 'green']
+  props: ['blue', 'orange', 'green', 'black']
 }
 </script>
 
@@ -37,6 +38,10 @@ export default {
 
   .progress__green {
     background-color: #23CF5F;
+  }
+
+  .progress__black {
+    background-color: #000;
   }
 }
 </style>

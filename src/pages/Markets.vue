@@ -28,24 +28,20 @@
       <input type="search" name="search" v-model="searchQuery" placeholder="Search..." />
     </div>
 
-    <div class="markets">
-      <div class="market" v-for="market in filteredMarkets" :key="market.MarketName" :class="{ 'is-in-balance': isInBalance(market.MarketName) }">
-        <strong>{{ market.MarketName }}</strong>, Last: {{ market.Last }}, Vol: {{ market.BaseVolume }}
-      </div>
-    </div>
-
-
+    <Markets :filteredMarkets="filteredMarkets"></Markets>
 
   </div>
 </template>
 
 <script>
 import Button from '@/components/Button'
+import Markets from '@/components/Markets'
 
 export default {
   name: 'MarketsHomePage',
   components: {
-    Button
+    Button,
+    Markets
   },
   data () {
     return {
@@ -56,23 +52,21 @@ export default {
     searchQueryInLowerCase () {
       return (this.searchQuery ? this.searchQuery.toLowerCase().trim() : null)
     },
-    allFilledCurrenciesInBalance () {
-      return this.$store.getters['balances/allFilledCurrencies']
-    },
     filteredMarkets () {
       const currency = this.$route.params.currency
 
       if (currency === 'BTC') {
-        const btcMarkets = this.$store.getters['markets/allBtcMarkets']
+        const btcMarkets = this.$store.getters['markets/allBtcMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
         if (this.searchQueryInLowerCase) {
           return btcMarkets.filter(market => {
             return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
           })
+
         } else {
           return btcMarkets
         }
       } else if (currency === 'ETH') {
-        const ethMarkets = this.$store.getters['markets/allEthMarkets']
+        const ethMarkets = this.$store.getters['markets/allEthMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
         if (this.searchQueryInLowerCase) {
           return ethMarkets.filter(market => {
             return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
@@ -81,7 +75,7 @@ export default {
           return ethMarkets
         }
       } else if (currency === 'USD') {
-        const usdMarkets = this.$store.getters['markets/allUsdMarkets']
+        const usdMarkets = this.$store.getters['markets/allUsdMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
         if (this.searchQueryInLowerCase) {
           return usdMarkets.filter(market => {
             return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
@@ -90,7 +84,7 @@ export default {
           return usdMarkets
         }
       } else {
-        const allMarkets = this.$store.getters['markets/allMarkets']
+        const allMarkets = this.$store.getters['markets/allMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
         if (this.searchQueryInLowerCase) {
           return allMarkets.filter(market => {
             return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
@@ -112,33 +106,12 @@ export default {
       } else {
         return this.$store.getters['markets/allMarkets'].length
       }
-    },
-    isInBalance (marketName) {
-      const inBalanceCurrencyNames = this.allFilledCurrenciesInBalance.filter(currency => {
-        return currency.Currency === marketName.replace(/.*-/, '') // Replaces the "BTC-", "ETH-", "USD-" from the market name
-      })
-      return inBalanceCurrencyNames.length
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
-.markets {
-  padding: 0 15px;
-}
-.market {
-  border: 1px #DFE1E3 solid;
-  padding: 15px;
-  background-color: #fff;
-  margin-bottom: 5px;
-  border-radius: 3px;
-}
-.is-in-balance {
-  border: 1px #0077FF solid;
-}
-
 .page-header {
   text-align: left;
   padding: 0 15px;
