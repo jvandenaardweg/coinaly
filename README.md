@@ -4,7 +4,7 @@ An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex 
 
 Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche)
 
-<img src="https://www.dropbox.com/s/zim7funbj5kx4m3/IMG_2876.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/moc84sytyx5uvzj/IMG_2877.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/33n5wsc27beqkbz/IMG_2878.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/yyfhcy172cvhuyp/IMG_2879.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/p6zk2m4t8i7erx1/IMG_2880.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/egxqxp4clm9p2ok/IMG_2875.PNG?raw=1" width="210">
+<img src="https://www.dropbox.com/s/zim7funbj5kx4m3/IMG_2876.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/moc84sytyx5uvzj/IMG_2877.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/rp3ze5zfh8xlo5l/IMG_2883.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/33n5wsc27beqkbz/IMG_2878.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/yyfhcy172cvhuyp/IMG_2879.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/p6zk2m4t8i7erx1/IMG_2880.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/egxqxp4clm9p2ok/IMG_2875.PNG?raw=1" width="210">
 
 This project is still in development. Screenshots above can already be different then the latest version.
 
