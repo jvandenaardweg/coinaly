@@ -16,10 +16,13 @@ export default {
   namespaced: true,
   state: {
     markets: [],
-    isLoading: false
+    isLoading: true
   },
   mutations: {
     addAllMarkets (state, items) {
+      state.markets = items
+    },
+    addAllMarkets2 (state, items) {
       state.markets = items
     },
     startLoading (state) {
@@ -83,6 +86,7 @@ export default {
       return axios.get(`api/marketsummaries`)
       .then(response => {
         context.commit('addAllMarkets', response.data)
+        context.commit('addAllMarket2', response.data)
       })
       .catch(error => {
         console.error('Failed to get the markets.', error)

@@ -2,8 +2,8 @@
   <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
       <div class="listing-currency__symbol"><strong>{{ currency.Currency }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.Balance }} <span v-if="allMarkets">({{ currentWorth(currency.Balance, currency.Currency) }})</span></div>
-      <div class="listing-currency__percentage" :class="percentageClass"><!--{{ currency.percentage | percentage }}--></div>
+      <div class="listing-currency__meta">{{ currency.Balance }}</div>
+      <div class="listing-currency__percentage"><span v-if="allMarkets">{{ currentWorth(currency.Balance, currency.Currency) }}</span></div>
     </div>
     <div class="listing-currency__stats">
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
@@ -351,7 +351,7 @@ export default {
   }
 
   .listing-currency__symbol {
-    width: 50px;
+    width: 60px;
     text-align: left;
   }
 
@@ -363,18 +363,7 @@ export default {
   .listing-currency__percentage {
     align-self: right;
     margin-left: auto;
-
-    &.is-negative {
-      color: #DC3A4E;
-    }
-
-    &.is-positive {
-      color: #23CF5F;
-    }
-
-    &.is-warning {
-      color: #F4BC5F;
-    }
+    opacity: 0.5;
   }
 
   .listing-currency__body {

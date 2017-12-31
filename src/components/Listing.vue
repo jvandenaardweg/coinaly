@@ -7,6 +7,11 @@
       </div>
     </header>
     <div class="listing__body">
+      <div class="listing__legend">
+        <div class="listing__legend-symbol">Coin</div>
+        <div class="listing__legend-amount">Amount</div>
+        <div class="listing__legend-worth">Worth</div>
+      </div>
       <ListingCurrency v-for="currency in currencies" :key="currency.Currency" :currency="currency"></ListingCurrency>
     </div>
   </div>
@@ -72,7 +77,6 @@ export default {
 .listing {
   text-align: left;
   margin-bottom: 15px;
-  // border-bottom: 1px #DFE1E3 solid;
 
   .listing__header {
     text-align: left;
@@ -97,9 +101,34 @@ export default {
     > div {
       margin-bottom: 5px;
 
-      &:first-child {
-        border-top: 1px #DFE1E3 solid;
-      }
+      // &:first-child {
+      //   border-top: 1px #DFE1E3 solid;
+      // }
+    }
+  }
+
+  .listing__legend {
+    display: flex;
+    width: 100%;
+    padding: 0 15px;
+    font-weight: bold;
+
+    .listing__legend-symbol {
+      flex-basis: 60px;
+      flex-shrink: 0;
+    }
+
+    .listing__legend-amount {
+      flex-grow: 1;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .listing__legend-worth {
+      flex-basis: 70px;
+      flex-shrink: 0;
+      text-align: right;
+      padding-right: 32px;
     }
   }
 }

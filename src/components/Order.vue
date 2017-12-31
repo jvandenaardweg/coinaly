@@ -91,14 +91,14 @@ export default {
       })[0]
     },
     difference () {
-      const currentMarket = this.currentMarket
-      return (currentMarket.Last - this.order.Limit).toFixed(8)
+      const currentMarketLast = this.currentMarket.Last
+      const orderLimit = this.order.Limit
+      return (currentMarketLast - orderLimit).toFixed(8)
     },
     differencePercentage () {
-      const marketPrice = this.currentMarket.Last
-      const limit = this.order.Limit
-      const diff = this.difference
-      return (((marketPrice - limit) / limit) * 100).toFixed(2)
+      const currentMarketLast = this.currentMarket.Last
+      const orderLimit = this.order.Limit
+      return (((currentMarketLast - orderLimit) / orderLimit) * 100).toFixed(2)
     },
     currentWorth () {
       if (this.isBuy) {

@@ -28,7 +28,7 @@
       <input type="search" name="search" v-model="searchQuery" placeholder="Search markets..." />
     </div>
 
-    <Markets :filteredMarkets="filteredMarkets"></Markets>
+    <Markets :filteredMarkets="filteredMarkets" :searchQuery="searchQuery"></Markets>
   </div>
 </template>
 

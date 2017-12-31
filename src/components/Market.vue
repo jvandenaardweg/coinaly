@@ -6,7 +6,7 @@
       </div>
       <div class="market__volume">
         <Progress v-once :blue="0" :green="0" :orange="0" :black="currencyVolumePercentage"></Progress>
-        <span>{{ currencyVolumePercentage }}% ({{ number(market.BaseVolume) }} {{ mainPair }})</span>
+        <!-- <span>{{ currencyVolumePercentage }}% ({{ number(market.BaseVolume) }} {{ mainPair }})</span> -->
       </div>
       <div class="market__percentage" :class="{'is-positive': isPositiveOneDayDiff === true, 'is-negative': isPositiveOneDayDiff === false }">
         <span>{{ oneDayDiffPercentage }}%</span>
@@ -144,7 +144,7 @@ export default {
 
     .progress {
       position: relative;
-      top: 4px;
+      top: 8px;
     }
   }
 
@@ -165,8 +165,5 @@ export default {
       }
     }
   }
-
-
-
 }
 </style>
