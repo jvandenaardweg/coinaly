@@ -1,14 +1,16 @@
 <template>
   <nav class="navigation">
-    <div class="navigation__logo">
-      <router-link to="/" exact>S</router-link>
+    <div class="navigation__container">
+      <div class="navigation__logo">
+        <router-link to="/" exact>S</router-link>
+      </div>
+      <ul class="navigation__items" v-if="isAuthorized">
+        <li><router-link to="/" exact>Home</router-link></li>
+        <li><router-link to="/balances">Balances</router-link></li>
+        <li><router-link to="/orders">Orders</router-link></li>
+        <li><router-link to="/markets">Markets</router-link></li>
+      </ul>
     </div>
-    <ul class="navigation__items" v-if="isAuthorized">
-      <li><router-link to="/" exact>Home</router-link></li>
-      <li><router-link to="/balances">Balances</router-link></li>
-      <li><router-link to="/orders">Orders</router-link></li>
-      <li><router-link to="/markets">Markets</router-link></li>
-    </ul>
   </nav>
 </template>
 
@@ -34,9 +36,15 @@ $navigation-height: 60px;
   line-height: 6rem;
   width: 100%;
   background-color: #0077FF;
-  padding: 0 15px;
-  display: flex;
   z-index: 99;
+
+  .navigation__container {
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    padding: 0 15px;
+  }
 
   .navigation__logo {
     padding: 10px 0;
