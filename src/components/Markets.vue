@@ -1,11 +1,11 @@
 <template>
   <div class="markets">
     <div class="markets__body">
-      <Market v-for="(market, index) in filteredMarkets" :key="market.MarketName" :market="market" v-if="limiter(index)"></Market>
+      <Market v-for="(market, index) in filteredMarkets" :key="market.MarketName" :market="market"></Market>
     </div>
-    <div class="markets__footer">
+    <!-- <div class="markets__footer">
       <Button :className="'link'" :label="'Show all markets'" v-if="totalMarketItemsShown > paginationLimit" @click.native="showAllMarkets()"></Button>
-    </div>
+    </div> -->
   </div>
 </template>
 
