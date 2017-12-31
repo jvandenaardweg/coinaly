@@ -179,21 +179,18 @@ export default {
 
   input[type="search"] {
     border: 1px #DFE1E3 solid;
-  padding: 0 15px;
+    adding: 0 15px;
     background-color: #fff;
     border-radius: 3px;
     color: #000;
-
     font-size: 1.4rem;
     line-height: 4rem;
     height: 4rem;
     width: 100%;
     display: block;
-    // border: 0;
-    // padding: 0;
-    // background: none;
     outline: none;
     margin: 0;
+    appearance: none;
   }
 }
 
