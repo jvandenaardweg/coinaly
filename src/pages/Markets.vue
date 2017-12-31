@@ -3,7 +3,7 @@
 
     <header class="page-header">
       <h2 class="page-header__title">Markets</h2>
-      <div class="page-header__control">
+      <!-- <div class="page-header__control">
         <div class="select-box">
           <select name="order">
             <option disabled selected>Order by...</option>
@@ -14,7 +14,7 @@
             <option>24hr low</option>
           </select>
         </div>
-      </div>
+      </div> -->
     </header>
 
     <ul class="tabs">
@@ -134,29 +134,43 @@ export default {
 
 .tabs {
   list-style: none;
-  padding: 0 10px 0 15px;
+  padding: 0 15px;
   margin: 0;
   display: flex;
+  border-radius: 3px;
+  overflow: hidden;
 
   .tabs__item {
     display: block;
     width: 100%;
-    margin-right: 5px;
+    margin-right: -1px;
+
+    &:first-child {
+      .tabs__item-link {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+      }
+    }
+
+    &:last-child {
+      .tabs__item-link {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
 
     span {
       font-size: 1rem;
       position: relative;
       top: -1px;
-      // left: 1px;
     }
   }
 
   .tabs__item-link {
     border: 1px rgba(0,0,0, 0.3) solid;
-    border-radius: 3px;
-    height: 30px;
-    padding: 0 10px;
-    line-height: 3rem;
+    height: 35px;
+    padding: 0 12px;
+    line-height: 3.5rem;
     font-size: 1.4rem;
     width: 100%;
     display: block;
@@ -164,11 +178,15 @@ export default {
     // background-color: #fff;
     text-decoration: none;
     text-align: center;
+    z-index: 0;
 
     &.is-active {
-      // background-color: #fff;
+      background-color: #0077FF;
       border: 1px #0077FF solid;
-      color: #0077FF;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+      font-weight: bold;
     }
   }
 }
