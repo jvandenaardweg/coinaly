@@ -20,6 +20,7 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 - Overview open orders. How are my orders performing? Should I cancel or adjust them?
 - Better live candlestick chart by [TradingView.com](https://www.tradingview.com/)
 - Live updates all market data. No need to refresh yourself.
+- Easily browse all available market.
 
 ## Donations
 I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](https://www.linkedin.com/in/jvandenaardweg/) using my spare time to create this. A donation of any size is very welcome!
