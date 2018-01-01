@@ -31,6 +31,9 @@ export default {
     ListingCurrency,
     Button
   },
+  created () {
+    console.log('create listing')
+  },
   data () {
     return {
       showAll: false
