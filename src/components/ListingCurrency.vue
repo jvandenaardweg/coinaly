@@ -7,7 +7,7 @@
     </div>
     <div class="listing-currency__stats">
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
-      <div class="listing-currency__legenda">
+      <div v-if="isExpanded" class="listing-currency__legenda">
         <ul>
           <li><span>Available:</span> <p>{{ currency.Available }}</p></li>
           <li><span>In open orders:</span> <p>{{ difference }}</p></li>
@@ -15,7 +15,7 @@
         </ul>
       </div>
     </div>
-    <div class="listing-currency__body">
+    <div v-if="isExpanded" class="listing-currency__body">
       <!-- <div v-if="currency.Balance < buySellDifference(currency.Currency)">
         <p>{{ buySellDifference(currency.Currency) }} {{ currency.Currency }} is transfered from Bittrex to something else.</p>
       </div> -->
@@ -266,17 +266,10 @@ export default {
   border: 1px #DFE1E3 solid;
 
   &.is-expanded {
-    .listing-currency__body {
-      display: block;
-    }
     .listing-currency__header {
       &:after {
         transform: rotate(-180deg);
       }
-    }
-
-    .listing-currency__legenda {
-      display: block;
     }
   }
 
@@ -314,7 +307,6 @@ export default {
   }
 
   .listing-currency__legenda {
-    display: none;
     font-size: 1.1rem;
     padding-top: 10px;
 
@@ -367,7 +359,6 @@ export default {
   }
 
   .listing-currency__body {
-    display: none;
     text-align: left;
     padding: 0 15px 12px 15px;
   }

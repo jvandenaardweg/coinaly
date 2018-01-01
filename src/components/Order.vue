@@ -16,7 +16,7 @@
     <div class="order__stats" v-if="!isClosed">
       <Progress :blue="0" :orange="0" :green="filledPercentage"></Progress>
     </div>
-    <div class="order__body">
+    <div v-if="isExpanded" class="order__body">
       <div v-if="isClosedBuy" class="order__panel" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false, 'is-neutral': isPositiveDelta === null }">
         <strong>Worth:</strong> <span>{{ currentWorth }} ({{ delta }}%)</span>
       </div>
@@ -34,7 +34,7 @@
       </ul>
       <p v-if="order.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>
-    <div v-if="order.QuantityRemaining" class="order__footer">
+    <div v-if="order.QuantityRemaining && isExpanded" class="order__footer">
       <Button :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
       <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
     </div>
@@ -187,10 +187,6 @@ export default {
   text-align: left;
 
   &.is-expanded {
-    .order__body,
-    .order__footer {
-      display: block;
-    }
     .order__header {
       &:after {
         transform: rotate(-180deg);
@@ -250,18 +246,14 @@ export default {
   }
 
   .order__symbol {
-    // width: 90px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    // display: inline-block;
-
     flex-basis: 90px;
     flex-shrink: 0;
   }
 
   .order__body {
-    display: none;
     padding: 15px 15px 10px 15px;
 
     ul {
@@ -274,10 +266,6 @@ export default {
       justify-content: flex-start;
       border-bottom: 1px #DFE1E3 solid;
       margin-bottom: 10px;
-
-      // &:last-child {
-      //   border-bottom: 0;
-      // }
 
       li {
         padding-right: 15px;
@@ -318,7 +306,6 @@ export default {
   .order__footer {
     padding: 0 15px 15px 15px;
     text-align: right;
-    display: none;
   }
 
   .order__stats {

@@ -12,7 +12,7 @@
         <span>{{ oneDayDiffPercentage }}%</span>
       </div>
     </div>
-    <div class="market__body">
+    <div v-if="isExpanded" class="market__body">
       <ul>
         <li>Vol: {{ Math.floor(market.BaseVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage }})</span></li>
         <li>Last: {{ market.Last}} </li>
@@ -23,7 +23,7 @@
         <li>Open sell orders: {{ market.OpenSellOrders }}</li>
       </ul>
     </div>
-    <div class="market__footer">
+    <div v-if="isExpanded" class="market__footer">
       <Button :label="'Buy'" @click.native="handleBuy()"></Button>
     </div>
   </div>
@@ -133,10 +133,6 @@ export default {
   }
 
   &.is-expanded {
-    .market__body,
-    .market__footer {
-      display: block;
-    }
     .market__header {
       &:after {
         transform: rotate(-180deg);
@@ -167,14 +163,9 @@ export default {
     }
   }
 
-  .market__body {
-    display: none;
-  }
-
   .market__footer {
     padding: 15px;
     text-align: right;
-    display: none;
   }
 
   .market__symbol {
