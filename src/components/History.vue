@@ -23,10 +23,13 @@
         <div class="history__legend-type">Type</div>
       </div>
 
-      <Order v-if="historyOrders" v-for="order in historyOrders" :key="order.OrderUuid" :order="order"></Order>
+      <Order v-if="historyOrders && isWithinPageLimit(index)" v-for="(order, index) in historyOrders" :key="order.OrderUuid" :order="order"></Order>
       <div v-if="showLoadingIndicator" class="history__empty">
         <p>Loading your order history...</p>
       </div>
+    </div>
+    <div class="history__footer">
+      <Button :className="'link'" :label="'Show all history'" v-if="historyOrdersTotal > paginationLimit" @click.native="showAllHistory()"></Button>
     </div>
   </div>
 </template>
@@ -43,18 +46,36 @@ export default {
   },
   data () {
     return {
-      orderBy: 'dateDesc'
+      orderBy: 'dateDesc',
+      paginationLimit: 15,
+      ordersIndex: 0
     }
   },
   computed: {
     historyOrders () {
       return this.$store.getters['orders/getAllHistory']
     },
+    historyOrdersTotal () {
+      return this.historyOrders.length
+    },
     isLoading () {
       return this.$store.getters['orders/isLoading']
     },
     showLoadingIndicator () {
       return !this.historyOrders.length && this.isLoading
+    }
+  },
+  methods: {
+    isWithinPageLimit (index) {
+      this.ordersIndex = index
+      if (index < this.paginationLimit) {
+        return true
+      } else {
+        return false
+      }
+    },
+    showAllHistory () {
+      this.paginationLimit = 9999
     }
   }
 }
@@ -67,6 +88,11 @@ export default {
 
   .history__body {
     padding: 0 15px 15px 15px;
+  }
+
+  .history__footer {
+    text-align: center;
+    padding: 15px 0;
   }
 
   .history__empty {
