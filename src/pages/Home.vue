@@ -8,7 +8,6 @@
 <script>
 import History from '@/components/History'
 import Setup from '@/components/Setup'
-import store from '../store'
 
 export default {
   name: 'HomePage',
@@ -23,10 +22,7 @@ export default {
   },
   created () {
     console.log('created homepage')
-  },
-  beforeRouteEnter (to, from, next) {
-    store.dispatch('orders/getAllHistory')
-    next()
+    this.$store.dispatch('orders/getAllHistory')
   }
 }
 </script>
