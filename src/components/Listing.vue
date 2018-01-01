@@ -13,6 +13,9 @@
         <div class="listing__legend-worth">Worth</div>
       </div>
       <ListingCurrency v-for="currency in currencies" :key="currency.Currency" :currency="currency"></ListingCurrency>
+      <div v-if="showLoadingIndicator" class="listing__empty">
+        <p>Loading your balances...</p>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +37,12 @@ export default {
     }
   },
   computed: {
+    isLoading () {
+      return this.$store.getters['balances/isLoading'] || this.$store.getters['orders/isLoading']
+    },
+    showLoadingIndicator () {
+      return !this.allCurrencies.length && this.isLoading
+    },
     allCurrencies () {
       return this.$store.getters['balances/allCurrencies']
     },
@@ -130,6 +139,14 @@ export default {
       text-align: right;
       padding-right: 32px;
     }
+  }
+
+  .listing__empty {
+    padding-top: 15px;
+    font-size: 1.6rem;
+    opacity: 0.5;
+    font-weight: normal;
+    text-align: center;
   }
 }
 </style>

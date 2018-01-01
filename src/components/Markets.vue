@@ -37,6 +37,9 @@ export default {
       totalMarketItemsShown: 0
     }
   },
+  created () {
+    console.log('created markets component')
+  },
   computed: {
     showLoadingIndicator () {
       return !this.hasFilteredMarkets && this.isLoading && !this.searchQuery

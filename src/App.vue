@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <Navigation></Navigation>
-    <Loader></Loader>
-    <router-view/>
+    <!-- <Loader></Loader> -->
+    <keep-alive include="HomePage,BalancesPage,MarketsPage,OrdersPage">
+      <router-view></router-view>
+    </keep-alive>
     <div class="footer" v-if="isAuthorized">
       <Button :label="'Logout'" :className="'outlined'" @click.native="handleLogout()"></Button>
     </div>
@@ -39,16 +41,11 @@ export default {
     },
     getAllData () {
       this.message = false
-
       // First we do an API call to check if the credentials are valid
       // If that API call returns an error, the API key and secret seem to be invalid
       this.$store.dispatch('balances/getAll')
       .then(response => {
-        this.$store.dispatch('balances/getAll')
-        this.$store.dispatch('orders/getAllHistory')
-        this.$store.dispatch('orders/getOpenOrders')
-        this.$store.dispatch('deposits/getAllHistory')
-        this.$store.dispatch('withdrawals/getAllHistory')
+        // Then we get all market data. We use this throughout the whole website, so we want this to be available after first load
         this.$store.dispatch('markets/getAll')
 
         // TODO: do with websockets

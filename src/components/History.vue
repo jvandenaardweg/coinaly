@@ -17,6 +17,9 @@
     </header>
     <div class="history__body">
       <Order v-if="historyOrders" v-for="order in historyOrders" :key="order.OrderUuid" :order="order"></Order>
+      <div v-if="showLoadingIndicator" class="history__empty">
+        <p>Loading your order history...</p>
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +42,13 @@ export default {
   computed: {
     historyOrders () {
       return this.$store.getters['orders/getAllHistory']
-    }
+    },
+    isLoading () {
+      return this.$store.getters['orders/isLoading']
+    },
+    showLoadingIndicator () {
+      return !this.historyOrders.length && this.isLoading
+    },
   }
 }
 </script>
@@ -76,6 +85,14 @@ export default {
     .history__header-control {
       margin-left: auto;
     }
+  }
+
+  .history__empty {
+    padding-top: 15px;
+    font-size: 1.6rem;
+    opacity: 0.5;
+    font-weight: normal;
+    text-align: center;
   }
 }
 </style>

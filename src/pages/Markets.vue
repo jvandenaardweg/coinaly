@@ -18,14 +18,15 @@
     </header>
 
     <ul class="tabs">
-      <li class="tabs__item"><router-link to="/markets" class="tabs__item-link" exact>All <span>({{ marketCount('all') }})</span></router-link></li>
-      <li class="tabs__item"><router-link to="/markets/BTC" class="tabs__item-link">BTC <span>({{ marketCount('BTC') }})</span></router-link></li>
-      <li class="tabs__item"><router-link to="/markets/ETH" class="tabs__item-link">ETH <span>({{ marketCount('ETH') }})</span></router-link></li>
-      <li class="tabs__item"><router-link to="/markets/USD" class="tabs__item-link">USD <span>({{ marketCount('USD') }})</span></router-link></li>
+      <li class="tabs__item"><router-link to="/markets" class="tabs__item-link" exact  @click.native="setSelectedMarket('all')">All <span>({{ marketCount('all') }})</span></router-link></li>
+      <li class="tabs__item"><router-link to="/markets/BTC" class="tabs__item-link" @click.native="setSelectedMarket('BTC')">BTC <span>({{ marketCount('BTC') }})</span></router-link></li>
+      <li class="tabs__item"><router-link to="/markets/ETH" class="tabs__item-link" @click.native="setSelectedMarket('ETH')">ETH <span>({{ marketCount('ETH') }})</span></router-link></li>
+      <li class="tabs__item"><router-link to="/markets/USD" class="tabs__item-link" @click.native="setSelectedMarket('USD')">USD <span>({{ marketCount('USD') }})</span></router-link></li>
     </ul>
 
     <div class="search-box">
       <input type="search" name="search" v-model="searchQuery" placeholder="Search markets..." />
+      <!-- <Button class="search-box__control" v-if="searchQuery" :className="'link'" :label="'Clear'" @click.native="clearSearch()"></Button> -->
     </div>
 
     <Markets :filteredMarkets="filteredMarkets" :searchQuery="searchQuery"></Markets>
@@ -35,19 +36,28 @@
 <script>
 import Button from '@/components/Button'
 import Markets from '@/components/Markets'
+import store from '../store'
 
 export default {
-  name: 'MarketsHomePage',
+  name: 'MarketsPage',
+  props: ['selectedTab'],
   components: {
     Button,
     Markets
   },
+  created () {
+    console.log('created markets page')
+  },
   data () {
     return {
-      searchQuery: null
+      searchQuery: null,
+      selectedCurrency: null
     }
   },
   computed: {
+    selectedMarket () {
+      return this.$cookie.get('selectedMarket')
+    },
     searchQueryInLowerCase () {
       return (this.searchQuery ? this.searchQuery.toLowerCase().trim() : null)
     },
@@ -104,7 +114,17 @@ export default {
       } else {
         return this.$store.getters['markets/allMarkets'].length
       }
+    },
+    clearSearch () {
+      this.searchQuery = null
+    },
+    setSelectedMarket (currency) {
+      this.$cookie.set('selectedMarket', currency)
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    store.dispatch('balances/getAll') // Because we want to see what currency we have on our balance
+    next()
   }
 }
 </script>
@@ -193,6 +213,7 @@ export default {
 
 .search-box {
   padding: 15px;
+  position: relative;
 
   input[type="search"] {
     border: 1px #DFE1E3 solid;
@@ -208,6 +229,12 @@ export default {
     outline: none;
     margin: 0;
     appearance: none;
+  }
+
+  .search-box__control {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 

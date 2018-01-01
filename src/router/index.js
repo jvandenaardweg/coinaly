@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import VueCookie from 'vue-cookie'
+
 import HomePage from '@/pages/Home'
 import BalancesPage from '@/pages/Balances'
 import OrdersPage from '@/pages/Orders'
 import MarketsPage from '@/pages/Markets'
 
+Vue.use(VueCookie)
 Vue.use(Router)
 
 export default new Router({
@@ -27,7 +30,10 @@ export default new Router({
     {
       path: '/markets/:currency?',
       name: 'Markets',
-      component: MarketsPage
+      component: MarketsPage,
+      props: {
+        selectedTab: Vue.cookie.get('marketTab') || null
+      }
     }
   ],
   linkActiveClass: 'is-active',

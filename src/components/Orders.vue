@@ -7,9 +7,12 @@
       </div>
     </header>
     <div class="orders__body">
-      <Order v-if="openOrders" v-for="order in openOrders" :key="order.OrderUuid" :order="order"></Order>
-      <div v-if="!openOrders.length" class="orders__empty">
+      <Order v-if="hasOpenOrders" v-for="order in openOrders" :key="order.OrderUuid" :order="order"></Order>
+      <div v-if="!hasOpenOrders && !showLoadingIndicator" class="orders__empty">
         <p>No open orders found.</p>
+      </div>
+      <div v-if="showLoadingIndicator" class="orders__empty">
+        <p>Loading your orders...</p>
       </div>
     </div>
   </div>
@@ -25,14 +28,30 @@ export default {
     Order,
     Button
   },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'fetchData'
+  },
   computed: {
+    isLoading () {
+      return this.$store.getters['orders/isLoading']
+    },
+    hasOpenOrders () {
+      return this.openOrders.length
+    },
     openOrders () {
       return this.$store.getters['orders/getOpenOrders']
+    },
+    showLoadingIndicator () {
+      return !this.openOrders.length && this.isLoading
     }
   },
   methods: {
     showOrderModal () {
       window.alert('This feature does not work yet, sorry!')
+    },
+    fetchData () {
+      console.log('fetch data')
     }
   }
 }

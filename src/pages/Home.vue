@@ -8,6 +8,7 @@
 <script>
 import History from '@/components/History'
 import Setup from '@/components/Setup'
+import store from '../store'
 
 export default {
   name: 'HomePage',
@@ -19,6 +20,13 @@ export default {
     isAuthorized () {
       return this.$store.getters['auth/isAuthorized']
     }
+  },
+  created () {
+    console.log('created homepage')
+  },
+  beforeRouteEnter (to, from, next) {
+    store.dispatch('orders/getAllHistory')
+    next()
   }
 }
 </script>

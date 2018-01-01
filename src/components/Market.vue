@@ -36,6 +36,9 @@ export default {
   components: {
     Progress
   },
+  created () {
+    console.log('created market component')
+  },
   computed: {
     allFilledCurrenciesInBalance () {
       return this.$store.getters['balances/allFilledCurrencies']
