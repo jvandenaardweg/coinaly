@@ -13,7 +13,7 @@
         <Label v-if="order.OrderType === 'LIMIT_BUY'" :text="'Buy'" :color="'green'"></Label>
       </div>
     </div>
-    <div class="order__stats" v-if="order.QuantityRemaining">
+    <div class="order__stats" v-if="!isClosed">
       <Progress :blue="0" :orange="0" :green="filledPercentage"></Progress>
     </div>
     <div class="order__body">
