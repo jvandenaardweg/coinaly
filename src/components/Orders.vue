@@ -7,6 +7,11 @@
       </div>
     </header>
     <div class="orders__body">
+      <div class="orders__legend">
+        <div class="orders__legend-symbol">Market</div>
+        <div class="orders__legend-amount">Amount</div>
+        <div class="orders__legend-type">Type</div>
+      </div>
       <Order v-if="hasOpenOrders" v-for="order in openOrders" :key="order.OrderUuid" :order="order"></Order>
       <div v-if="!hasOpenOrders && !showLoadingIndicator" class="orders__empty">
         <p>No open orders found.</p>
@@ -28,10 +33,6 @@ export default {
     Order,
     Button
   },
-  watch: {
-    // call again the method if the route changes
-    '$route': 'fetchData'
-  },
   computed: {
     isLoading () {
       return this.$store.getters['orders/isLoading']
@@ -49,9 +50,6 @@ export default {
   methods: {
     showOrderModal () {
       window.alert('This feature does not work yet, sorry!')
-    },
-    fetchData () {
-      console.log('fetch data')
     }
   }
 }
@@ -89,6 +87,31 @@ export default {
 
     .orders__header-control {
       margin-left: auto;
+    }
+  }
+
+  .orders__legend {
+    display: flex;
+    width: 100%;
+    padding: 10px 15px;
+    font-weight: bold;
+
+    .orders__legend-symbol {
+      flex-basis: 90px;
+      flex-shrink: 0;
+    }
+
+    .orders__legend-amount {
+      flex-grow: 1;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .orders__legend-type {
+      flex-basis: 70px;
+      flex-shrink: 0;
+      text-align: right;
+      padding-right: 32px;
     }
   }
 }
