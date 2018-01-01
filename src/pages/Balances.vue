@@ -6,7 +6,6 @@
 
 <script>
 import Listing from '@/components/Listing'
-import store from '../store'
 
 export default {
   name: 'BalancesPage',
@@ -15,14 +14,11 @@ export default {
   },
   created () {
     console.log('created balances page')
-  },
-  beforeRouteEnter (to, from, next) {
-    store.dispatch('balances/getAll')
-    store.dispatch('orders/getAllHistory')
-    store.dispatch('orders/getOpenOrders')
-    store.dispatch('deposits/getAllHistory')
-    store.dispatch('withdrawals/getAllHistory')
-    next()
+    this.$store.dispatch('balances/getAll')
+    this.$store.dispatch('orders/getAllHistory')
+    this.$store.dispatch('orders/getOpenOrders')
+    this.$store.dispatch('deposits/getAllHistory')
+    this.$store.dispatch('withdrawals/getAllHistory')
   }
 }
 </script>
