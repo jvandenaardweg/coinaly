@@ -7,7 +7,7 @@
       </div>
     </header>
     <div class="orders__body">
-      <div class="orders__legend">
+      <div v-if="!showLoadingIndicator" class="orders__legend">
         <div class="orders__legend-symbol">Market</div>
         <div class="orders__legend-amount">Amount</div>
         <div class="orders__legend-type">Type</div>

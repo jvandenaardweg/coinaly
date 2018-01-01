@@ -1,7 +1,7 @@
 <template>
   <div class="markets">
     <div class="markets__body">
-      <div v-if="hasFilteredMarkets" class="markets__legend">
+      <div v-if="!showLoadingIndicator" class="markets__legend">
         <div class="markets__legend-symbol" @click="sortBy('MarketName')">Market</div>
         <div class="markets__legend-volume" @click="sortBy('BaseVolume')">Volume</div>
         <div class="markets__legend-percentage" @click="sortBy('percentage')">Change</div>

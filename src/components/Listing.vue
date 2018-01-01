@@ -7,7 +7,7 @@
       </div>
     </header>
     <div class="listing__body">
-      <div class="listing__legend">
+      <div v-if="!showLoadingIndicator" class="listing__legend">
         <div class="listing__legend-symbol">Coin</div>
         <div class="listing__legend-amount">Amount</div>
         <div class="listing__legend-worth">Worth</div>

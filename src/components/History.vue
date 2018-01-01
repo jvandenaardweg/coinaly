@@ -16,7 +16,7 @@
       </div>
     </header>
     <div class="history__body">
-      <div class="history__legend">
+      <div v-if="!showLoadingIndicator" class="history__legend">
         <div class="history__legend-symbol">Market</div>
         <div class="history__legend-amount">Amount</div>
         <div class="history__legend-profit">Profit</div>
