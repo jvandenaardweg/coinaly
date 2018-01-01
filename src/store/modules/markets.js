@@ -1,4 +1,9 @@
 import axios from '../../axios'
+import Vue from 'vue'
+import VueCookie from 'vue-cookie'
+Vue.use(VueCookie)
+
+const initialSelectedMarket = Vue.cookie.get('selectedMarket') || ''
 
 function filterMarkets (array, currency) {
   return array.filter(market => {
@@ -16,7 +21,8 @@ export default {
   namespaced: true,
   state: {
     markets: [],
-    isLoading: true
+    isLoading: true,
+    selectedMarket: initialSelectedMarket
   },
   mutations: {
     addAllMarkets (state, items) {
@@ -27,9 +33,20 @@ export default {
     },
     stopLoading (state) {
       state.isLoading = false
+    },
+    setSelectedMarket (state, market) {
+      Vue.cookie.set('selectedMarket', market)
+      state.selectedMarket = market
+    },
+    removeSelectedMarket (state) {
+      state.selectedMarket = ''
+      Vue.cookie.delete('selectedMarket')
     }
   },
   getters: {
+    selectedMarket (state) {
+      return state.selectedMarket
+    },
     allMarkets: state => {
       return state.markets
     },

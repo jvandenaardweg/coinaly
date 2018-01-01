@@ -8,7 +8,7 @@
         <li><router-link to="/" exact>Home</router-link></li>
         <li><router-link to="/balances">Balances</router-link></li>
         <li><router-link to="/orders">Orders</router-link></li>
-        <li><router-link to="/markets">Markets</router-link></li>
+        <li><router-link :to="marketPath" :class="{'is-active': subIsActive('/markets')}">Markets</router-link></li>
       </ul>
     </div>
   </nav>
@@ -20,6 +20,19 @@ export default {
   computed: {
     isAuthorized () {
       return this.$store.getters['auth/isAuthorized']
+    },
+    marketPath () {
+      const selectedMarket = this.$store.getters['markets/selectedMarket']
+      const path = (selectedMarket ? `/markets/${selectedMarket}` : '/markets')
+      return path
+    }
+  },
+  methods: {
+    subIsActive (input) {
+      const paths = Array.isArray(input) ? input : [input]
+      return paths.some(path => {
+        return this.$route.path.indexOf(path) === 0 // current path starts with this path string
+      })
     }
   }
 }

@@ -2,7 +2,7 @@
   <div id="app">
     <Navigation></Navigation>
     <!-- <Loader></Loader> -->
-    <keep-alive include="HomePage,BalancesPage,MarketsPage,OrdersPage">
+    <keep-alive include="HomePage,MarketsPage,OrdersPage,BalancesPage">
       <router-view></router-view>
     </keep-alive>
     <div class="footer" v-if="isAuthorized">

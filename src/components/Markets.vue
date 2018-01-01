@@ -6,7 +6,7 @@
         <div class="markets__legend-volume" @click="sortBy('BaseVolume')">Volume</div>
         <div class="markets__legend-percentage" @click="sortBy('percentage')">Change</div>
       </div>
-      <Market v-if="hasFilteredMarkets" v-for="(market, index) in filteredMarkets" :key="market.MarketName" :market="market"></Market>
+      <Market v-if="hasFilteredMarkets && isWithinPageLimit(index)" v-for="(market, index) in filteredMarkets" :key="market.MarketName" :market="market"></Market>
       <div v-if="!hasFilteredMarkets" class="markets__empty">
         <p v-if="searchQuery">No markets found for "{{ searchQuery }}".</p>
       </div>
@@ -14,9 +14,9 @@
         <p>Loading market data...</p>
       </div>
     </div>
-    <!-- <div class="markets__footer">
-      <Button :className="'link'" :label="'Show all markets'" v-if="totalMarketItemsShown > paginationLimit" @click.native="showAllMarkets()"></Button>
-    </div> -->
+    <div class="markets__footer">
+      <Button :className="'link'" :label="'Show all markets'" v-if="totalFileredMarkets > paginationLimit" @click.native="showAllMarkets()"></Button>
+    </div>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
   data () {
     return {
       paginationLimit: 15,
-      totalMarketItemsShown: 0
+      marketsIndex: 0
     }
   },
   created () {
@@ -49,14 +49,17 @@ export default {
     },
     hasFilteredMarkets () {
       return this.filteredMarkets.length
+    },
+    totalFileredMarkets () {
+      return this.filteredMarkets.length
     }
   },
   methods: {
     sortBy (sorting) {
       console.log('sort', sorting)
     },
-    limiter (index) {
-      this.totalMarketItemsShown = (index + 1)
+    isWithinPageLimit (index) {
+      this.marketsIndex = index
       if (index < this.paginationLimit) {
         return true
       } else {

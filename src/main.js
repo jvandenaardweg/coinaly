@@ -7,6 +7,9 @@ import router from './router'
 import store from './store'
 import VueCookie from 'vue-cookie'
 import VueAnalytics from 'vue-analytics'
+import { sync } from 'vuex-router-sync'
+
+sync(store, router)
 
 Vue.use(VueCookie)
 
