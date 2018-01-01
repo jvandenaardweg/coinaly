@@ -1,6 +1,6 @@
 <template>
-  <div class="market" :class="{ 'is-in-balance': isInBalance(market.MarketName) }">
-    <div class="market__header">
+  <div class="market" :class="{ 'is-in-balance': isInBalance(market.MarketName), 'is-expanded': isExpanded }">
+    <div class="market__header" @click.prevent="toggleExpand()">
       <div class="market__symbol">
         <strong>{{ market.MarketName }}</strong>
       </div>
@@ -12,7 +12,7 @@
         <span>{{ oneDayDiffPercentage }}%</span>
       </div>
     </div>
-    <!-- <div>
+    <div class="market__body">
       <ul>
         <li>Vol: {{ Math.floor(market.BaseVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage }})</span></li>
         <li>Last: {{ market.Last}} </li>
@@ -22,19 +22,29 @@
         <li>Open buy orders: {{ market.OpenBuyOrders }}</li>
         <li>Open sell orders: {{ market.OpenSellOrders }}</li>
       </ul>
-    </div> -->
+    </div>
+    <div class="market__footer">
+      <Button :label="'Buy'" @click.native="handleBuy()"></Button>
+    </div>
   </div>
 </template>
 
 <script>
 import numeral from 'numeral'
 import Progress from '@/components/Progress'
+import Button from '@/components/Button'
 
 export default {
   name: 'Market',
   props: ['market'],
   components: {
-    Progress
+    Progress,
+    Button
+  },
+  data () {
+    return {
+      isExpanded: false
+    }
   },
   created () {
     console.log('created market component')
@@ -88,6 +98,12 @@ export default {
     },
     number (number) {
       return numeral(number).format('0,0')
+    },
+    toggleExpand () {
+      this.isExpanded = !this.isExpanded
+    },
+    handleBuy () {
+      window.alert('Does not work yet!')
     }
   }
 }
@@ -96,13 +112,10 @@ export default {
 <style lang="scss" scoped>
 .market {
   border: 1px #DFE1E3 solid;
-  // border-bottom: 0;
-  padding: 15px;
   background-color: #fff;
   margin-bottom: -1px;
   z-index:0;
   position: relative;
-  // border-radius: 3px;
 
   &:first-child {
     border-top-left-radius: 3px;
@@ -112,7 +125,6 @@ export default {
   &:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    // border-bottom
   }
 
   &.is-in-balance {
@@ -120,8 +132,49 @@ export default {
     z-index:1;
   }
 
+  &.is-expanded {
+    .market__body,
+    .market__footer {
+      display: block;
+    }
+    .market__header {
+      &:after {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
   .market__header {
+    padding: 15px 45px 15px 15px;
     display: flex;
+    width: 100%;
+    position: relative;
+    height: 50px;
+    cursor: pointer;
+
+    &:after {
+      content: "";
+      height: 50px;
+      width: 50px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M225.813 48.907L128 146.72 30.187 48.907 0 79.093l128 128 128-128z"/></svg>');
+      position: absolute;
+      right: -2px;
+      top: 0;
+      bottom: 0;
+      background-size: 25%;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+  }
+
+  .market__body {
+    display: none;
+  }
+
+  .market__footer {
+    padding: 15px;
+    text-align: right;
+    display: none;
   }
 
   .market__symbol {

@@ -204,6 +204,7 @@ export default {
     width: 100%;
     position: relative;
     height: 50px;
+    cursor: pointer;
 
     &:after {
       content: "";
