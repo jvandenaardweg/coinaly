@@ -110,19 +110,15 @@ export default {
   .listing__body {
     padding: 0 15px 15px 15px;
 
-    > div {
+    .listing-currency {
       margin-bottom: 5px;
-
-      // &:first-child {
-      //   border-top: 1px #DFE1E3 solid;
-      // }
     }
   }
 
   .listing__legend {
     display: flex;
     width: 100%;
-    padding: 0 15px;
+    padding: 10px 15px;
     font-weight: bold;
 
     .listing__legend-symbol {
