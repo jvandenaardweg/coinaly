@@ -218,13 +218,13 @@ export default {
 
     &.is-negative {
       span {
-        color: $color-cerise-red;
+        color: $color-alizarin-crimson;
       }
     }
 
     &.is-positive {
       span {
-        color: $color-mountain-meadow;
+        color: $color-chateau-green;
       }
     }
   }

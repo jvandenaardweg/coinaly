@@ -37,11 +37,11 @@ export default {
   }
 
   .progress__green {
-    background-color: $color-mountain-meadow;
+    background-color: $color-chateau-green;
   }
 
   .progress__black {
-    background-color: #000;
+    background-color: $color-black;
   }
 }
 </style>

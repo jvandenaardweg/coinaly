@@ -42,7 +42,7 @@ export default {
   }
 
   &.button--danger {
-    background: $color-cerise-red;
+    background: $color-alizarin-crimson;
 
     .button__icon {
       svg {
@@ -52,7 +52,7 @@ export default {
   }
 
   &.button--success {
-    background: $color-mountain-meadow;
+    background: $color-chateau-green;
 
     .button__icon {
       svg {

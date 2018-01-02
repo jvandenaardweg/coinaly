@@ -26,7 +26,7 @@ export default {
 .error-message {
   padding: 15px 30px 15px 15px;
   color: $color-white;
-  background: $color-cerise-red;
+  background: $color-alizarin-crimson;
   margin-top: 15px;
   font-size: 1.4rem;
   border-radius: 3px;

@@ -24,13 +24,13 @@ export default {
   min-width: 42px;
 
   &.label--red {
-    color: $color-cerise-red;
-    border-color: $color-cerise-red;
+    color: $color-alizarin-crimson;
+    border-color: $color-alizarin-crimson;
   }
 
   &.label--green {
-    color: $color-mountain-meadow;
-    border-color: $color-mountain-meadow;
+    color: $color-chateau-green;
+    border-color: $color-chateau-green;
   }
 }
 </style>

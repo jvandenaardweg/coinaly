@@ -224,13 +224,13 @@ export default {
 
     &.is-negative {
       span {
-        color: $color-cerise-red;
+        color: $color-alizarin-crimson;
       }
     }
 
     &.is-positive {
       span {
-        color: $color-mountain-meadow;
+        color: $color-chateau-green;
       }
     }
 
@@ -291,15 +291,15 @@ export default {
     margin-bottom: 15px;
 
     &.is-positive {
-      background-color: $color-mountain-meadow;
+      background-color: $color-chateau-green;
       color: $color-white;
-      border-color: $color-mountain-meadow;
+      border-color: $color-chateau-green;
     }
 
     &.is-negative {
-      background-color: $color-cerise-red;
+      background-color: $color-alizarin-crimson;
       color: $color-white;
-      border-color: $color-cerise-red;
+      border-color: $color-alizarin-crimson;
     }
   }
 

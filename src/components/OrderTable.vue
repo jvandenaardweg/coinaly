@@ -118,7 +118,7 @@ export default {
   }
 
   .is-positive {
-    color: $color-mountain-meadow;
+    color: $color-chateau-green;
   }
 }
 </style>
