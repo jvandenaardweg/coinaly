@@ -4,7 +4,7 @@ An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex 
 
 Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche)
 
-<img src="https://www.dropbox.com/s/zim7funbj5kx4m3/IMG_2876.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/moc84sytyx5uvzj/IMG_2877.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/rp3ze5zfh8xlo5l/IMG_2883.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/30tdhnaopxpondx/IMG_2884.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/yyfhcy172cvhuyp/IMG_2879.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/p6zk2m4t8i7erx1/IMG_2880.PNG?raw=1" width="210">&nbsp;&nbsp;&nbsp;<img src="https://www.dropbox.com/s/egxqxp4clm9p2ok/IMG_2875.PNG?raw=1" width="210">
+![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
 
 This project is still in development. Screenshots above can already be different then the latest version.
 
@@ -30,7 +30,9 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 - ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
 
 # Setup
-Currently the setup is a self hosted solution, untill we figured out the most secure way to store your Bittrex API key and secrets. Since this project is in early development, using this in an production environment is at your own risk.
+Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://simpletrade.herokuapp.com/ 
+
+This project is in early development, some features might not work yet.
 
 ## Bittrex API permissions
 In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
