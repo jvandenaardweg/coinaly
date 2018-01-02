@@ -24,8 +24,10 @@
       </ul>
     </div>
     <div v-if="isExpanded" class="market__footer">
+      <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
       <Button :label="'Buy'" @click.native="handleBuy()"></Button>
     </div>
+    <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="chartCurrencyPair"></ChartOverlay>
   </div>
 </template>
 
@@ -33,17 +35,22 @@
 import numeral from 'numeral'
 import Progress from '@/components/Progress'
 import Button from '@/components/Button'
+import ButtonIcon from '@/components/ButtonIcon'
+import ChartOverlay from '@/components/ChartOverlay'
 
 export default {
   name: 'Market',
   props: ['market'],
   components: {
     Progress,
-    Button
+    Button,
+    ButtonIcon,
+    ChartOverlay
   },
   data () {
     return {
-      isExpanded: false
+      isExpanded: false,
+      openChart: false
     }
   },
   created () {
@@ -76,6 +83,13 @@ export default {
     mainPair () {
       return this.market.MarketName.replace(/-.*/, '')
     },
+    currency () {
+      return this.getCurrencyFromMarketName(this.market.MarketName)
+    },
+    chartCurrencyPair () {
+      const currency = this.getCurrencyFromMarketName(this.market.MarketName)
+      return `${currency}${this.mainPair}`
+    },
     oneDayDiffPercentage () {
       return (((this.market.Last - this.market.PrevDay) / this.market.PrevDay) * 100).toFixed(2)
     },
@@ -90,9 +104,12 @@ export default {
     }
   },
   methods: {
+    getCurrencyFromMarketName (marketName) {
+      return marketName.replace(/.*-/, '') // Replaces the "BTC-", "ETH-", "USD-" from the market name
+    },
     isInBalance (marketName) {
       const inBalanceCurrencyNames = this.allFilledCurrenciesInBalance.filter(currency => {
-        return currency.Currency === marketName.replace(/.*-/, '') // Replaces the "BTC-", "ETH-", "USD-" from the market name
+        return currency.Currency === this.getCurrencyFromMarketName(marketName)
       })
       return inBalanceCurrencyNames.length
     },
@@ -113,8 +130,7 @@ export default {
 .market {
   border: 1px #DFE1E3 solid;
   background-color: #fff;
-  margin-bottom: -1px;
-  z-index:0;
+  border-bottom: 0;
   position: relative;
 
   &:first-child {
@@ -125,11 +141,11 @@ export default {
   &:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    border-bottom: 1px #DFE1E3 solid;
   }
 
   &.is-in-balance {
     border: 1px #0077FF solid;
-    z-index:1;
   }
 
   &.is-expanded {
