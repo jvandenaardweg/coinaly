@@ -61,14 +61,14 @@ export default {
       this.removeError()
       this.$store.dispatch('auth/setApiKey', { apiKey: this.apiKey, apiSecret: this.apiSecret })
       .then(() => {
-        this.$router.push('home')
+        this.$router.push('/home')
       })
     },
     removeError () {
       this.$store.dispatch('auth/removeError')
     },
     handleCancel () {
-      this.$router.push('home')
+      this.$router.push('/home')
     }
   }
 }
