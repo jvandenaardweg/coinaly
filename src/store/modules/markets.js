@@ -6,15 +6,23 @@ Vue.use(VueCookie)
 const initialSelectedMarket = Vue.cookie.get('selectedMarket') || ''
 
 function filterMarkets (array, currency) {
-  return array.filter(market => {
-    return market.MarketName.includes(`${currency}-`)
-  })
+  if (array.length) {
+    return array.filter(market => {
+      return market.MarketName.includes(`${currency}-`)
+    })
+  } else {
+    return 0
+  }
 }
 
 function reduceBaseVolume (array) {
-  return array.reduce((total, number) => {
-    return total + number.BaseVolume
-  }, 0)
+  if (array.length) {
+    return array.reduce((total, number) => {
+      return total + number.BaseVolume
+    }, 0)
+  } else {
+    return 0
+  }
 }
 
 export default {
@@ -63,7 +71,7 @@ export default {
       if (state.markets.length) {
         return reduceBaseVolume(state.markets)
       } else {
-        return null
+        return state.markets
       }
     },
     totalBtcVolume: state => {
@@ -71,7 +79,7 @@ export default {
         const filteredMarkets = filterMarkets(state.markets, 'BTC')
         return reduceBaseVolume(filteredMarkets)
       } else {
-        return null
+        return state.markets
       }
     },
     totalEthVolume: state => {
@@ -79,7 +87,7 @@ export default {
         const filteredMarkets = filterMarkets(state.markets, 'ETH')
         return reduceBaseVolume(filteredMarkets)
       } else {
-        return null
+        return state.markets
       }
     },
     totalUsdVolume: state => {
@@ -87,7 +95,7 @@ export default {
         const filteredMarkets = filterMarkets(state.markets, 'USDT')
         return reduceBaseVolume(filteredMarkets)
       } else {
-        return null
+        return state.markets
       }
     },
     isLoading: state => {

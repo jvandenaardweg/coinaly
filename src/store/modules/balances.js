@@ -29,9 +29,13 @@ export default {
       return state.currencies
     },
     allFilledCurrencies: state => {
-      return state.currencies.filter(currency => {
-        return currency.Balance > 0
-      })
+      if (state.currencies.length) {
+        return state.currencies.filter(currency => {
+          return currency.Balance > 0
+        })
+      } else {
+        return state.currencies
+      }
     },
     isLoading: state => {
       return state.isLoading

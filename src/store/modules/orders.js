@@ -29,14 +29,22 @@ export default {
       return state.history
     },
     getAllBuyHistory: state => {
-      return state.history.filter(order => {
-        return order.OrderType === 'LIMIT_BUY'
-      })
+      if (state.history.length) {
+        return state.history.filter(order => {
+          return order.OrderType === 'LIMIT_BUY'
+        })
+      } else {
+        return state.history
+      }
     },
     getAllSellHistory: state => {
-      return state.history.filter(order => {
-        return order.OrderType === 'LIMIT_SELL'
-      })
+      if (state.history.length) {
+        return state.history.filter(order => {
+          return order.OrderType === 'LIMIT_SELL'
+        })
+      } else {
+        return state.history
+      }
     },
     isLoading: state => {
       return state.isLoading
