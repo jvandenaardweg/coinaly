@@ -4,7 +4,7 @@ An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex 
 
 Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche)
 
-![Screenshots](https://www.dropbox.com/s/gmoolxjglsjvvye/github-banner.png?raw=1)
+![Screenshots](https://www.dropbox.com/s/j8xz4str9cg6gum/github-banner.png?raw=1)
 
 This project is still in development. Screenshots above can already be different then the latest version.
 
