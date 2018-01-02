@@ -5,7 +5,7 @@
         <router-link to="/" exact>S</router-link>
       </div>
       <ul class="navigation__items" v-if="isAuthorized">
-        <li><router-link to="/" exact>Home</router-link></li>
+        <li><router-link :to="homePath" :class="{'is-active': subIsActive('/home')}" exact>Home</router-link></li>
         <li><router-link to="/balances">Balances</router-link></li>
         <li><router-link to="/orders">Orders</router-link></li>
         <li><router-link :to="marketPath" :class="{'is-active': subIsActive('/markets')}">Markets</router-link></li>
@@ -23,7 +23,12 @@ export default {
     },
     marketPath () {
       const selectedMarket = this.$store.getters['markets/selectedMarket']
-      const path = (selectedMarket ? `/markets/${selectedMarket}` : '/markets')
+      const path = (selectedMarket && selectedMarket !== null ? `/markets/${selectedMarket}` : '/markets')
+      return path
+    },
+    homePath () {
+      const selectedOrderType = this.$store.getters['orders/selectedOrderType']
+      const path = (selectedOrderType && selectedOrderType !== null ? `/home/${selectedOrderType}` : '/home')
       return path
     }
   },

@@ -1,19 +1,16 @@
 <template>
   <div id="home">
-    <Setup v-if="!isAuthorized"></Setup>
     <History v-if="isAuthorized"></History>
   </div>
 </template>
 
 <script>
 import History from '@/components/History'
-import Setup from '@/components/Setup'
 
 export default {
   name: 'HomePage',
   components: {
-    History,
-    Setup
+    History
   },
   computed: {
     isAuthorized () {
@@ -22,7 +19,10 @@ export default {
   },
   created () {
     console.log('created homepage')
-    this.$store.dispatch('orders/getAllHistory')
+
+    if (this.isAuthorized) {
+      this.$store.dispatch('orders/getAllHistory')
+    }
   }
 }
 </script>

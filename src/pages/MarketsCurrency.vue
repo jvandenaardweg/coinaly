@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div class="search-box">
-      <input type="search" name="search" v-model="searchQuery" placeholder="Search markets..." />
-    </div>
+    <Search @searchQuery="handleSearch" :placeholder="'Search markets...'"></Search>
     <Markets :filteredMarkets="filteredMarkets" :searchQuery="searchQuery"></Markets>
   </div>
 </template>
 
 <script>
 import Markets from '@/components/Markets'
+import Search from '@/components/Search'
 
 export default {
   name: 'MarketsCurrencyPage',
   components: {
-    Markets
+    Markets,
+    Search
   },
   created () {
     console.log('created markets currency page')
@@ -77,6 +77,9 @@ export default {
     }
   },
   methods: {
+    handleSearch (searchQuery) {
+      this.searchQuery = searchQuery
+    },
     marketCount (currency) {
       if (currency === 'BTC') {
         return this.$store.getters['markets/allBtcMarkets'].length
@@ -90,39 +93,7 @@ export default {
     },
     clearSearch () {
       this.searchQuery = null
-    },
-    setSelectedMarket (currency) {
-      this.$cookie.set('selectedMarket', currency)
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.search-box {
-  padding: 15px;
-  position: relative;
-
-  input[type="search"] {
-    border: 1px $color-iron solid;
-    padding: 0 15px;
-    background-color: $color-white;
-    border-radius: 3px;
-    color: $color-black;
-    font-size: 1.4rem;
-    line-height: 4rem;
-    height: 4rem;
-    width: 100%;
-    display: block;
-    outline: none;
-    margin: 0;
-    appearance: none;
-  }
-
-  .search-box__control {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-}
-</style>

@@ -3,7 +3,7 @@ import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
 
-const initialSelectedMarket = Vue.cookie.get('selectedMarket') || ''
+const initialSelectedMarket = Vue.cookie.get('selectedMarket') || null
 
 function filterMarkets (array, currency) {
   return array.filter(market => {
@@ -39,7 +39,7 @@ export default {
       state.selectedMarket = market
     },
     removeSelectedMarket (state) {
-      state.selectedMarket = ''
+      state.selectedMarket = null
       Vue.cookie.delete('selectedMarket')
     }
   },

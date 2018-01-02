@@ -1,11 +1,17 @@
 import axios from '../../axios'
+import Vue from 'vue'
+import VueCookie from 'vue-cookie'
+Vue.use(VueCookie)
+
+const initialSelectedOrderType = Vue.cookie.get('selectedOrderType') || null
 
 export default {
   namespaced: true,
   state: {
     history: [],
     open: [],
-    isLoading: false
+    isLoading: false,
+    selectedOrderType: initialSelectedOrderType
   },
   mutations: {
     addAllHistory (state, items) {
@@ -19,9 +25,20 @@ export default {
     },
     stopLoading (state) {
       state.isLoading = false
+    },
+    setSelectedOrderType (state, type) {
+      Vue.cookie.set('selectedOrderType', type)
+      state.selectedOrderType = type
+    },
+    removeSelectedOrderType (state, type) {
+      Vue.cookie.delete('selectedOrderType')
+      state.selectedOrderType = null
     }
   },
   getters: {
+    selectedOrderType: state => {
+      return state.selectedOrderType
+    },
     getOpenOrders: state => {
       return state.open
     },

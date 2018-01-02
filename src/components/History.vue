@@ -2,21 +2,15 @@
   <div class="history">
     <header class="history__header">
       <h2 class="history__header-title">Order activity <span v-show="historyOrdersTotal">({{ historyOrdersTotal }})</span></h2>
-      <div class="history__header-control">
-        <!-- <Button :label="'New order'"></Button> -->
-        <!-- <div>
-          <label>Order by</label>
-          <select v-model="orderBy">
-            <option disabled value="">Order by...</option>
-            <option value="dateDesc">Date</option>
-            <option value="currencyDesc">Currency</option>
-          </select>
-        </div> -->
-
-      </div>
     </header>
+
+    <Tabs :items="tabItems"></Tabs>
+
+    <Search @searchQuery="handleSearch" :placeholder="'Search order history...'"></Search>
+
     <div class="history__body">
-      <div v-if="!showLoadingIndicator" class="history__legend">
+
+      <div v-if="!showLoadingIndicator && hasFilteredOrders" class="history__legend">
         <div class="history__legend-symbol">Market</div>
         <div class="history__legend-amount">Amount</div>
         <div class="history__legend-profit">Profit</div>
@@ -24,12 +18,15 @@
       </div>
 
       <Order v-if="historyOrders && isWithinPageLimit(index)" v-for="(order, index) in historyOrders" :key="order.OrderUuid" :order="order"></Order>
+      <div v-if="!hasFilteredOrders" class="history__empty">
+        <p v-if="searchQuery">No orders found for "{{ searchQuery }}".</p>
+      </div>
       <div v-if="showLoadingIndicator" class="history__empty">
         <p>Loading your order history...</p>
       </div>
     </div>
     <div class="history__footer">
-      <Button :className="'link'" :label="'Show all history'" v-if="historyOrdersTotal > paginationLimit" @click.native="showAllHistory()"></Button>
+      <Button :className="'link'" :label="'Show all history'" v-if="filteredHistoryOrdersTotal > paginationLimit" @click.native="showAllHistory()"></Button>
     </div>
   </div>
 </template>
@@ -37,35 +34,99 @@
 <script>
 import Button from '@/components/Button'
 import Order from '@/components/Order'
+import Tabs from '@/components/Tabs'
+import Search from '@/components/Search'
 
 export default {
   name: 'History',
   components: {
     Button,
-    Order
+    Order,
+    Tabs,
+    Search
   },
   data () {
     return {
       orderBy: 'dateDesc',
       paginationLimit: 15,
-      ordersIndex: 0
+      ordersIndex: 0,
+      searchQuery: null,
+      tabItems: [
+        {
+          link: '/home',
+          storeName: 'orders',
+          storeType: null,
+          label: 'All'
+        },
+        {
+          link: '/home/buys',
+          storeName: 'orders',
+          storeType: 'buys',
+          label: 'Buys'
+        },
+        {
+          link: '/home/sells',
+          storeName: 'orders',
+          storeType: 'sells',
+          label: 'Sells'
+        }
+      ]
     }
   },
   computed: {
+    showLoadingIndicator () {
+      return !this.hasFilteredOrders && this.isLoading && !this.searchQuery
+    },
+    hasFilteredOrders () {
+      return this.historyOrders.length
+    },
+    searchQueryInLowerCase () {
+      return (this.searchQuery ? this.searchQuery.toLowerCase().trim() : null)
+    },
     historyOrders () {
+      let orderHistory
+      const orderType = this.$route.params.orderType
+      console.log(orderType)
+
+      if (orderType === 'buys') {
+        orderHistory = this.allBuyOrders
+      } else if (orderType === 'sells') {
+        orderHistory = this.allSellOrders
+      } else {
+        orderHistory = this.allHistory
+      }
+
+      if (this.searchQueryInLowerCase) {
+        return orderHistory.filter(order => {
+          return order.Exchange.toLowerCase().includes(this.searchQueryInLowerCase)
+        })
+      } else {
+        return orderHistory
+      }
+    },
+    allHistory () {
       return this.$store.getters['orders/getAllHistory']
     },
-    historyOrdersTotal () {
+    allBuyOrders () {
+      return this.$store.getters['orders/getAllBuyHistory']
+    },
+    allSellOrders () {
+      return this.$store.getters['orders/getAllSellHistory']
+    },
+    filteredHistoryOrdersTotal () {
       return this.historyOrders.length
+    },
+    historyOrdersTotal () {
+      return this.allHistory.length
     },
     isLoading () {
       return this.$store.getters['orders/isLoading']
-    },
-    showLoadingIndicator () {
-      return !this.historyOrders.length && this.isLoading
     }
   },
   methods: {
+    handleSearch (searchQuery) {
+      this.searchQuery = searchQuery
+    },
     isWithinPageLimit (index) {
       this.ordersIndex = index
       if (index < this.paginationLimit) {
