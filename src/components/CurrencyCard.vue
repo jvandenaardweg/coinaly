@@ -45,9 +45,9 @@ export default {
 
 <style lang="scss" scoped>
 .currency-card {
-  background-color: #fff;
+  background-color: $color-white;
   margin-bottom: 10px;
-  border: 1px #DFE1E3 solid;
+  border: 1px $color-iron solid;
   border-radius: 3px;
   padding: 0 0 15px 0;
 
@@ -110,12 +110,12 @@ export default {
 
         &:first-child {
           p {
-            color: #0077FF;
+            color: $color-azure-radiance;
           }
         }
         &:nth-child(2) {
           p {
-            color: #F4BC5F;
+            color: $color-cream-can;
           }
         }
       }
@@ -211,7 +211,7 @@ export default {
   }
 
   .currency-card__footer {
-    border-top: 1px #DFE1E3 solid;
+    border-top: 1px $color-iron solid;
     margin-left: 15px;
     margin-right: 15px;
     padding: 15px 0 0 15px;

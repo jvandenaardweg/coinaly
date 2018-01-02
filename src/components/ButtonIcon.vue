@@ -27,7 +27,7 @@ export default {
   border: 0;
   font-size: 1.4rem;
   font-weight: bold;
-  border: 1px #0077FF solid;
+  border: 1px $color-azure-radiance solid;
   outline: none;
   appearance: none;
   background: none;
@@ -43,7 +43,7 @@ export default {
 
     svg {
       width: 100%;
-      fill: #0077FF;
+      fill: $color-azure-radiance;
     }
   }
 }

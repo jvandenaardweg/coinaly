@@ -261,9 +261,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .listing-currency {
-  background-color: #fff;
+  background-color: $color-white;
   border-radius: 3px;
-  border: 1px #DFE1E3 solid;
+  border: 1px $color-iron solid;
 
   &.is-expanded {
     .listing-currency__header {
@@ -302,7 +302,7 @@ export default {
 
   .listing-currency__history {
     text-align: center;
-    border-top: 1px #DFE1E3 solid;
+    border-top: 1px $color-iron solid;
     padding-top: 5px;
   }
 
@@ -330,12 +330,12 @@ export default {
 
         &:first-child {
           p {
-            color: #0077FF;
+            color: $color-azure-radiance;
           }
         }
         &:nth-child(2) {
           p {
-            color: #F4BC5F;
+            color: $color-cream-can;
           }
         }
       }

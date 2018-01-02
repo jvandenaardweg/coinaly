@@ -77,7 +77,7 @@ export default {
 <style lang="scss">
 html {
   font-size: 62.5%;
-  background: #EEEFF3;
+  background: $color-athens-gray;
   box-sizing: border-box;
 }
 *, *:before, *:after {
@@ -94,11 +94,10 @@ body {
 #app {
   max-width: 800px;
   margin: 0 auto;
-  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: $color-pickled-bluewood;
   padding-top: 80px;
 }
 
@@ -114,16 +113,16 @@ input[type="text"] {
   height: 4rem;
   padding: 0 15px;
   line-height: 4rem;
-  border: 1px #DFE1E3 solid;
+  border: 1px $color-iron solid;
   width: 100%;
 
   &:focus {
-    border-color: #0077FF;
+    border-color: $color-azure-radiance;
   }
 }
 
 a {
-  color: #0077FF;
+  color: $color-azure-radiance;
 }
 
 .footer {

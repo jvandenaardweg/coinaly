@@ -24,7 +24,7 @@ export default {
   display: inline-block;
   padding: 10px 20px;
   border-radius: 3px;
-  background: #0077FF;
+  background: $color-azure-radiance;
   color: white;
   border: 0;
   font-size: 1.4rem;
@@ -42,50 +42,50 @@ export default {
   }
 
   &.button--danger {
-    background: #DC3A4E;
+    background: $color-cerise-red;
 
     .button__icon {
       svg {
-        fill: #ffffff;
+        fill: $color-white;
       }
     }
   }
 
   &.button--success {
-    background: #23CF5F;
+    background: $color-mountain-meadow;
 
     .button__icon {
       svg {
-        fill: #ffffff;
+        fill: $color-white;
       }
     }
   }
 
   &.button--warning {
-    background: #F4BC5F;
+    background: $color-cream-can;
 
     .button__icon {
       svg {
-        fill: #ffffff;
+        fill: $color-white;
       }
     }
   }
 
   &.button--outlined {
     background: transparent;
-    color: #0077FF;
-    border-color: #0077FF;
+    color: $color-azure-radiance;
+    border-color: $color-azure-radiance;
 
     .button__icon {
       svg {
-        fill: #0077FF;
+        fill: $color-azure-radiance;
       }
     }
   }
 
   &.button--link {
     background: transparent;
-    color: #0077FF;
+    color: $color-azure-radiance;
     padding-right: 0;
     padding-left: 0;
     position: relative;
@@ -98,12 +98,12 @@ export default {
       position: absolute;
       left: 0;
       width: 100%;
-      background: #0077FF;
+      background: $color-azure-radiance;
     }
 
     .button__icon {
       svg {
-        fill: #0077FF;
+        fill: $color-azure-radiance;
       }
     }
   }
@@ -114,7 +114,7 @@ export default {
 
     svg {
       width: 100%;
-      fill: #fff;
+      fill: $color-white;
     }
   }
 }

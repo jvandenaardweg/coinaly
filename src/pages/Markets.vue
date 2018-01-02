@@ -127,15 +127,15 @@ export default {
     width: 100%;
     display: block;
     color: rgba(0,0,0, 0.3);
-    // background-color: #fff;
+    // background-color: $color-white;
     text-decoration: none;
     text-align: center;
     z-index: 0;
 
     &.is-active {
-      background-color: #0077FF;
-      border: 1px #0077FF solid;
-      color: #fff;
+      background-color: $color-azure-radiance;
+      border: 1px $color-azure-radiance solid;
+      color: $color-white;
       position: relative;
       z-index: 1;
       font-weight: bold;
@@ -144,9 +144,9 @@ export default {
 }
 
 .select-box {
-  border: 1px #DFE1E3 solid;
+  border: 1px $color-iron solid;
   padding: 0 5px;
-    background-color: #fff;
+    background-color: $color-white;
     border-radius: 3px;
     height: 4rem;
 

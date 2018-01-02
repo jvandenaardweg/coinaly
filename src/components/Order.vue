@@ -180,9 +180,9 @@ export default {
 
 <style lang="scss" scoped>
 .order {
-  background-color: #fff;
+  background-color: $color-white;
   margin-bottom: 5px;
-  border: 1px #DFE1E3 solid;
+  border: 1px $color-iron solid;
   border-radius: 3px;
   text-align: left;
 
@@ -224,13 +224,13 @@ export default {
 
     &.is-negative {
       span {
-        color: #DC3A4E;
+        color: $color-cerise-red;
       }
     }
 
     &.is-positive {
       span {
-        color: #23CF5F;
+        color: $color-mountain-meadow;
       }
     }
 
@@ -264,7 +264,7 @@ export default {
       flex-wrap: wrap;
       flex-direction: row;
       justify-content: flex-start;
-      border-bottom: 1px #DFE1E3 solid;
+      border-bottom: 1px $color-iron solid;
       margin-bottom: 10px;
 
       li {
@@ -286,20 +286,20 @@ export default {
 
   .order__panel {
     padding: 10px 15px;
-    border: 1px #DFE1E3 solid;
+    border: 1px $color-iron solid;
     border-radius: 3px;
     margin-bottom: 15px;
 
     &.is-positive {
-      background-color: #23CF5F;
-      color: #fff;
-      border-color: #23CF5F;
+      background-color: $color-mountain-meadow;
+      color: $color-white;
+      border-color: $color-mountain-meadow;
     }
 
     &.is-negative {
-      background-color: #DC3A4E;
-      color: #fff;
-      border-color: #DC3A4E;
+      background-color: $color-cerise-red;
+      color: $color-white;
+      border-color: $color-cerise-red;
     }
   }
 

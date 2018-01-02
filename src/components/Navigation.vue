@@ -48,7 +48,7 @@ $navigation-height: 60px;
   height: $navigation-height;
   line-height: 6rem;
   width: 100%;
-  background-color: #0077FF;
+  background-color: $color-azure-radiance;
   z-index: 99;
 
   .navigation__container {
@@ -65,10 +65,10 @@ $navigation-height: 60px;
 
     a {
       display: block;
-      border: 1px #fff solid;
+      border: 1px $color-white solid;
       height: 100%;
       width: 40px;
-      color: #fff;
+      color: $color-white;
       text-decoration: none;
       line-height: 4rem;
       font-size: 2rem;
@@ -86,7 +86,7 @@ $navigation-height: 60px;
       padding-left: 15px;
 
       a {
-        color: #fff;
+        color: $color-white;
         text-decoration: none;
         font-size: 1.6rem;
         font-weight: bold;

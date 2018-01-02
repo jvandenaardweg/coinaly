@@ -25,8 +25,8 @@ export default {
 <style lang="scss" scoped>
 .error-message {
   padding: 15px 30px 15px 15px;
-  color: #fff;
-  background: #DC3A4E;
+  color: $color-white;
+  background: $color-cerise-red;
   margin-top: 15px;
   font-size: 1.4rem;
   border-radius: 3px;
@@ -50,7 +50,7 @@ export default {
     position: absolute;
     right: -4px;
     top: -8px;
-    color: #fff;
+    color: $color-white;
     font-size: 3rem;
     text-align: center;
     display: inline-block;

@@ -104,11 +104,11 @@ export default {
   position: relative;
 
   input[type="search"] {
-    border: 1px #DFE1E3 solid;
+    border: 1px $color-iron solid;
     padding: 0 15px;
-    background-color: #fff;
+    background-color: $color-white;
     border-radius: 3px;
-    color: #000;
+    color: $color-black;
     font-size: 1.4rem;
     line-height: 4rem;
     height: 4rem;

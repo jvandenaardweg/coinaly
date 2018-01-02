@@ -18,7 +18,7 @@ export default {
 .progress {
   height: 4px;
   width: 100%;
-  background-color: #DFE1E3;
+  background-color: $color-iron;
   border-radius: 2px;
   overflow: hidden;
   display: flex;
@@ -29,7 +29,7 @@ export default {
   }
 
   .progress__blue {
-    background-color: #0077FF;
+    background-color: $color-azure-radiance;
   }
 
   .progress__orange {
@@ -37,7 +37,7 @@ export default {
   }
 
   .progress__green {
-    background-color: #23CF5F;
+    background-color: $color-mountain-meadow;
   }
 
   .progress__black {

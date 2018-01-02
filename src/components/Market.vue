@@ -128,8 +128,8 @@ export default {
 
 <style lang="scss" scoped>
 .market {
-  border: 1px #DFE1E3 solid;
-  background-color: #fff;
+  border: 1px $color-iron solid;
+  background-color: $color-white;
   border-bottom: 0;
   position: relative;
 
@@ -141,11 +141,11 @@ export default {
   &:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    border-bottom: 1px #DFE1E3 solid;
+    border-bottom: 1px $color-iron solid;
   }
 
   &.is-in-balance {
-    border: 1px #0077FF solid;
+    border: 1px $color-azure-radiance solid;
   }
 
   &.is-expanded {
@@ -218,13 +218,13 @@ export default {
 
     &.is-negative {
       span {
-        color: #DC3A4E;
+        color: $color-cerise-red;
       }
     }
 
     &.is-positive {
       span {
-        color: #23CF5F;
+        color: $color-mountain-meadow;
       }
     }
   }

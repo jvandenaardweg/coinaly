@@ -107,7 +107,7 @@ export default {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: $color-white;
 
   .chart__header {
     padding: 0 15px;

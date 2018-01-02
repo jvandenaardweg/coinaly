@@ -125,6 +125,28 @@ router.get('/market/cancel', function (request, response, next) {
   })
 })
 
+// router.post('/market/cancel', function (request, response, next) {
+//   bittrex.options({
+//     'apikey': request.cookies.bittrexApiKey,
+//     'apisecret': request.cookies.bittrexApiSecret,
+//     verbose: true
+//   })
+
+//   // const uuid = request.query.uuid
+//   // if (!uuid) {
+//   //   response.status(500).json({'message': 'Please provide an uuid'})
+//   //   return
+//   // }
+
+//   bittrex.tradesell({ uuid: uuid }, (data) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       response.status(500).json(data)
+//     }
+//   })
+// })
+
 // TODO: do with websocket
 router.get('/ticker', function (request, response, next) {
   bittrex.options({

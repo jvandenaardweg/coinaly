@@ -97,7 +97,7 @@ export default {
   text-align: left;
   width: 100%;
   margin-top: 15px;
-  border-top: 1px #DFE1E3 solid;
+  border-top: 1px $color-iron solid;
   padding-top: 10px;
 
   small {
@@ -118,7 +118,7 @@ export default {
   }
 
   .is-positive {
-    color: #23CF5F;
+    color: $color-mountain-meadow;
   }
 }
 </style>
