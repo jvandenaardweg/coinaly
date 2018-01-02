@@ -32,7 +32,7 @@ I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](ht
 # Setup
 Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://simpletrade.herokuapp.com/ 
 
-Since this project is in early development, using this is at your own risk.
+This project is in early development, some features might not work yet.
 
 ## Bittrex API permissions
 In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
