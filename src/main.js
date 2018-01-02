@@ -8,6 +8,10 @@ import store from './store'
 import VueCookie from 'vue-cookie'
 import VueAnalytics from 'vue-analytics'
 import { sync } from 'vuex-router-sync'
+import Raven from 'raven-js'
+import RavenVue from 'raven-js/plugins/vue'
+
+Raven.config('https://3b02901b7b0a418ca9d76303a9217881@sentry.io/265611').addPlugin(RavenVue, Vue).install()
 
 sync(store, router)
 
