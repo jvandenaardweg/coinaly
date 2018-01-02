@@ -6,7 +6,8 @@
       <router-view></router-view>
     </keep-alive>
     <div class="footer" v-if="isAuthorized">
-      <Button :label="'Logout'" :className="'outlined'" @click.native="handleLogout()"></Button>
+      <Button :label="'Logout'" :className="'link-gray'" @click.native="handleLogout()"></Button> &nbsp;
+      <Button :label="'Setup'" :className="'link-gray'" @click.native="handleSetup()"></Button>
     </div>
   </div>
 </template>
@@ -38,6 +39,9 @@ export default {
       this.$store.dispatch('auth/removeApiKey')
       window.clearInterval(this.marketInterval)
       this.$router.push('Home')
+    },
+    handleSetup () {
+      this.$router.push('setup')
     },
     getAllData () {
       this.message = false

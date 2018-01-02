@@ -5,7 +5,8 @@
     'button--success': className === 'success',
     'button--warning': className === 'warning',
     'button--outlined': className === 'outlined',
-    'button--link': className === 'link'
+    'button--link': className === 'link',
+    'button--link-gray': className === 'link-gray'
   }">
     {{ label }}
   </button>
@@ -105,6 +106,26 @@ export default {
       svg {
         fill: $color-azure-radiance;
       }
+    }
+  }
+
+  &.button--link-gray {
+    background: transparent;
+    color: $color-black;
+    padding-right: 0;
+    padding-left: 0;
+    position: relative;
+    font-weight: normal;
+    opacity: 0.5;
+
+    &:after {
+      content: "";
+      height: 1px;
+      bottom: 8px;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background: $color-black;
     }
   }
 

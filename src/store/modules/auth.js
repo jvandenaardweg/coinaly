@@ -23,15 +23,25 @@ export default {
       state.error = null
     },
     setApiKey (state, apiCredentials) {
+      Vue.cookie.set('bittrexApiKey', apiCredentials.apiKey, { expires: '99Y' })
+      Vue.cookie.set('bittrexApiSecret', apiCredentials.apiSecret, { expires: '99Y' })
       state.bittrex.apiKey = apiCredentials.apiKey
       state.bittrex.apiSecret = apiCredentials.apiSecret
     },
     removeApiKeys (state) {
+      Vue.cookie.delete('bittrexApiKey')
+      Vue.cookie.delete('bittrexApiSecret')
       state.bittrex.apiKey = null
       state.bittrex.apiSecret = null
     }
   },
   getters: {
+    getApiKey (state) {
+      return state.bittrex.apiKey
+    },
+    getApiSecret (state) {
+      return state.bittrex.apiSecret
+    },
     isAuthorized (state) {
       return Boolean(state.bittrex.apiKey && state.bittrex.apiSecret)
     },
@@ -48,13 +58,9 @@ export default {
     },
     setApiKey (context, apiCredentials) {
       context.commit('setApiKey', apiCredentials)
-      Vue.cookie.set('bittrexApiKey', apiCredentials.apiKey, { expires: '99Y' })
-      Vue.cookie.set('bittrexApiSecret', apiCredentials.apiSecret, { expires: '99Y' })
     },
     removeApiKey (context, apiCredentials) {
       context.commit('removeApiKeys')
-      Vue.cookie.delete('bittrexApiKey')
-      Vue.cookie.delete('bittrexApiSecret')
     },
     checkValidity (context) {
       return axios.get('api/balance')

@@ -7,6 +7,7 @@ import BalancesPage from '@/pages/Balances'
 import OrdersPage from '@/pages/Orders'
 import MarketsPage from '@/pages/Markets'
 import MarketsCurrencyPage from '@/pages/MarketsCurrency'
+import SetupPage from '@/pages/Setup'
 
 Vue.use(VueCookie)
 Vue.use(Router)
@@ -14,9 +15,20 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '*',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
       name: 'Home',
-      component: HomePage
+      component: HomePage,
+      children: [
+        {
+          path: ':orderType?',
+          name: 'MarketsCurrency',
+          component: MarketsCurrencyPage
+        }
+      ]
     },
     {
       path: '/balances',
@@ -27,6 +39,11 @@ export default new Router({
       path: '/orders',
       name: 'Orders',
       component: OrdersPage
+    },
+    {
+      path: '/setup',
+      name: 'Setup',
+      component: SetupPage
     },
     {
       path: '/markets',

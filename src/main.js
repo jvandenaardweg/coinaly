@@ -28,8 +28,8 @@ router.beforeEach((to, from, next) => {
   if (store.getters['auth/isAuthorized']) {
     next()
   } else {
-    if (to.name !== 'Home') {
-      router.push({path: '/'})
+    if (to.name !== 'Setup') {
+      router.push('setup')
     } else {
       next()
     }
