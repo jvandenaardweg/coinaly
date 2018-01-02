@@ -23,7 +23,7 @@
         <td v-if="isBuy"><small>Worth</small>{{ currentWorth }}</td>
       </tr>
       <tr>
-        <td v-if="isBuy"><small>Delta</small><span :class="{'is-positive': deltaPositive, 'is-negative': deltaNegative}">{{ delta }}%</span></td>
+        <td v-if="isBuy"><small>Delta</small><span :class="{'is-positive': deltaPositive, 'is-negative': !deltaPositive}">{{ delta }}%</span></td>
       </tr>
     </tbody>
   </table>
