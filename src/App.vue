@@ -77,7 +77,7 @@ export default {
 <style lang="scss">
 html {
   font-size: 62.5%;
-  background: #f4f5f7;
+  background: #EEEFF3;
   box-sizing: border-box;
 }
 *, *:before, *:after {
