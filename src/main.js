@@ -25,14 +25,17 @@ Vue.use(VueAnalytics, {
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (store.getters['auth/isAuthorized']) {
-    next()
-  } else {
-    if (to.name !== 'Setup') {
-      router.push('setup')
+  // Credits: https://router.vuejs.org/en/advanced/meta.html
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!store.getters['auth/isAuthorized']) {
+      next({path: '/setup'})
     } else {
       next()
     }
+  } else {
+    next()
   }
 })
 

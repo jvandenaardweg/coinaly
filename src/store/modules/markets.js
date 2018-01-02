@@ -3,7 +3,8 @@ import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
 
-const initialSelectedMarket = Vue.cookie.get('selectedMarket') || null
+const selectedMarketCookie = Vue.cookie.get('selectedMarket') || null
+const initialSelectedMarket = (selectedMarketCookie === 'null' ? null : selectedMarketCookie)
 
 function filterMarkets (array, currency) {
   return array.filter(market => {

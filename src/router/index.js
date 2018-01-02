@@ -16,44 +16,44 @@ export default new Router({
   routes: [
     {
       path: '*',
-      redirect: '/home'
+      redirect: '/home',
+      meta: { requiresAuth: true }
     },
     {
-      path: '/home',
+      path: '/home/:orderType?',
       name: 'Home',
       component: HomePage,
-      children: [
-        {
-          path: ':orderType?',
-          name: 'MarketsCurrency',
-          component: MarketsCurrencyPage
-        }
-      ]
+      meta: { requiresAuth: true }
     },
     {
       path: '/balances',
       name: 'Balances',
-      component: BalancesPage
+      component: BalancesPage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/orders',
       name: 'Orders',
-      component: OrdersPage
+      component: OrdersPage,
+      meta: { requiresAuth: true }
     },
     {
       path: '/setup',
       name: 'Setup',
-      component: SetupPage
+      component: SetupPage,
+      meta: { requiresAuth: false }
     },
     {
       path: '/markets',
       name: 'Markets',
       component: MarketsPage,
+      meta: { requiresAuth: true },
       children: [
         {
           path: ':currency?',
           name: 'MarketsCurrency',
-          component: MarketsCurrencyPage
+          component: MarketsCurrencyPage,
+          meta: { requiresAuth: true }
         }
       ]
     }

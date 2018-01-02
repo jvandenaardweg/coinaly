@@ -3,7 +3,8 @@ import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
 
-const initialSelectedOrderType = Vue.cookie.get('selectedOrderType') || null
+const selectedOrderTypeCookie = Vue.cookie.get('selectedOrderType') || null
+const initialSelectedOrderType = (selectedOrderTypeCookie === 'null' ? null : selectedOrderTypeCookie)
 
 export default {
   namespaced: true,
