@@ -26,21 +26,6 @@ Since this project is in the early development stage, we currently only support 
 ## 👨‍🚀 Javascript astronauts wanted 
 We are currently looking for Javascript developers to speed up the development process, so we can add more exchanges in the near future. Preferably we are looking for skilled developers with professional VueJS en NodeJS experience. If you don’t fit that description, but you still want to help us out? That’s awesome! Please contact Jordy directly.
 
-## 💰 Fuel our efforts 
-We are a hard working bunch of people and are not affiliated with Bittrex in any way. We are just using our spare time to create a better mobile experience for what we love to do: trading cryptocurrencies. 
-
-Do you like what we create? A donation of any size is very welcome! 
-
-* BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo 
-* ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
-
-We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
-
-# 🚧 Developing for this project
-Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://simpletrade.herokuapp.com/ 
-
-This project is in early development, some features might not work yet.
-
 ## Bittrex API permissions
 In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
 
@@ -51,7 +36,22 @@ In order to use this you need to have a Bittrex API key so we can read your orde
 **!! Important !!**
 We don't need **Withdrawal** permissions, so please leave that one off.
 
-## Installation
+## 💰 Fuel our efforts 
+We are a hard working bunch of people and are not affiliated with Bittrex in any way. We are just using our spare time to create a better mobile experience for what we love to do: trading cryptocurrencies. 
+
+Do you like what we create? A donation of any size is very welcome! 
+
+* BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo 
+* ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
+
+We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
+
+## 🚧 Developing for this project
+Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://simpletrade.herokuapp.com/ 
+
+This project is in early development, some features might not work yet.
+
+### Installation
 1. Download this Git repo
 2. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
 3. Run: `npm run dev`
@@ -61,13 +61,13 @@ After started successfully, the website is in development mode and available at 
 
 The API is available at http://localhost:5000.
 
-## Run development mode
+### Run development mode
 ``` bash
 # serve with hot reload at localhost:8080
 npm run dev
 ```
 
-## Build for production
+### Build for production
 ``` bash
 # build for production with minification
 npm run build
@@ -79,7 +79,7 @@ npm run build --report
 npm start
 ```
 
-## Run tests
+### Run tests
 ``` bash
 # run unit tests
 npm run unit
