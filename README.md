@@ -29,12 +29,12 @@ We are currently looking for Javascript developers to speed up the development p
 ## 🔓 Bittrex API permissions
 In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
 
-**Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
+* **Read info** (required: ON) is the minimum required permission that needs to be enabled. Se we can read and display your balances and order history.
+* **Trade limit** (optional: ON) is only required if you want to trade from within the website.
+* **Trade market** (optional: ON) is only required if you want to trade from within the website.
+* **Withdrawal** (required: OFF) we don't need this, so you can leave that one off.
 
 [View example](https://www.dropbox.com/s/h6d7r3qdox0fvt7/bittrexapikeypermissions.png?raw=1)
-
-**!! Important !!**
-We don't need **Withdrawal** permissions, so please leave that one off.
 
 ## 💰 Fuel our efforts 
 We are a hard working bunch of people and are not affiliated with Bittrex in any way. We are just using our spare time to create a better mobile experience for what we love to do: trading cryptocurrencies. 
