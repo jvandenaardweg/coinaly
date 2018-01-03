@@ -31,8 +31,8 @@ We are a hard working bunch of people and are not affiliated with Bittrex in any
 
 Do you like what we create? A donation of any size is very welcome! 
 
-BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo 
-ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
+* BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo 
+* ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
 
 We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
 
