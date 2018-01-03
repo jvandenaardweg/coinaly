@@ -101,9 +101,10 @@ router.get('/orderhistory', function (request, response, next) {
 })
 
 router.get('/v2/orders', (request, response, next) => {
+  const orderStatus = request.query.status
+  let orders
 
   (async () => {
-    // instantiate the exchange
     let exchange = new ccxt.bittrex({
       'apiKey': request.cookies.bittrexApiKey,
       'secret': request.cookies.bittrexApiSecret,
@@ -112,47 +113,13 @@ router.get('/v2/orders', (request, response, next) => {
     })
 
     try {
-      const orders = await exchange.fetchOrders()
-      response.json(orders)
-    } catch (e) {
-      catchExchangeError(ccxt, e, response)
-    }
-  })()
-})
-
-router.get('/v2/orders/open', (request, response, next) => {
-
-  (async () => {
-    // instantiate the exchange
-    let exchange = new ccxt.bittrex({
-      'apiKey': request.cookies.bittrexApiKey,
-      'secret': request.cookies.bittrexApiSecret,
-      enableRateLimit: true,
-      'verbose': false
-    })
-
-    try {
-      const orders = await exchange.fetchOpenOrders()
-      response.json(orders)
-    } catch (e) {
-      catchExchangeError(ccxt, e, response)
-    }
-  })()
-})
-
-router.get('/v2/orders/closed', (request, response, next) => {
-
-  (async () => {
-    // instantiate the exchange
-    let exchange = new ccxt.bittrex({
-      'apiKey': request.cookies.bittrexApiKey,
-      'secret': request.cookies.bittrexApiSecret,
-      enableRateLimit: true,
-      'verbose': false
-    })
-
-    try {
-      const orders = await exchange.fetchClosedOrders()
+      if (orderStatus === 'open') {
+        orders = await exchange.fetchOpenOrders()
+      } else if (orderStatus === 'closed') {
+        orders = await exchange.fetchClosedOrders()
+      } else {
+        orders = await exchange.fetchOrders()
+      }
       response.json(orders)
     } catch (e) {
       catchExchangeError(ccxt, e, response)
