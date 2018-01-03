@@ -1,9 +1,39 @@
 const bittrex = require('node-bittrex-api')
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const ccxt = require('ccxt')
+const log = require('ololog').configure({ locate: false })
 const router = express.Router()
 const app = express()
 app.use(cookieParser())
+
+let sleep = (ms) => new Promise (resolve => setTimeout(resolve, ms))
+
+function catchExchangeError (ccxt, e, response) {
+  let message
+  if (e instanceof ccxt.DDoSProtection || e.message.includes('ECONNRESET')) {
+    log.bright.yellow('[DDoS Protection] ' + e.message)
+    message = e.message
+  } else if (e instanceof ccxt.RequestTimeout) {
+    log.bright.yellow('[Request Timeout] ' + e.message)
+    message = e.message
+  } else if (e instanceof ccxt.AuthenticationError) {
+    log.bright.yellow('[Authentication Error] ' + e.message)
+    message = e.message
+  } else if (e instanceof ccxt.ExchangeNotAvailable) {
+    log.bright.yellow('[Exchange Not Available Error] ' + e.message)
+    message = e.message
+  } else if (e instanceof ccxt.ExchangeError) {
+    log.bright.yellow('[Exchange Error] ' + e.message)
+    message = e.message
+  } else if (e instanceof ccxt.NetworkError) {
+    log.bright.yellow('[Network Error] ' + e.message)
+    message = e.message
+  } else {
+    message = e.message
+  }
+  response.status(500).json({message: message})
+}
 
 router.get('*', function (request, response, next) {
   const bittrexApiKey = request.cookies['bittrexApiKey']
@@ -18,6 +48,25 @@ router.get('*', function (request, response, next) {
 })
 
 // https://www.npmjs.com/package/node.bittrex.api
+
+router.get('/v2/balances', (request, response, next) => {
+
+  (async () => {
+    // instantiate the exchange
+    let exchange = new ccxt.bittrex({
+      'apiKey': request.cookies.bittrexApiKey,
+      'secret': request.cookies.bittrexApiSecret,
+      'verbose': false
+    })
+
+    try {
+      let balance = await exchange.fetchBalance()
+      response.json(balance)
+    } catch (e) {
+      catchExchangeError(ccxt, e, response)
+    }
+  })()
+})
 
 router.get('/balances', function (request, response, next) {
   bittrex.options({
@@ -49,6 +98,66 @@ router.get('/orderhistory', function (request, response, next) {
       response.status(500).json(data)
     }
   })
+})
+
+router.get('/v2/orders', (request, response, next) => {
+
+  (async () => {
+    // instantiate the exchange
+    let exchange = new ccxt.bittrex({
+      'apiKey': request.cookies.bittrexApiKey,
+      'secret': request.cookies.bittrexApiSecret,
+      enableRateLimit: true,
+      'verbose': false
+    })
+
+    try {
+      const orders = await exchange.fetchOrders()
+      response.json(orders)
+    } catch (e) {
+      catchExchangeError(ccxt, e, response)
+    }
+  })()
+})
+
+router.get('/v2/orders/open', (request, response, next) => {
+
+  (async () => {
+    // instantiate the exchange
+    let exchange = new ccxt.bittrex({
+      'apiKey': request.cookies.bittrexApiKey,
+      'secret': request.cookies.bittrexApiSecret,
+      enableRateLimit: true,
+      'verbose': false
+    })
+
+    try {
+      const orders = await exchange.fetchOpenOrders()
+      response.json(orders)
+    } catch (e) {
+      catchExchangeError(ccxt, e, response)
+    }
+  })()
+})
+
+router.get('/v2/orders/closed', (request, response, next) => {
+
+  (async () => {
+    // instantiate the exchange
+    let exchange = new ccxt.bittrex({
+      'apiKey': request.cookies.bittrexApiKey,
+      'secret': request.cookies.bittrexApiSecret,
+      enableRateLimit: true,
+      'verbose': false
+    })
+
+    try {
+      const orders = await exchange.fetchClosedOrders()
+      response.json(orders)
+    } catch (e) {
+      catchExchangeError(ccxt, e, response)
+    }
+  })()
 })
 
 router.get('/withdrawalhistory', function (request, response, next) {

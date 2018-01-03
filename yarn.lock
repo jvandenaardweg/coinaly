@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/node@^8.0.7":
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.2.tgz#83b8103fa9a2c2e83d78f701a9aa7c9539739aa5"
+
 "@types/strip-bom@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/strip-bom/-/strip-bom-3.0.0.tgz#14a8ec3956c2e81edb7520790aecf21c290aebd2"
@@ -138,6 +142,10 @@ ansi-styles@^3.1.0, ansi-styles@^3.2.0:
   dependencies:
     color-convert "^1.9.0"
 
+ansicolor@^1.1.71:
+  version "1.1.71"
+  resolved "https://registry.yarnpkg.com/ansicolor/-/ansicolor-1.1.71.tgz#38bbf97db282edb1462dcb23400112407a9486e3"
+
 anymatch@^1.3.0:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-1.3.2.tgz#553dcb8f91e3c889845dfdba34c77721b90b9d7a"
@@ -218,6 +226,12 @@ array-unique@^0.2.1:
 arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
+
+as-table@^1.0.31:
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/as-table/-/as-table-1.0.31.tgz#d00180024ecbb6d1a747150df751d3716aea8166"
+  dependencies:
+    printable-characters "^1.0.37"
 
 asn1.js@^4.0.0:
   version "4.9.2"
@@ -1315,6 +1329,14 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
+ccxt@^1.10.549:
+  version "1.10.549"
+  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.10.549.tgz#8de7fe45cb5ab0485a45f03e1d4c6cb07261a4f4"
+  dependencies:
+    crypto-js "3.1.9-1"
+    fetch-ponyfill "^4.1.0"
+    qs "6.5.1"
+
 center-align@^0.1.1:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/center-align/-/center-align-0.1.3.tgz#aa0d32629b6ee972200411cbd4461c907bc2b7ad"
@@ -1785,7 +1807,7 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
-crypto-js@^3.1.9-1:
+crypto-js@3.1.9-1, crypto-js@^3.1.9-1:
   version "3.1.9-1"
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
 
@@ -1920,6 +1942,12 @@ dashdash@^1.12.0:
 data-uri-to-buffer@1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-1.2.0.tgz#77163ea9c20d8641b4707e8f18abdf9a78f34835"
+
+data-uri-to-buffer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-2.0.0.tgz#0ba23671727349828c32cfafddea411908d13d23"
+  dependencies:
+    "@types/node" "^8.0.7"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -2244,6 +2272,12 @@ emojis-list@^2.0.0:
 encodeurl@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.1.tgz#79e3d58655346909fe6f0f45a5de68103b294d20"
+
+encoding@^0.1.11:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"
+  dependencies:
+    iconv-lite "~0.4.13"
 
 end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   version "1.4.0"
@@ -2749,6 +2783,12 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
+fetch-ponyfill@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/fetch-ponyfill/-/fetch-ponyfill-4.1.0.tgz#ae3ce5f732c645eab87e4ae8793414709b239893"
+  dependencies:
+    node-fetch "~1.7.1"
+
 figures@^1.3.5:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
@@ -3024,6 +3064,13 @@ generate-object-property@^1.1.0:
 get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
+
+get-source@^1.0.24:
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/get-source/-/get-source-1.0.24.tgz#898dcc7b5592adba02e8bb82b8d2cda60cdae5c5"
+  dependencies:
+    data-uri-to-buffer "^2.0.0"
+    source-map "^0.6.0"
 
 get-stdin@^4.0.1:
   version "4.0.1"
@@ -3465,7 +3512,7 @@ https-proxy-agent@1:
     debug "2"
     extend "3"
 
-iconv-lite@0.4.19:
+iconv-lite@0.4.19, iconv-lite@~0.4.13:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
@@ -3787,7 +3834,7 @@ is-retry-allowed@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-retry-allowed/-/is-retry-allowed-1.1.0.tgz#11a060568b67339444033d0125a61a20d564fb34"
 
-is-stream@^1.0.0, is-stream@^1.1.0:
+is-stream@^1.0.0, is-stream@^1.0.1, is-stream@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
 
@@ -4898,6 +4945,13 @@ node-cache@^4.1.1:
     clone "2.x"
     lodash "4.x"
 
+node-fetch@~1.7.1:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
+  dependencies:
+    encoding "^0.1.11"
+    is-stream "^1.0.1"
+
 node-forge@0.6.33:
   version "0.6.33"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.6.33.tgz#463811879f573d45155ad6a9f43dc296e8e85ebc"
@@ -5124,6 +5178,17 @@ object.omit@^2.0.0:
 obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.1.tgz#104124b6c602c6796881a042541d36db43a5264e"
+
+ololog@^1.1.83:
+  version "1.1.83"
+  resolved "https://registry.yarnpkg.com/ololog/-/ololog-1.1.83.tgz#322536da52ab7ce16ba00a1dc4338f0a8f2be852"
+  dependencies:
+    ansicolor "^1.1.71"
+    pipez "^1.1.8"
+    printable-characters "^1.0.38"
+    stacktracey "^1.2.96"
+    string.bullet "^1.0.11"
+    string.ify "^1.0.43"
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -5439,6 +5504,10 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
+
+pipez@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/pipez/-/pipez-1.1.8.tgz#ea73726a2312d8fe83192681d70fb2b47026892a"
 
 pkg-dir@^1.0.0:
   version "1.0.0"
@@ -5788,6 +5857,10 @@ pretty@2.0.0:
     condense-newlines "^0.2.1"
     extend-shallow "^2.0.1"
     js-beautify "^1.6.12"
+
+printable-characters@^1.0.26, printable-characters@^1.0.28, printable-characters@^1.0.37, printable-characters@^1.0.38:
+  version "1.0.38"
+  resolved "https://registry.yarnpkg.com/printable-characters/-/printable-characters-1.0.38.tgz#76ef84accfd7f8366fb7138fb92466a916d599bc"
 
 private@^0.1.6, private@^0.1.7:
   version "0.1.8"
@@ -6658,7 +6731,7 @@ source-map@^0.4.2, source-map@^0.4.4:
   dependencies:
     amdefine ">=0.0.4"
 
-source-map@^0.6.1, source-map@~0.6.1:
+source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
@@ -6732,6 +6805,13 @@ ssri@^5.0.0:
 stackframe@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.0.4.tgz#357b24a992f9427cba6b545d96a14ed2cbca187b"
+
+stacktracey@^1.2.96:
+  version "1.2.100"
+  resolved "https://registry.yarnpkg.com/stacktracey/-/stacktracey-1.2.100.tgz#9e32c7a7fa643eaf69a8f9572361339a8afb6b59"
+  dependencies:
+    as-table "^1.0.31"
+    get-source "^1.0.24"
 
 "statuses@>= 1.3.1 < 2":
   version "1.4.0"
@@ -6812,6 +6892,19 @@ string-width@^2.0.0, string-width@^2.1.1:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
+
+string.bullet@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/string.bullet/-/string.bullet-1.0.11.tgz#83d00dc0121fdcc558cf68d77fb91468923a82ae"
+  dependencies:
+    printable-characters "^1.0.26"
+
+string.ify@^1.0.43:
+  version "1.0.43"
+  resolved "https://registry.yarnpkg.com/string.ify/-/string.ify-1.0.43.tgz#dfb0e8fe73c21c23adf7d675c574ba7464f0cc80"
+  dependencies:
+    printable-characters "^1.0.28"
+    string.bullet "^1.0.11"
 
 string_decoder@^1.0.0, string_decoder@~1.0.3:
   version "1.0.3"
