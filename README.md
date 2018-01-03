@@ -8,8 +8,6 @@ Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche
 
 ![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
 
-This project is still in development. Screenshots above can already be different then the latest version.
-
 ## 📱 Our mission 
 We are here to create a fast and easy to use mobile (website) trade and portfolio interface for your favorite exchange. No more missed opportunities or trades because the website of your favorite exchange is too slow or too complicated to use. We optimize our website for easy mobile usage and give you the tools and insights you need on a daily basis. It’s more about you and your trades, and less about the exchange pushing you to buy coins.
 
