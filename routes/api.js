@@ -127,6 +127,24 @@ router.get('/v2/orders', (request, response, next) => {
   })()
 })
 
+router.get('/v2/tickers', (request, response, next) => {
+  (async () => {
+    let exchange = new ccxt.bittrex({
+      'apiKey': request.cookies.bittrexApiKey,
+      'secret': request.cookies.bittrexApiSecret,
+      enableRateLimit: true,
+      'verbose': false
+    })
+
+    try {
+      const tickers = await exchange.fetchTickers()
+      response.json(tickers)
+    } catch (e) {
+      catchExchangeError(ccxt, e, response)
+    }
+  })()
+})
+
 router.get('/withdrawalhistory', function (request, response, next) {
   bittrex.options({
     'apikey': request.cookies.bittrexApiKey,
