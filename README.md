@@ -2,6 +2,8 @@
 
 Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Are my coins taking off or crashing down? Better insights in your cryptocurrency endeavours.
 
+*Since this project is in the early development stage, we currently only support Bittrex. We plan on adding more exchanges in the future.*
+
 Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche)
 
 ![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
@@ -10,8 +12,6 @@ This project is still in development. Screenshots above can already be different
 
 ## 📱 Our mission 
 We are here to create a fast and easy to use mobile (website) trade and portfolio interface for your favorite exchange. No more missed opportunities or trades because the website of your favorite exchange is too slow or too complicated to use. We optimize our website for easy mobile usage and give you the tools and insights you need on a daily basis. It’s more about you and your trades, and less about the exchange pushing you to buy coins.
-
-Since this project is in the early development stage, we currently only support Bittrex. We plan on adding more exchanges in the future. 
 
 ## 🚀 Features
 - Instantly see the current status of your balances and orders. Am I making a profit? Or am I losing money?
