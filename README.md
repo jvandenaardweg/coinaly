@@ -1,19 +1,19 @@
 # Simpletrade
 
-An easy too use mobile "on the go" trade interface for Bittrex, because Bittrex did a horrible job in providing a mobile friendly website.
+Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Are my coins taking off or crashing down? Better insights in your cryptocurrency endeavours.
+
+*Since this project is in the early development stage, we currently only support Bittrex. We plan on adding more exchanges in the future.*
 
 Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche)
 
+Progress for the first beta release can be tracked here: https://github.com/jvandenaardweg/simpletrade/projects/1
+
 ![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
 
-This project is still in development. Screenshots above can already be different then the latest version.
+## 📱 Our mission 
+We are here to create a fast and easy to use mobile (website) trade and portfolio interface for your favorite exchange. No more missed opportunities or trades because the website of your favorite exchange is too slow or too complicated to use. We optimize our website for easy mobile usage and give you the tools and insights you need on a daily basis. It’s more about you and your trades, and less about the exchange pushing you to buy coins.
 
-## Why?
-I find the Bittrex website not easy to use. The mobile version of their website is horrible. It's cluttered with information and does not visualize the things I want to know on a daily/hourly basis. With their API we can do things a little better.
-
-Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. But their website could use a little help.
-
-## Features
+## 🚀 Features
 - Instantly see the current status of your balances and orders. Am I making a profit? Or am I losing money?
 - Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin (in progress)
 - Optimized for mobile screens and mobile performance. Always there with you
@@ -23,28 +23,35 @@ Don't get me wrong, I love the Bittrex exchange with their offer of alt coins. B
 - Live updates all market data. No need to refresh yourself
 - Easily browse and filter all available markets
 
-## Donations
-I'am not affiliated with Bittrex in any way. I'm just a [freelance developer](https://www.linkedin.com/in/jvandenaardweg/) using my spare time to create this. A donation of any size is very welcome!
+## 👨‍🚀 Javascript astronauts wanted 
+We are currently looking for Javascript developers to speed up the development process, so we can add more exchanges in the near future. Preferably we are looking for skilled developers with professional VueJS en NodeJS experience. If you don’t fit that description, but you still want to help us out? That’s awesome! Please contact Jordy directly.
 
-- BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
-- ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
+## 🔓 Bittrex API permissions
+In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
 
-# Setup
+* **Read info** (required: ON) is the minimum required permission that needs to be enabled. Se we can read and display your balances and order history.
+* **Trade limit** (optional: ON) is only required if you want to trade from within the website.
+* **Trade market** (optional: ON) is only required if you want to trade from within the website.
+* **Withdrawal** (required: OFF) we don't need this, so you can leave that one off.
+
+[View example](https://www.dropbox.com/s/h6d7r3qdox0fvt7/bittrexapikeypermissions.png?raw=1)
+
+## 💰 Fuel our efforts 
+We are a hard working bunch of people and are not affiliated with Bittrex in any way. We are just using our spare time to create a better mobile experience for what we love to do: trading cryptocurrencies. 
+
+Do you like what we create? A donation of any size is very welcome! 
+
+* BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo 
+* ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
+
+We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
+
+## 🚧 Developing for this project
 Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://simpletrade.herokuapp.com/ 
 
 This project is in early development, some features might not work yet.
 
-## Bittrex API permissions
-In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
-
-**Read info** is the minimum required permission that needs to be enabled for your API key. **Trade limit** and **Trade market** are required if you want to trade from within the website. 
-
-[View example](https://www.dropbox.com/s/h6d7r3qdox0fvt7/bittrexapikeypermissions.png?raw=1)
-
-**!! Important !!**
-We don't need **Withdrawal** permissions, so please leave that one off.
-
-## Installation
+### Installation
 1. Download this Git repo
 2. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
 3. Run: `npm run dev`
@@ -54,13 +61,13 @@ After started successfully, the website is in development mode and available at 
 
 The API is available at http://localhost:5000.
 
-## Run development mode
+### Run development mode
 ``` bash
 # serve with hot reload at localhost:8080
 npm run dev
 ```
 
-## Build for production
+### Build for production
 ``` bash
 # build for production with minification
 npm run build
@@ -72,7 +79,7 @@ npm run build --report
 npm start
 ```
 
-## Run tests
+### Run tests
 ``` bash
 # run unit tests
 npm run unit
