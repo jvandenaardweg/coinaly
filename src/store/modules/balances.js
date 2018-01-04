@@ -1,4 +1,11 @@
 import axios from '../../axios'
+import pickBy from 'lodash/pickBy'
+
+function filterFilledCurrencies (currencies) {
+  return pickBy(currencies, (currency, currencyName) => {
+    return currency.total > 0
+  })
+}
 
 export default {
   namespaced: true,
@@ -9,6 +16,7 @@ export default {
   },
   mutations: {
     addAll (state, items) {
+      delete items.info
       state.currencies = items
     },
     startLoading (state) {
@@ -28,14 +36,14 @@ export default {
     allCurrencies: state => {
       return state.currencies
     },
+    allCurrenciesTotal: state => {
+      return Object.keys(state.currencies).length
+    },
     allFilledCurrencies: state => {
-      if (state.currencies.length) {
-        return state.currencies.filter(currency => {
-          return currency.Balance > 0
-        })
-      } else {
-        return state.currencies
-      }
+      return filterFilledCurrencies(state.currencies)
+    },
+    allFilledCurrenciesTotal: state => {
+      return Object.keys(filterFilledCurrencies(state.currencies)).length
     },
     isLoading: state => {
       return state.isLoading

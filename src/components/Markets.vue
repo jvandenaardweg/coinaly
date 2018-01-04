@@ -3,10 +3,10 @@
     <div class="markets__body">
       <div v-if="!showLoadingIndicator && hasFilteredMarkets" class="markets__legend">
         <div class="markets__legend-symbol" @click="sortBy('MarketName')">Market</div>
-        <div class="markets__legend-volume" @click="sortBy('BaseVolume')">Volume</div>
+        <div class="markets__legend-volume" @click="sortBy('Volume')">Volume</div>
         <div class="markets__legend-percentage" @click="sortBy('percentage')">Change</div>
       </div>
-      <Market v-if="hasFilteredMarkets && isWithinPageLimit(index)" v-for="(market, index) in filteredMarkets" :key="market.MarketName" :market="market"></Market>
+      <Market v-if="hasFilteredMarkets && isWithinPageLimit(index)" v-for="(market, index) in filteredMarkets" :key="market.symbol" :market="market"></Market>
       <div v-if="!hasFilteredMarkets" class="markets__empty">
         <p v-if="searchQuery">No markets found for "{{ searchQuery }}".</p>
       </div>

@@ -23,10 +23,6 @@ export default {
     if (this.isAuthorized) {
       this.$store.dispatch('orders/getAllHistory')
     }
-  },
-  beforeRouteUpdate (to, from, next) {
-    console.log('hier', to)
-    next()
   }
 }
 </script>

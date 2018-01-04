@@ -26,5 +26,9 @@ module.exports = {
     '!src/main.js',
     '!src/router/index.js',
     '!**/node_modules/**'
+  ],
+  modulePathIgnorePatterns: [
+    'npm-cache',
+    '.npm'
   ]
 }

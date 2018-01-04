@@ -8,13 +8,13 @@ const initialSelectedMarket = (selectedMarketCookie === 'null' ? null : selected
 
 function filterMarkets (array, currency) {
   return array.filter(market => {
-    return market.MarketName.includes(`${currency}-`)
+    return market.symbol.includes(`/${currency}`) // Symbol is something like: XRP/BTC or ETH/BTC (where /BTC is the main market)
   })
 }
 
-function reduceBaseVolume (array) {
+function reduceQuoteVolume (array) {
   return array.reduce((total, number) => {
-    return total + number.BaseVolume
+    return total + number.quoteVolume
   }, 0)
 }
 
@@ -27,7 +27,7 @@ export default {
   },
   mutations: {
     addAllMarkets (state, items) {
-      state.markets = items
+      state.markets = Object.values(items)
     },
     startLoading (state) {
       state.isLoading = true
@@ -62,7 +62,7 @@ export default {
     },
     totalVolume: state => {
       if (state.markets.length) {
-        return reduceBaseVolume(state.markets)
+        return reduceQuoteVolume(state.markets)
       } else {
         return null
       }
@@ -70,7 +70,7 @@ export default {
     totalBtcVolume: state => {
       if (state.markets.length) {
         const filteredMarkets = filterMarkets(state.markets, 'BTC')
-        return reduceBaseVolume(filteredMarkets)
+        return reduceQuoteVolume(filteredMarkets)
       } else {
         return null
       }
@@ -78,7 +78,7 @@ export default {
     totalEthVolume: state => {
       if (state.markets.length) {
         const filteredMarkets = filterMarkets(state.markets, 'ETH')
-        return reduceBaseVolume(filteredMarkets)
+        return reduceQuoteVolume(filteredMarkets)
       } else {
         return null
       }
@@ -86,7 +86,7 @@ export default {
     totalUsdVolume: state => {
       if (state.markets.length) {
         const filteredMarkets = filterMarkets(state.markets, 'USDT')
-        return reduceBaseVolume(filteredMarkets)
+        return reduceQuoteVolume(filteredMarkets)
       } else {
         return null
       }
@@ -98,7 +98,7 @@ export default {
   actions: {
     getAll (context) {
       context.commit('startLoading')
-      return axios.get(`api/marketsummaries`)
+      return axios.get(`api/tickers`)
       .then(response => {
         context.commit('addAllMarkets', response.data)
       })

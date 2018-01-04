@@ -2,22 +2,22 @@
   <table class="order-table">
     <thead>
       <tr>
-        <th>{{ readableOrderType }} ({{ order.Quantity }}) <span>at {{ readableDate(order.Closed) }}</span></th>
+        <th>{{ readableOrderType }} ({{ order.amount }}) <span>at {{ readableDate(order.datetime) }}</span></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><small>Amount</small>{{ order.Quantity }}</td>
+        <td><small>Amount</small>{{ order.amount }}</td>
       </tr>
       <tr>
-        <td><small>Price (BTC)</small>{{ order.PricePerUnit }}</td>
+        <td><small>Price (BTC)</small>{{ order.price }}</td>
       </tr>
       <tr>
-        <td><small>Pair</small>{{ order.Exchange }}</td>
+        <td><small>Pair</small>{{ order.symbol }}</td>
       </tr>
       <tr>
-        <td v-if="isBuy"><small>Costs (BTC)</small>{{ order.Price }}</td>
-        <td v-if="isSell"><small>Proceeds (BTC)</small>{{ order.Price }}</td>
+        <td v-if="isBuy"><small>Costs (BTC)</small>{{ order.cost }}</td>
+        <td v-if="isSell"><small>Proceeds (BTC)</small>{{ order.cost }}</td>
       </tr>
       <tr>
         <td v-if="isBuy"><small>Worth</small>{{ currentWorth }}</td>
@@ -37,13 +37,13 @@ export default {
   props: ['order'],
   computed: {
     isBuy () {
-      return this.order.OrderType === 'LIMIT_BUY'
+      return this.order.side === 'buy'
     },
     isSell () {
-      return this.order.OrderType === 'LIMIT_SELL'
+      return this.order.side === 'sell'
     },
     readableOrderType () {
-      if (this.order.OrderType === 'LIMIT_SELL') {
+      if (this.order.side === 'sell') {
         return 'Sold'
       } else {
         return 'Bought'
@@ -54,12 +54,12 @@ export default {
         let currentWorth = null
         const markets = this.$store.getters['markets/allMarkets']
         const currentMarket = markets.filter(market => {
-          return market.MarketName === this.order.Exchange // TODO: make BTC dynamic, can be something else
+          return market.symbol === this.order.symbol
         })
 
         if (currentMarket.length) {
-          const lastPricePerUnit = currentMarket[0].Last
-          currentWorth = (lastPricePerUnit * this.order.Quantity).toFixed(8)
+          const lastPricePerUnit = currentMarket[0].last
+          currentWorth = (lastPricePerUnit * this.order.amount).toFixed(8)
         }
 
         return currentWorth
@@ -76,7 +76,7 @@ export default {
     },
     delta () {
       if (this.isBuy) {
-        const percentage = ((this.currentWorth - this.order.Price) / this.order.Price * 100).toFixed(2)
+        const percentage = ((this.currentWorth - this.order.cost) / this.order.cost * 100).toFixed(2)
         return percentage
       } else {
         return '-'
