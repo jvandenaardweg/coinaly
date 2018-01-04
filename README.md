@@ -6,6 +6,8 @@ Fast and easy to use mobile trade interface for cryptocurrencies. Track your tra
 
 Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche)
 
+Progress for the first beta release can be tracked here: https://github.com/jvandenaardweg/simpletrade/projects/1
+
 ![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
 
 ## 📱 Our mission 
