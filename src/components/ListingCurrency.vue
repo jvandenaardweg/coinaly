@@ -365,10 +365,10 @@ export default {
 
   .listing-currency__controls {
     text-align: right;
-    padding: 0 0 15px 0;
+    padding: 0 15px 15px 0;
     display: flex;
     flex-direction: row;
-   justify-content: flex-end;
+    justify-content: flex-end;
 
     .button {
       margin-left: 5px;
