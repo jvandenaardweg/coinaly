@@ -104,9 +104,9 @@ export default {
     },
     isInBalance () {
       const inBalanceCurrencyNames = pickBy(this.allFilledCurrenciesInBalance, (currency, currencyName) => {
-        return currency.symbol === this.market.symbol
+        return this.currency === currencyName
       })
-      return inBalanceCurrencyNames.length
+      return Object.keys(inBalanceCurrencyNames).length
     }
   },
   methods: {
@@ -182,7 +182,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    
+
     .button {
       margin-left: 5px;
     }
