@@ -106,5 +106,9 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
+  ],
+  "modulePathIgnorePatterns": [
+    "npm-cache",
+    ".npm"
   ]
 }

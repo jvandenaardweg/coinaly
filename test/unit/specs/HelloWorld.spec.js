@@ -1,11 +1,11 @@
 import Vue from 'vue'
-import HelloWorld from '@/components/HelloWorld'
+import Button from '@/components/Button'
 
-describe('HelloWorld.vue', () => {
-  it('should render correct contents', () => {
-    const Constructor = Vue.extend(HelloWorld)
+describe('Button.vue', () => {
+  it('should render correct button', () => {
+    const Constructor = Vue.extend(Button)
     const vm = new Constructor().$mount()
-    expect(vm.$el.querySelector('.hello h1').textContent)
-    .toEqual('Welcome to Your Vue.js App')
+    expect(vm.$el.querySelector('.button'))
+    .toBeDefined()
   })
 })
