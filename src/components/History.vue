@@ -17,7 +17,8 @@
         <div class="history__legend-type">Type</div>
       </div>
 
-      <Order v-if="historyOrders && isWithinPageLimit(index)" v-for="(order, index) in historyOrders" :key="order.OrderUuid" :order="order"></Order>
+      <Order v-if="historyOrders && isWithinPageLimit(index)" v-for="(order, index) in historyOrders" :key="order.id" :order="order"></Order>
+
       <div v-if="!hasFilteredOrders" class="history__empty">
         <p v-if="searchQuery">No orders found for "{{ searchQuery }}".</p>
       </div>
@@ -86,7 +87,6 @@ export default {
     historyOrders () {
       let orderHistory
       const orderType = this.$route.params.orderType
-      console.log(orderType)
 
       if (orderType === 'buys') {
         orderHistory = this.allBuyOrders
@@ -98,7 +98,7 @@ export default {
 
       if (this.searchQueryInLowerCase) {
         return orderHistory.filter(order => {
-          return order.Exchange.toLowerCase().includes(this.searchQueryInLowerCase)
+          return order.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
         })
       } else {
         return orderHistory

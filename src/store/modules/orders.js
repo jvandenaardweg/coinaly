@@ -49,7 +49,7 @@ export default {
     getAllBuyHistory: state => {
       if (state.history.length) {
         return state.history.filter(order => {
-          return order.OrderType === 'LIMIT_BUY'
+          return order.side === 'buy'
         })
       } else {
         return state.history
@@ -58,7 +58,7 @@ export default {
     getAllSellHistory: state => {
       if (state.history.length) {
         return state.history.filter(order => {
-          return order.OrderType === 'LIMIT_SELL'
+          return order.side === 'sell'
         })
       } else {
         return state.history
@@ -70,11 +70,11 @@ export default {
   },
   actions: {
     cancelOrder (context, uuid) {
-      return axios.get(`api/market/cancel?uuid=${uuid}`)
+      return axios.get(`api/cancelorder?uuid=${uuid}`)
     },
     getAllHistory (context) {
       context.commit('startLoading')
-      return axios.get(`api/orderhistory`)
+      return axios.get(`api/orders`)
       .then(response => {
         context.commit('addAllHistory', response.data)
       })
@@ -87,7 +87,7 @@ export default {
     },
     getOpenOrders (context) {
       context.commit('startLoading')
-      return axios.get(`api/openorders`)
+      return axios.get(`api/orders?status=open`)
       .then(response => {
         context.commit('addAllOpen', response.data)
       })

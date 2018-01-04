@@ -2,15 +2,15 @@
   <div class="order" :class="{'is-expanded': isExpanded}">
     <div class="order__header" @click.prevent="toggleExpand()">
       <div class="order__symbol">
-        <strong>{{ order.Exchange }}</strong>
+        <strong>{{ order.symbol }}</strong>
       </div>
       <div class="order__meta">
-        <span>{{ order.Quantity }}</span>
+        <span>{{ order.amount }}</span>
       </div>
       <div class="order__percentage" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false}">
         <span v-if="isClosedBuy && delta !== null">{{ delta }}%</span>
-        <Label v-if="order.OrderType === 'LIMIT_SELL'" :text="'Sell'" :color="'red'"></Label>
-        <Label v-if="order.OrderType === 'LIMIT_BUY'" :text="'Buy'" :color="'green'"></Label>
+        <Label v-if="order.side === 'sell'" :text="'Sell'" :color="'red'"></Label>
+        <Label v-if="order.side === 'buy'" :text="'Buy'" :color="'green'"></Label>
       </div>
     </div>
     <div class="order__stats" v-if="!isClosed">
@@ -21,21 +21,21 @@
         <strong>Worth:</strong> <span>{{ currentWorth }} ({{ delta }}%)</span>
       </div>
       <ul>
-        <li><small>Quantity</small><span>{{ order.Quantity }}</span></li>
-        <li><small>Remaining</small><span>{{ order.QuantityRemaining }}</span></li>
-        <li><small>Price</small><span>{{ order.Price }}</span></li>
-        <li><small>Limit</small><span>{{ order.Limit }}</span></li>
-        <li><small>Target</small><span>{{ order.ConditionTarget }}</span></li>
-        <li><small>Condition</small><span>{{ order.Condition }}</span></li>
+        <li><small>Quantity</small><span>{{ order.amount }}</span></li>
+        <li><small>Remaining</small><span>{{ order.remaining }}</span></li>
+        <li><small>Cost</small><span>{{ order.cost }}</span></li>
+        <li><small>Price (limit)</small><span>{{ order.price }}</span></li>
+        <li><small>Target</small><span>{{ order.info.ConditionTarget }}</span></li>
+        <li><small>Condition</small><span>{{ order.info.Condition }}</span></li>
       </ul>
       <ul v-if="!isClosed">
-        <li><small>Market price</small><span>{{ currentMarket.Last }}</span></li>
+        <li><small>Market price</small><span>{{ currentMarket.last }}</span></li>
         <li><small>Order difference</small><span :class="{'is-positive': differencePercentage > 5, 'is-negative': differencePercentage < 0, 'is-warning': differencePercentage < 5}">{{ differencePercentage }}%</span></li>
       </ul>
-      <p v-if="order.Condition !== 'NONE'">{{ readableOrder }}</p>
+      <p v-if="order.info.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>
-    <div v-if="order.QuantityRemaining && isExpanded" class="order__footer">
-      <Button :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.OrderUuid)"></Button>
+    <div v-if="order.remaining && isExpanded" class="order__footer">
+      <Button :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.id)"></Button>
       <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
     </div>
   </div>
@@ -65,47 +65,47 @@ export default {
   },
   computed: {
     mainPair () {
-      return this.order.Exchange.replace(/-.*/, '')
+      return this.order.symbol.split('/')[1]
     },
     coinName () {
-      return this.order.Exchange.replace(/.*-/, '')
+      return this.order.symbol.split('/')[0]
     },
     isBuy () {
-      return this.order.OrderType === 'LIMIT_BUY'
+      return this.order.side === 'buy'
     },
     isSell () {
-      return this.order.OrderType === 'LIMIT_SELL'
+      return this.order.side === 'sell'
     },
     isClosedBuy () {
-      return this.isBuy && this.order.Closed
+      return this.order.side === 'buy' && this.order.status === 'closed'
     },
     isClosed () {
-      return this.order.Closed
+      return this.order.status === 'closed'
     },
     allMarkets () {
       return this.$store.getters['markets/allMarkets']
     },
     currentMarket () {
       return this.allMarkets.filter(market => {
-        return market.MarketName === this.order.Exchange
+        return market.symbol === this.order.symbol
       })[0]
     },
     difference () {
-      const currentMarketLast = this.currentMarket.Last
-      const orderLimit = this.order.Limit
+      const currentMarketLast = this.currentMarket.last
+      const orderLimit = this.order.limit
       return (currentMarketLast - orderLimit).toFixed(8)
     },
     differencePercentage () {
-      const currentMarketLast = this.currentMarket.Last
-      const orderLimit = this.order.Limit
+      const currentMarketLast = this.currentMarket.last
+      const orderLimit = this.order.price
       return (((currentMarketLast - orderLimit) / orderLimit) * 100).toFixed(2)
     },
     currentWorth () {
       if (this.isBuy) {
         let currentWorth = null
         if (this.currentMarket) {
-          const lastPricePerUnit = this.currentMarket.Last
-          currentWorth = (lastPricePerUnit * this.order.Quantity).toFixed(8)
+          const lastPricePerUnit = this.currentMarket.last
+          currentWorth = (lastPricePerUnit * this.order.amount).toFixed(8)
         }
         return currentWorth
       } else {
@@ -115,7 +115,7 @@ export default {
     delta () {
       if (this.allMarkets.length) {
         if (this.isBuy) {
-          const percentage = ((this.currentWorth - this.order.Price) / this.order.Price * 100).toFixed(2)
+          const percentage = ((this.currentWorth - this.order.cost) / this.order.cost * 100).toFixed(2)
           return percentage
         } else {
           return '-'
@@ -132,13 +132,13 @@ export default {
       }
     },
     readableOrder () {
-      const readableCondition = (this.order.Condition === 'LESS_THAN' ? 'less than' : 'more than')
-      const readableOrderType = (this.order.OrderType === 'LIMIT_BUY' ? 'buy' : 'sell')
-      return `If market price is ${readableCondition} ${this.order.ConditionTarget} then ${readableOrderType} ${this.order.Quantity} ${this.order.Exchange} for ${this.order.Limit}`
+      const readableCondition = (this.order.info.Condition === 'LESS_THAN' ? 'less than' : 'more than')
+      const readableOrderType = (this.order.info.OrderType === 'LIMIT_BUY' ? 'buy' : 'sell')
+      return `If market price is ${readableCondition} ${this.order.info.ConditionTarget} then ${readableOrderType} ${this.order.amount} ${this.order.symbol} for ${this.order.price}`
     },
     filledPercentage () {
-      const difference = this.order.QuantityRemaining - this.order.Quantity
-      const filledPercentage = (difference / this.order.Quantity) * 100
+      const difference = this.order.amount - this.order.remaining
+      const filledPercentage = (difference / this.order.amount) * 100
       return Math.ceil(filledPercentage)
     },
     cancelLabel () {
@@ -163,8 +163,13 @@ export default {
           this.$store.dispatch('orders/getOpenOrders')
         })
         .catch(error => {
+          let reason
           console.error('errorrrr', error)
-          this.errorMessage = 'Something went wrong. Please try again.'
+          if (error.reason === 'request timeout') {
+            reason = 'The exchange did not respond...'
+          }
+          // TODO: if something when wrong, do an extra check to see if the order is canceled or not
+          this.errorMessage = `Something went wrong. ${reason} Please try again.`
         })
         .finally(() => {
           this.cancelLoading = false

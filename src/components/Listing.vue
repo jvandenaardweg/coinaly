@@ -12,7 +12,7 @@
         <div class="listing__legend-amount">Amount</div>
         <div class="listing__legend-worth">Worth</div>
       </div>
-      <ListingCurrency v-for="currency in currencies" :key="currency.Currency" :currency="currency"></ListingCurrency>
+      <ListingCurrency v-for="(currency, key, index) in currencies" :key="key" :currency="currency" :currencyName="key" :index="index"></ListingCurrency>
       <div v-if="showLoadingIndicator" class="listing__empty">
         <p>Loading your balances...</p>
       </div>
@@ -44,7 +44,7 @@ export default {
       return this.$store.getters['balances/isLoading'] || this.$store.getters['orders/isLoading']
     },
     showLoadingIndicator () {
-      return !this.allCurrencies.length && this.isLoading
+      return !this.allCurrenciesTotal && this.isLoading
     },
     allCurrencies () {
       return this.$store.getters['balances/allCurrencies']
@@ -59,12 +59,18 @@ export default {
         return this.allFilledCurrencies
       }
     },
+    allCurrenciesTotal () {
+      return this.$store.getters['balances/allCurrenciesTotal']
+    },
+    allFilledCurrenciesTotal () {
+      return this.$store.getters['balances/allFilledCurrenciesTotal']
+    },
     openOrders () {
       return this.$store.getters['orders/allOpenOrders']
     },
     showAllLabel () {
       if (!this.showAll) {
-        return `Show all (${this.allCurrencies.length})`
+        return `Show all (${this.allCurrenciesTotal})`
       } else {
         return 'Hide 0 balances'
       }
@@ -73,8 +79,8 @@ export default {
   methods: {
     toggleShowAll () {
       if (this.showAll) {
-        this.currencies = this.allFilledCurrencies
         this.showAll = false
+        this.currencies = this.allFilledCurrencies
       } else {
         this.currencies = this.allCurrencies
         this.showAll = true

@@ -12,4 +12,7 @@ var axiosInstance = axios.create({
   withCredentials: true
 })
 
+axiosInstance.defaults.params = {}
+axiosInstance.defaults.params['exchange'] = 'bittrex' // This needs to change when we add more exchanges
+
 module.exports = axiosInstance

@@ -1,15 +1,15 @@
 <template>
   <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
-      <div class="listing-currency__symbol"><strong>{{ currency.Currency }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.Balance }}</div>
-      <div class="listing-currency__percentage"><span v-if="allMarkets">{{ currentWorth(currency.Balance, currency.Currency) }}</span></div>
+      <div class="listing-currency__symbol"><strong>{{ currencyName }}</strong></div>
+      <div class="listing-currency__meta">{{ currency.total }}</div>
+      <div class="listing-currency__percentage"><span v-if="allMarkets">{{ currentWorth(currency.total, currencyName) }}</span></div>
     </div>
     <div class="listing-currency__stats">
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
       <div v-if="isExpanded" class="listing-currency__legenda">
         <ul>
-          <li><span>Available:</span> <p>{{ currency.Available }}</p></li>
+          <li><span>Available:</span> <p>{{ currency.free }}</p></li>
           <li><span>In open orders:</span> <p>{{ difference }}</p></li>
           <!-- Sold: {{ totalSell(currency.Currency) }}, Bought: {{ totalBuy(currency.Currency) }}, Diff: {{ buySellDifference(currency.Currency) }}, Withdrawl: {{ totalWithdrawalByCurrency(currency.Currency)}}, Deposit: {{ totalDepositByCurrency(currency.Currency)}} -->
         </ul>
@@ -21,12 +21,12 @@
       </div> -->
       <div class="listing-currency__controls">
         <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
-        <Button :label="'Sell'" :className="'danger'" @click.native="handleClick('sell')" :disabled="!currency.Available"></Button>
+        <Button :label="'Sell'" :className="'danger'" @click.native="handleClick('sell')" :disabled="!currency.free"></Button>
         <Button :label="'Buy'" @click.native="handleClick('buy')"></Button>
       </div>
       <div class="listing-currency__history">
-          <Button v-if="totalOrderHistory(currency.Currency)" :className="'link'" :label="`View history (${totalOrderHistory(currency.Currency)})`" @click.native="toggleShowOrderHistory()"></Button>
-          <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currency.Currency)" :key="index" :order="order"></OrderTable>
+          <Button v-if="totalOrderHistory(currencyName)" :className="'link'" :label="`View history (${totalOrderHistory(currencyName)})`" @click.native="toggleShowOrderHistory()"></Button>
+          <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currencyName)" :key="index" :order="order"></OrderTable>
         </div>
     </div>
     <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
@@ -44,7 +44,7 @@ import ChartOverlay from '@/components/ChartOverlay'
 
 export default {
   name: 'Listing',
-  props: ['currency'],
+  props: ['currency', 'currencyName'],
   components: {
     Button,
     ButtonIcon,
@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     currencyPair () {
-      const currency = this.currency.Currency
+      const currency = this.currencyName
       if (currency === 'BTC') {
         return 'BTC'
       } else {
@@ -72,8 +72,8 @@ export default {
       }
     },
     stats () {
-      const balance = this.currency.Balance // Total (excluding open orders)
-      const available = this.currency.Available // Available (minus open orders)
+      const balance = this.currency.total // Total (excluding open orders)
+      const available = this.currency.free // Available (minus open orders)
       const difference = (balance - available)
       const availablePercentage = Math.ceil((available / balance) * 100)
       const differencePercentage = Math.ceil((difference / balance) * 100)
@@ -84,7 +84,7 @@ export default {
       }
     },
     difference () {
-      const difference = (this.currency.Balance - this.currency.Available)
+      const difference = (this.currency.total - this.currency.free)
 
       if (difference === 0) {
         return 0
@@ -119,19 +119,19 @@ export default {
     orderHistoryByCurrency (currency) {
       const orderHistory = this.$store.getters['orders/getAllHistory']
       return orderHistory.filter(order => {
-        return order.Exchange === `BTC-${currency}` // TODO: market (BTC) can be different, make dynamic
+        return order.symbol === `${currency}/BTC` // TODO: market (BTC) can be different, make dynamic
       })
     },
     depositHistoryByCurrency (currency) {
       const orderHistory = this.$store.getters['deposits/getAllHistory']
       return orderHistory.filter(order => {
-        return order.Currency === currency
+        return this.currencyName === currency
       })
     },
     withdrawalHistoryByCurrency (currency) {
       const orderHistory = this.$store.getters['withdrawals/getAllHistory']
       return orderHistory.filter(order => {
-        return order.Currency === currency
+        return this.currencyName === currency
       })
     },
     totalWithdrawalByCurrency (currency) {
@@ -171,11 +171,11 @@ export default {
       const orderHistory = this.$store.getters['orders/getAllSellHistory']
 
       const totalByCurrency = orderHistory.filter(order => {
-        return order.Exchange === `BTC-${currency}` // TODO: market (BTC) can be different, make dynamic
+        return order.symbol === `${currency}/BTC` // TODO: market (BTC) can be different, make dynamic
       })
 
       const soldAmount = totalByCurrency.map(order => {
-        return order.Quantity
+        return order.amount
       })
 
       if (soldAmount.length) {
@@ -190,11 +190,11 @@ export default {
       let amount = 0
       const orderHistory = this.$store.getters['orders/getAllBuyHistory']
       const totalByCurrency = orderHistory.filter(order => {
-        return order.Exchange === `BTC-${currency}` // TODO: market (BTC) can be different, make dynamic
+        return order.symbol === `${currency}/BTC` // TODO: market (BTC) can be different, make dynamic
       })
 
       const buyAmount = totalByCurrency.map(order => {
-        return order.Quantity
+        return order.amount
       })
 
       if (buyAmount.length) {
@@ -222,23 +222,23 @@ export default {
 
         // TODO: optimize performance, this is slow
         const currencyMarket = this.allMarkets.filter(market => {
-          return market.MarketName === `BTC-${currency}` // TODO: make dynamic, BTC can be something else
+          return market.symbol === `${currency}/BTC` // TODO: make dynamic, BTC can be something else
         })[0]
 
         // Get the USD market data for BTC
         // TODO: optimize performance, this is slow
         const usdMarket = this.allMarkets.filter(market => {
-          return market.MarketName === `USDT-BTC` // TODO: make dynamic, BTC can be something else
+          return market.symbol === `BTC/USDT` // TODO: make dynamic, BTC can be something else
         })[0]
 
         // If the currency is just BTC, show the USD market data
         if (currency === 'BTC') {
-          const worth = (amount * usdMarket.Last).toFixed(2)
+          const worth = (amount * usdMarket.last).toFixed(2)
           return `$${worth}`
         } else {
           if (currencyMarket && usdMarket) {
-            worthBtc = amount * currencyMarket.Last
-            worthUsd = (worthBtc * usdMarket.Last).toFixed(2)
+            worthBtc = amount * currencyMarket.last
+            worthUsd = (worthBtc * usdMarket.last).toFixed(2)
             return `$${worthUsd}`
           } else {
             return worth

@@ -1,12 +1,11 @@
 <template>
-  <div class="market" :class="{ 'is-in-balance': isInBalance(market.MarketName), 'is-expanded': isExpanded }">
+  <div class="market" :class="{ 'is-in-balance': isInBalance, 'is-expanded': isExpanded }">
     <div class="market__header" @click.prevent="toggleExpand()">
       <div class="market__symbol">
-        <strong>{{ market.MarketName }}</strong>
+        <strong>{{ market.symbol }}</strong>
       </div>
       <div class="market__volume">
         <Progress v-once :blue="0" :green="0" :orange="0" :black="currencyVolumePercentage"></Progress>
-        <!-- <span>{{ currencyVolumePercentage }}% ({{ number(market.BaseVolume) }} {{ mainPair }})</span> -->
       </div>
       <div class="market__percentage" :class="{'is-positive': isPositiveOneDayDiff === true, 'is-negative': isPositiveOneDayDiff === false }">
         <span>{{ oneDayDiffPercentage }}%</span>
@@ -14,13 +13,13 @@
     </div>
     <div v-if="isExpanded" class="market__body">
       <ul>
-        <li>Vol: {{ Math.floor(market.BaseVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage }})</span></li>
-        <li>Last: {{ market.Last}} </li>
-        <li>Today low: {{ market.Low }}</li>
-        <li>Today high: {{ market.High }}</li>
-        <li>Yesterday: {{ market.PrevDay }}</li>
-        <li>Open buy orders: {{ market.OpenBuyOrders }}</li>
-        <li>Open sell orders: {{ market.OpenSellOrders }}</li>
+        <li>Vol: {{ Math.floor(market.quoteVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage }})</span></li>
+        <li>Last: {{ market.last}} </li>
+        <li>Today low: {{ market.low }}</li>
+        <li>Today high: {{ market.high }}</li>
+        <li>Yesterday: {{ market.info.PrevDay }}</li>
+        <li>Open buy orders: {{ market.info.OpenBuyOrders }}</li>
+        <li>Open sell orders: {{ market.info.OpenSellOrders }}</li>
       </ul>
     </div>
     <div v-if="isExpanded" class="market__footer">
@@ -33,6 +32,8 @@
 
 <script>
 import numeral from 'numeral'
+import pickBy from 'lodash/pickBy'
+
 import Progress from '@/components/Progress'
 import Button from '@/components/Button'
 import ButtonIcon from '@/components/ButtonIcon'
@@ -78,20 +79,19 @@ export default {
       } else {
         volume = this.totalBtcVolume
       }
-      return ((this.market.BaseVolume / volume) * 100).toFixed(2)
+      return ((this.market.quoteVolume / volume) * 100).toFixed(2)
     },
     mainPair () {
-      return this.market.MarketName.replace(/-.*/, '')
+      return this.market.symbol.split('/')[1]
     },
     currency () {
-      return this.getCurrencyFromMarketName(this.market.MarketName)
+      return this.market.symbol.split('/')[0]
     },
     chartCurrencyPair () {
-      const currency = this.getCurrencyFromMarketName(this.market.MarketName)
-      return `${currency}${this.mainPair}`
+      return `${this.currency}${this.mainPair}`
     },
     oneDayDiffPercentage () {
-      return (((this.market.Last - this.market.PrevDay) / this.market.PrevDay) * 100).toFixed(2)
+      return (((this.market.last - this.market.info.PrevDay) / this.market.info.PrevDay) * 100).toFixed(2)
     },
     isPositiveOneDayDiff () {
       if (this.oneDayDiffPercentage > 0) {
@@ -101,18 +101,15 @@ export default {
       } else {
         return null
       }
+    },
+    isInBalance () {
+      const inBalanceCurrencyNames = pickBy(this.allFilledCurrenciesInBalance, (currency, currencyName) => {
+        return currency.symbol === this.market.symbol
+      })
+      return inBalanceCurrencyNames.length
     }
   },
   methods: {
-    getCurrencyFromMarketName (marketName) {
-      return marketName.replace(/.*-/, '') // Replaces the "BTC-", "ETH-", "USD-" from the market name
-    },
-    isInBalance (marketName) {
-      const inBalanceCurrencyNames = this.allFilledCurrenciesInBalance.filter(currency => {
-        return currency.Currency === this.getCurrencyFromMarketName(marketName)
-      })
-      return inBalanceCurrencyNames.length
-    },
     number (number) {
       return numeral(number).format('0,0')
     },

@@ -38,37 +38,37 @@ export default {
       const currency = this.$route.params.currency
 
       if (currency === 'BTC') {
-        const btcMarkets = this.$store.getters['markets/allBtcMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
+        const btcMarkets = this.$store.getters['markets/allBtcMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return btcMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
+            return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return btcMarkets
         }
       } else if (currency === 'ETH') {
-        const ethMarkets = this.$store.getters['markets/allEthMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
+        const ethMarkets = this.$store.getters['markets/allEthMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return ethMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
+            return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return ethMarkets
         }
       } else if (currency === 'USD') {
-        const usdMarkets = this.$store.getters['markets/allUsdMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
+        const usdMarkets = this.$store.getters['markets/allUsdMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return usdMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
+            return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return usdMarkets
         }
       } else {
-        const allMarkets = this.$store.getters['markets/allMarkets'].sort((a, b) => b.BaseVolume - a.BaseVolume)
+        const allMarkets = this.$store.getters['markets/allMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return allMarkets.filter(market => {
-            return market.MarketName.toLowerCase().includes(this.searchQueryInLowerCase)
+            return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
           })
         } else {
           return allMarkets

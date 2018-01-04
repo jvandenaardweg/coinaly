@@ -7,32 +7,70 @@ const router = express.Router()
 const app = express()
 app.use(cookieParser())
 
-let sleep = (ms) => new Promise (resolve => setTimeout(resolve, ms))
+// let sleep = (ms) => new Promise (resolve => setTimeout(resolve, ms))
 
-function catchExchangeError (ccxt, e, response) {
+// A method to create exchange instances based on the exchange name given as a query parameter in the REST calls
+// Example: /api/balances?exchange=bittrex
+function createExchangeInstance (requestQueries, requestCookies) {
+  let exchangeInstance
+  const exchangeName = requestQueries.exchange
+  const apiKey = requestCookies.bittrexApiKey
+  const apiSecret = requestCookies.bittrexApiSecret
+
+  if (exchangeName && apiKey && apiSecret) {
+    const lowercasedExchangeName = exchangeName.toLowerCase()
+
+    if (lowercasedExchangeName === 'bittrex') {
+      exchangeInstance = new ccxt.bittrex({
+        apiKey: apiKey,
+        secret: apiSecret,
+        timeout: 15000
+      })
+      return exchangeInstance
+    } else {
+      throw new Error('Exchange not supported, currently only bittrex. Or you just need to send the ?exchange=bittrex parameter in the request.')
+    }
+  } else {
+    throw new Error('Cannot create instance, need exchangeName, apiKey and apiSecret.')
+  }
+}
+
+function handleExchangeError (ccxt, e, response) {
   let message
+  let reason = null
   if (e instanceof ccxt.DDoSProtection || e.message.includes('ECONNRESET')) {
     log.bright.yellow('[DDoS Protection] ' + e.message)
     message = e.message
+    reason = 'ddos protection'
   } else if (e instanceof ccxt.RequestTimeout) {
     log.bright.yellow('[Request Timeout] ' + e.message)
     message = e.message
+    reason = 'request timeout'
   } else if (e instanceof ccxt.AuthenticationError) {
     log.bright.yellow('[Authentication Error] ' + e.message)
     message = e.message
+    reason = 'authentication error'
   } else if (e instanceof ccxt.ExchangeNotAvailable) {
     log.bright.yellow('[Exchange Not Available Error] ' + e.message)
     message = e.message
+    reason = 'exchange not available error'
   } else if (e instanceof ccxt.ExchangeError) {
     log.bright.yellow('[Exchange Error] ' + e.message)
     message = e.message
+    reason = 'exchange error'
   } else if (e instanceof ccxt.NetworkError) {
     log.bright.yellow('[Network Error] ' + e.message)
     message = e.message
+    reason = 'network error'
   } else {
     message = e.message
   }
-  response.status(500).json({message: message})
+
+  response.status(500).json({
+    status: 'error',
+    reason: reason,
+    message: message
+  })
 }
 
 router.get('*', function (request, response, next) {
@@ -47,177 +85,200 @@ router.get('*', function (request, response, next) {
   next()
 })
 
-// https://www.npmjs.com/package/node.bittrex.api
-
-router.get('/v2/balances', (request, response, next) => {
-
+router.get('/balances', (request, response, next) => {
   (async () => {
-    // instantiate the exchange
-    let exchange = new ccxt.bittrex({
-      'apiKey': request.cookies.bittrexApiKey,
-      'secret': request.cookies.bittrexApiSecret,
-      'verbose': false
-    })
-
     try {
-      let balance = await exchange.fetchBalance()
-      response.json(balance)
-    } catch (e) {
-      catchExchangeError(ccxt, e, response)
+      const exchange = createExchangeInstance(request.query, request.cookies)
+      const result = await exchange.fetchBalance()
+      response.json(result)
+    } catch (error) {
+      handleExchangeError(ccxt, error, response)
     }
   })()
 })
 
-router.get('/balances', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
-
-  bittrex.getbalances((data) => {
-    if (data && data.success) {
-      response.json(data.result)
-    } else {
-      response.status(500).json(data)
-    }
-  })
-})
-
-router.get('/orderhistory', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
-
-  bittrex.getorderhistory({}, (data) => {
-    if (data && data.success) {
-      response.json(data.result)
-    } else {
-      response.status(500).json(data)
-    }
-  })
-})
-
-router.get('/v2/orders', (request, response, next) => {
-  const orderStatus = request.query.status
-  let orders
-
+router.get('/orders', (request, response, next) => {
+  let result
   (async () => {
-    let exchange = new ccxt.bittrex({
-      'apiKey': request.cookies.bittrexApiKey,
-      'secret': request.cookies.bittrexApiSecret,
-      enableRateLimit: true,
-      'verbose': false
-    })
-
     try {
-      if (orderStatus === 'open') {
-        orders = await exchange.fetchOpenOrders()
-      } else if (orderStatus === 'closed') {
-        orders = await exchange.fetchClosedOrders()
-      } else {
-        orders = await exchange.fetchOrders()
+      const orderStatus = request.query.status
+      const exchange = createExchangeInstance(request.query, request.cookies)
+
+      switch (orderStatus) {
+        case 'open':
+          result = await exchange.fetchOpenOrders()
+          break
+        case 'closed':
+          result = await exchange.fetchClosedOrders()
+          break
+        default:
+          result = await exchange.fetchOrders()
       }
-      response.json(orders)
-    } catch (e) {
-      catchExchangeError(ccxt, e, response)
+
+      response.json(result)
+    } catch (error) {
+      handleExchangeError(ccxt, error, response)
     }
   })()
 })
 
-router.get('/v2/tickers', (request, response, next) => {
+router.get('/tickers', (request, response, next) => {
   (async () => {
-    let exchange = new ccxt.bittrex({
-      'apiKey': request.cookies.bittrexApiKey,
-      'secret': request.cookies.bittrexApiSecret,
-      enableRateLimit: true,
-      'verbose': false
-    })
-
     try {
-      const tickers = await exchange.fetchTickers()
-      response.json(tickers)
+      const exchange = createExchangeInstance(request.query, request.cookies)
+      const result = await exchange.fetchTickers()
+      response.json(result)
     } catch (e) {
-      catchExchangeError(ccxt, e, response)
+      handleExchangeError(ccxt, e, response)
     }
   })()
 })
 
-router.get('/withdrawalhistory', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
-
-  bittrex.getwithdrawalhistory({}, (data) => {
-    if (data && data.success) {
-      response.json(data.result)
-    } else {
-      response.status(500).json(data)
+router.get('/withdrawalhistory', (request, response, next) => {
+  (async () => {
+    try {
+      const exchange = createExchangeInstance(request.query, request.cookies)
+      const result = await exchange.accountGetWithdrawalhistory() // According to CCXT docs, this method might differ per exchange. Need to look into this when we add more exchanges. See https://github.com/ccxt/ccxt/wiki/Manual#publicprivate-api
+      response.json(result)
+    } catch (e) {
+      handleExchangeError(ccxt, e, response)
     }
-  })
+  })()
 })
 
-router.get('/deposithistory', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
-
-  bittrex.getdeposithistory({}, (data) => {
-    if (data && data.success) {
-      response.json(data.result)
-    } else {
-      response.status(500).json(data)
+router.get('/deposithistory', (request, response, next) => {
+  (async () => {
+    try {
+      const exchange = createExchangeInstance(request.query, request.cookies)
+      const result = await exchange.accountGetDeposithistory() // According to CCXT docs, this method might differ per exchange. Need to look into this when we add more exchanges. See https://github.com/ccxt/ccxt/wiki/Manual#publicprivate-api
+      response.json(result)
+    } catch (e) {
+      handleExchangeError(ccxt, e, response)
     }
-  })
+  })()
 })
 
-router.get('/openorders', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
-
-  bittrex.getopenorders({}, (data) => {
-    if (data && data.success) {
-      response.json(data.result)
-    } else {
-      if (!data) {
-        response.status(500).json({'message': 'Are you sure your API key has the trade permissions?'})
-      } else {
-        response.status(500).json(data)
-      }
+router.get('/cancelorder', (request, response, next) => {
+  const orderUuid = request.query.uuid;
+  (async () => {
+    try {
+      const exchange = createExchangeInstance(request.query, request.cookies)
+      const result = await exchange.cancelOrder(orderUuid)
+      response.json(result)
+    } catch (e) {
+      handleExchangeError(ccxt, e, response)
     }
-  })
+  })()
 })
 
-router.get('/market/cancel', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
 
-  const uuid = request.query.uuid
-  if (!uuid) {
-    response.status(500).json({'message': 'Please provide an uuid'})
-    return
-  }
 
-  bittrex.cancel({ uuid: uuid }, (data) => {
-    if (data && data.success) {
-      response.json(data.result)
-    } else {
-      response.status(500).json(data)
-    }
-  })
-})
+
+
+// router.get('/balances', function (request, response, next) {
+//   bittrex.options({
+//     apikey: request.cookies.bittrexApiKey,
+//     apisecret: request.cookies.bittrexApiSecret
+//   })
+
+//   bittrex.getbalances((data) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       response.status(500).json(data)
+//     }
+//   })
+// })
+
+// router.get('/orderhistory', function (request, response, next) {
+//   bittrex.options({
+//     apikey: request.cookies.bittrexApiKey,
+//     apisecret: request.cookies.bittrexApiSecret
+//   })
+
+//   bittrex.getorderhistory({}, (data) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       response.status(500).json(data)
+//     }
+//   })
+// })
+
+
+
+
+
+// router.get('/withdrawalhistory', function (request, response, next) {
+//   bittrex.options({
+//     apikey: request.cookies.bittrexApiKey,
+//     apisecret: request.cookies.bittrexApiSecret
+//   })
+
+//   bittrex.getwithdrawalhistory({}, (data) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       response.status(500).json(data)
+//     }
+//   })
+// })
+
+// router.get('/deposithistory', function (request, response, next) {
+//   bittrex.options({
+//     apikey: request.cookies.bittrexApiKey,
+//     apisecret: request.cookies.bittrexApiSecret
+//   })
+
+//   bittrex.getdeposithistory({}, (data) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       response.status(500).json(data)
+//     }
+//   })
+// })
+
+// router.get('/openorders', function (request, response, next) {
+//   bittrex.options({
+//     apikey: request.cookies.bittrexApiKey,
+//     apisecret: request.cookies.bittrexApiSecret
+//   })
+
+//   bittrex.getopenorders({}, (data) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       if (!data) {
+//         response.status(500).json({'message': 'Are you sure your API key has the trade permissions?'})
+//       } else {
+//         response.status(500).json(data)
+//       }
+//     }
+//   })
+// })
+
+// router.get('/market/cancel', function (request, response, next) {
+//   bittrex.options({
+//     apikey: request.cookies.bittrexApiKey,
+//     apisecret: request.cookies.bittrexApiSecret,
+//     verbose: true
+//   })
+
+//   const uuid = request.query.uuid
+//   if (!uuid) {
+//     response.status(500).json({'message': 'Please provide an uuid'})
+//     return
+//   }
+
+//   bittrex.cancel({ uuid: uuid }, (data) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       response.status(500).json(data)
+//     }
+//   })
+// })
 
 // router.post('/market/cancel', function (request, response, next) {
 //   bittrex.options({
@@ -242,33 +303,33 @@ router.get('/market/cancel', function (request, response, next) {
 // })
 
 // TODO: do with websocket
-router.get('/ticker', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
+// router.get('/ticker', function (request, response, next) {
+//   bittrex.options({
+//     'apikey': request.cookies.bittrexApiKey,
+//     'apisecret': request.cookies.bittrexApiSecret,
+//     verbose: true
+//   })
 
-  bittrex.getticker({}, ticker => {
-    response.json(ticker)
-  })
-})
+//   bittrex.getticker({}, ticker => {
+//     response.json(ticker)
+//   })
+// })
 
 // TODO: do with websocket
-router.get('/marketsummaries', function (request, response, next) {
-  bittrex.options({
-    'apikey': request.cookies.bittrexApiKey,
-    'apisecret': request.cookies.bittrexApiSecret,
-    verbose: true
-  })
+// router.get('/marketsummaries', function (request, response, next) {
+//   bittrex.options({
+//     'apikey': request.cookies.bittrexApiKey,
+//     'apisecret': request.cookies.bittrexApiSecret,
+//     verbose: true
+//   })
 
-  bittrex.getmarketsummaries((data, error) => {
-    if (data && data.success) {
-      response.json(data.result)
-    } else {
-      response.status(500).json(data)
-    }
-  })
-})
+//   bittrex.getmarketsummaries((data, error) => {
+//     if (data && data.success) {
+//       response.json(data.result)
+//     } else {
+//       response.status(500).json(data)
+//     }
+//   })
+// })
 
 module.exports = router

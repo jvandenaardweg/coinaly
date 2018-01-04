@@ -30,7 +30,7 @@ export default {
       context.commit('startLoading')
       return axios.get(`api/deposithistory`)
       .then(response => {
-        context.commit('addAllHistory', response.data)
+        context.commit('addAllHistory', response.data.result)
       })
       .catch(error => {
         console.error('Failed to get the deposithistory history.', error)
