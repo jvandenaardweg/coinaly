@@ -5,8 +5,8 @@
   "author": "Jordy van den Aardweg <jordyvandenaardweg@gmail.com>",
   "private": true,
   "engines": {
-    "node": "8.9.3",
-    "npm": "5.5.1",
+    "node": "8.9.4",
+    "npm": "5.6.0",
     "yarn": "1.3.2"
   },
   "scripts": {
@@ -62,7 +62,6 @@
     "html-webpack-plugin": "^2.30.1",
     "jest": "^21.2.0",
     "jest-serializer-vue": "^0.3.0",
-    "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "nightwatch": "^0.9.12",
