@@ -53,6 +53,7 @@
 
 <script>
 import Button from '@/components/Button.vue'
+import pickBy from 'lodash/pickBy'
 
 // Bittrex API 2.0 > https://github.com/ericsomdahl/python-bittrex/issues/35#issuecomment-326191279
 
@@ -89,9 +90,10 @@ export default {
   },
   methods: {
     isInWallet (currency) {
-      return this.allFilledBalances.filter(balance => {
-        return balance.Currency === currency
-      }, 0).length
+      const inBalanceCurrencyNames = pickBy(this.allFilledCurrenciesInBalance, (currency, currencyName) => {
+        return currency === currencyName
+      })
+      return Object.keys(inBalanceCurrencyNames).length
     },
     handleOutsideClick (event) {
       if (event.target.classList.contains('modal')) {
