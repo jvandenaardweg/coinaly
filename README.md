@@ -25,7 +25,7 @@ We are here to create a fast and easy to use mobile (website) trade and portfoli
 - Easily browse and filter all available markets
 
 ## 👷‍♂️ Javascript devs wanted 
-We are currently looking for Javascript developers to speed up the development process, so we can add more exchanges in the near future. Preferably we are looking for skilled developers with professional VueJS en NodeJS experience. If you don’t fit that description, but you still want to help us out? That’s awesome! Please contact [Jordy](https://github.com/jvandenaardweg) directly.
+We are currently looking for Javascript developers to speed up the development process, so we can add more exchanges in the near future. Preferably we are looking for skilled developers with professional VueJS en NodeJS experience. If you don’t fit that description, but you still want to help us out? That’s awesome! Please contact [Jordy](https://github.com/jvandenaardweg) directly or send him a message in our [Slack](https://join.slack.com/t/coinaly/shared_invite/enQtMjk1OTcxMTc2MTE4LWJjMzJkOTg2ODY4MzI4MzRiNmMxNmRlODY1OWZjNjA0MGVlOWFkNGJiNjMyYjNhNzRjMjY4YmI2MzI5MTFiMzg).
 
 ## 🔓 Bittrex API permissions
 In order to use this you need to have a Bittrex API key so we can read your orders and balances. An Bittrex API key can be created here: [https://bittrex.com/Manage#sectionApi](https://bittrex.com/Manage#sectionApi). After creating, please remember the `key` and `secret`. We need that later in the setup.
