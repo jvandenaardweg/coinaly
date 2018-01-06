@@ -4,7 +4,7 @@ Fast and easy to use mobile trade interface for cryptocurrencies. Track your tra
 
 *Since this project is in the early development stage, we currently only support Bittrex. We plan on adding more exchanges in the future.*
 
-Alpha site: https://simpletrade.herokuapp.com/ (synced with the `master` branche)
+Alpha site: https://coinaly.herokuapp.com/ (synced with the `master` branche)
 
 Progress for the first beta release can be tracked here: https://github.com/jvandenaardweg/simpletrade/projects/1
 
@@ -47,7 +47,7 @@ Do you like what we create? A donation of any size is very welcome!
 We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
 
 ## 🚧 Developing for this project
-Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://simpletrade.herokuapp.com/ 
+Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://coinaly.herokuapp.com/ 
 
 This project is in early development, some features might not work yet.
 
