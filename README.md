@@ -2,11 +2,12 @@
 
 Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Are my coins taking off or crashing down? Better insights in your cryptocurrency endeavours.
 
-*Since this project is in the early development stage, we currently only support Bittrex. We plan on adding more exchanges in the future.*
-
 Alpha site: https://coinaly.herokuapp.com/ (synced with the `master` branche)
 
-Progress for the first beta release can be tracked here: https://github.com/jvandenaardweg/simpletrade/projects/1
+**Important:** 
+This project is in the very early development stage, some features might not work yet. Progress for the first beta release can be tracked here: [github.com/jvandenaardweg/simpletrade/projects/1](https://github.com/jvandenaardweg/simpletrade/projects/1)
+
+We currently only support Bittrex. We plan on adding more exchanges in the future.
 
 ![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
 
