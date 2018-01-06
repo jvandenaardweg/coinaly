@@ -2,7 +2,7 @@
 
 Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Are my coins taking off or crashing down? Better insights in your cryptocurrency endeavours.
 
-Alpha site: https://coinaly.herokuapp.com/ (synced with the `master` branche)
+Alpha site: http://coinaly.io (synced with the `master` branche)
 
 **Important:** 
 This project is in the very early development stage, some features might not work yet. Progress for the first beta release can be tracked here: [github.com/jvandenaardweg/simpletrade/projects/1](https://github.com/jvandenaardweg/simpletrade/projects/1)
@@ -48,7 +48,7 @@ Do you like what we create? A donation of any size is very welcome!
 We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
 
 ## 🚧 Developing for this project
-Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://coinaly.herokuapp.com/ 
+Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: http://coinaly.io 
 
 This project is in early development, some features might not work yet.
 
