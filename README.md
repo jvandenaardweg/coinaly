@@ -24,7 +24,7 @@ We are here to create a fast and easy to use mobile (website) trade and portfoli
 - Live updates all market data. No need to refresh yourself
 - Easily browse and filter all available markets
 
-## 👨‍🚀 Javascript astronauts wanted 
+## 👷‍♂️ Javascript devs wanted 
 We are currently looking for Javascript developers to speed up the development process, so we can add more exchanges in the near future. Preferably we are looking for skilled developers with professional VueJS en NodeJS experience. If you don’t fit that description, but you still want to help us out? That’s awesome! Please contact [Jordy](https://github.com/jvandenaardweg) directly.
 
 ## 🔓 Bittrex API permissions
