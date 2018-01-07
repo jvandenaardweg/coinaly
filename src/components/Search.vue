@@ -1,6 +1,7 @@
 <template>
   <div class="search">
-    <input type="search" name="search" v-model="searchQuery" :placeholder="placeholder" />
+    <label for="search">Search</label>
+    <input type="search" id="search" name="search" v-model="searchQuery" :placeholder="placeholder" />
   </div>
 </template>
 
@@ -25,6 +26,10 @@ export default {
 .search {
   padding: 15px;
   position: relative;
+
+  label {
+    display: none;
+  }
 
   input[type="search"] {
     border: 1px $color-iron solid;
