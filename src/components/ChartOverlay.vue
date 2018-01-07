@@ -2,7 +2,7 @@
   <div class="chart">
     <div class="chart__header">
       <h2>{{ currencyPair }}</h2>
-      <button type="button" @click="$emit('close')" class="chart__header-control">&times;</button>
+      <button type="button" @click.prevent="handleClose()" class="chart__header-control">&times;</button>
     </div>
     <div class="chart__body" id="chart"></div>
   </div>
@@ -14,17 +14,23 @@ const moment = require('moment-timezone')
 export default {
   name: 'ChartOverlay',
   props: ['exchange', 'currencyPair'],
+  computed: {
+    tradingViewSymbol () {
+      return `${this.exchange}:${this.currencyPair}`
+    },
+    userTimezone () {
+      return moment.tz.guess() || 'Europe/Paris'
+    }
+  },
   created () {
-    const userTimezone = moment.tz.guess() || 'Europe/Paris'
-
     setTimeout(() => {
       // eslint-disable-next-line
       this.widget = new window.TradingView.widget({
         'container_id': 'chart',
         'autosize': true,
-        'symbol': `${this.exchange}:${this.currencyPair}`,
+        'symbol': `${this.tradingViewSymbol}`,
         'interval': '60', // D = 1 day, 60 = 1hr
-        'timezone': userTimezone,
+        'timezone': this.userTimezone,
         'theme': 'Light',
         'style': '1',
         'locale': 'en',
@@ -91,6 +97,11 @@ export default {
         greyText: options.greyText || ""
       */
     })
+  },
+  methods: {
+    handleClose () {
+      this.$emit('close')
+    }
   }
 }
 </script>
