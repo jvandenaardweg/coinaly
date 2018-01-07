@@ -7,7 +7,7 @@ describe('Search.vue', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
-  it('should render the correct placeholder', () => {
+  it('should render the correct input field', () => {
     const testPlaceholderText = 'Search what you want'
     const wrapper = mount(Search, {
       propsData: {
@@ -15,9 +15,11 @@ describe('Search.vue', () => {
         attachToDocument: true
       }
     })
+    const inputField = wrapper.find('input')
 
     expect(wrapper.props().placeholder).toBe(testPlaceholderText)
-    // expect(wrapper.attributes().placeholder).toBe(testPlaceholderText) // TODO: cant seem to get this to work
+    expect(inputField.attributes().type).toBe('search')
+    expect(inputField.attributes().placeholder).toBe(testPlaceholderText)
   })
 
   it('should emit the correct search keywords', () => {
