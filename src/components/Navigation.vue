@@ -2,7 +2,7 @@
   <nav class="navigation">
     <div class="navigation__container">
       <div class="navigation__logo">
-        <router-link to="/" exact>S</router-link>
+        <router-link to="/" exact>C</router-link>
       </div>
       <ul class="navigation__items" v-if="isAuthorized">
         <li><router-link :to="homePath" :class="{'is-active': subIsActive('/home')}" exact>Home</router-link></li>
