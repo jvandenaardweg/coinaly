@@ -2,7 +2,7 @@
   <div class="chart">
     <div class="chart__header">
       <h2>{{ currencyPair }}</h2>
-      <button type="button" @click.prevent="handleClose()" class="chart__header-control">&times;</button>
+      <button type="button" aria-label="Close" @click.prevent="handleClose()" class="chart__header-control">&times;</button>
     </div>
     <div class="chart__body" id="chart"></div>
   </div>

@@ -1,7 +1,6 @@
 <template>
   <div class="search">
-    <label for="search">Search</label>
-    <input type="search" id="search" name="search" v-model="searchQuery" :placeholder="placeholder" />
+    <input type="search" :aria-label="placeholder" name="search" v-model="searchQuery" :placeholder="placeholder" />
   </div>
 </template>
 

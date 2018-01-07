@@ -1,10 +1,8 @@
 <template>
   <ul class="tabs">
     <li class="tabs__item" v-for="item in items" :key="item.link">
-      <router-link :to="item.link" class="tabs__item-link" @click.native="setSelectedTab(item.storeName, item.storeType)" exact>{{ item.label }}</router-link>
-      </li>
-    <!-- <li class="tabs__item"><router-link to="/home/buys" class="tabs__item-link" @click.native="setSelectedTab('orders', 'buys')">Buys</router-link></li> -->
-    <!-- <li class="tabs__item"><router-link to="/home/sells" class="tabs__item-link" @click.native="setSelectedTab('orders', 'sells')">Sells</router-link></li> -->
+      <router-link :to="item.link" class="tabs__item-link" :aria-label="`View ${item.label}`" @click.native="setSelectedTab(item.storeName, item.storeType)" exact>{{ item.label }}</router-link>
+    </li>
   </ul>
 </template>
 
