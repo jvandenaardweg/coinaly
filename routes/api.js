@@ -3,11 +3,11 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const ccxt = require('ccxt')
 const log = require('ololog').configure({ locate: false })
+const compression = require('compression')
 const router = express.Router()
 const app = express()
 app.use(cookieParser())
-
-// let sleep = (ms) => new Promise (resolve => setTimeout(resolve, ms))
+app.use(compression())
 
 // A method to create exchange instances based on the exchange name given as a query parameter in the REST calls
 // Example: /api/balances?exchange=bittrex
