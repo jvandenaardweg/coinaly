@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const path = require('path')
 const cookieParser = require('cookie-parser')
 const app = express()
 app.use(cookieParser())
@@ -9,12 +10,13 @@ const serveStatic = require('serve-static')
 const compression = require('compression')
 const router = express.Router()
 const routesApi = require('./routes/api')
-const cacheTime = 86400000 * 7 // 7 days
 
 app.use(compression())
 app.use(bodyParser.json())
 app.use(slashes(false))
-app.use(serveStatic(__dirname + '/dist'))
+app.use(serveStatic(path.join(__dirname, 'dist'), {
+  maxAge: '30d'
+}))
 
 // Disable CORS
 app.use((req, res, next) => {
@@ -25,14 +27,6 @@ app.use((req, res, next) => {
   }
   res.header('Access-Control-Allow-Credentials', 'true')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
-})
-
-app.get('*', (req, res, next) => {
-  // Manually set proper expire headers for files so CloudFlare picks it up for CDN usage
-  if (req.url.includes('/static/') || req.url.includes('/images/') || req.url.includes('.png')) {
-    res.setHeader('Cache-Control', 'public, max-age=' + cacheTime)
-  }
   next()
 })
 
