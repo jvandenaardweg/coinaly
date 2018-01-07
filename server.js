@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 })
 
 app.get('*', (req, res, next) => {
-  // Manually set proper expire headers for fonts so CloudFlare picks it up for CDN usage
+  // Manually set proper expire headers for files so CloudFlare picks it up for CDN usage
   if (req.url.includes('/static/') || req.url.includes('/images/') || req.url.includes('.png')) {
     res.setHeader('Cache-Control', 'public, max-age=' + cacheTime)
   }
