@@ -1,7 +1,6 @@
 require('dotenv').config()
 const express = require('express')
 const cookieParser = require('cookie-parser')
-
 const app = express()
 app.use(cookieParser())
 const bodyParser = require('body-parser')
@@ -10,6 +9,7 @@ const serveStatic = require('serve-static')
 const compression = require('compression')
 const router = express.Router()
 const routesApi = require('./routes/api')
+const cacheTime = 86400000 * 7 // 7 days
 
 app.use(compression())
 app.use(bodyParser.json())
@@ -28,9 +28,11 @@ app.use((req, res, next) => {
   next()
 })
 
-// Make sure Google doesnt index
-router.get('*', function (request, response, next) {
-  response.setHeader('X-Robots-Tag', 'googlebot: noindex, nofollow')
+app.get('*', (req, res, next) => {
+  // Manually set proper expire headers for fonts so CloudFlare picks it up for CDN usage
+  if (req.url.includes('/static/') || req.url.includes('/images/') || req.url.includes('.png')) {
+    res.setHeader('Cache-Control', 'public, max-age=' + cacheTime)
+  }
   next()
 })
 
