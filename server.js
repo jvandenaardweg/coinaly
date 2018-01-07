@@ -7,10 +7,11 @@ app.use(cookieParser())
 const bodyParser = require('body-parser')
 const slashes = require('connect-slashes')
 const serveStatic = require('serve-static')
-
+const compression = require('compression')
 const router = express.Router()
 const routesApi = require('./routes/api')
 
+app.use(compression())
 app.use(bodyParser.json())
 app.use(slashes(false))
 app.use(serveStatic(__dirname + '/dist'))
