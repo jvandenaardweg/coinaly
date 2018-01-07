@@ -1,4 +1,5 @@
 # Coinaly
+[![Build Status](https://travis-ci.org/jvandenaardweg/coinaly.svg?branch=master)](https://travis-ci.org/jvandenaardweg/coinaly)
 
 Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Are my coins taking off or crashing down? Better insights in your cryptocurrency endeavours.
 
