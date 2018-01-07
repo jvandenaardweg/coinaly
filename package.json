@@ -1,7 +1,7 @@
 {
-  "name": "simpletrade",
+  "name": "coinaly",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "Fast and easy to use mobile trade interface for cryptocurrencies",
   "author": "Jordy van den Aardweg <jordyvandenaardweg@gmail.com>",
   "private": true,
   "engines": {

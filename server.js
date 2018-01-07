@@ -18,7 +18,7 @@ app.use(serveStatic(__dirname + '/dist'))
 // Disable CORS
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === 'production') {
-    res.header('Access-Control-Allow-Origin', 'http://simpletrade.herokuapp')
+    res.header('Access-Control-Allow-Origin', 'https://coinaly.io')
   } else {
     res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
   }

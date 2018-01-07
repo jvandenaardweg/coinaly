@@ -3,16 +3,16 @@
 
 Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Are my coins taking off or crashing down? Better insights in your cryptocurrency endeavours.
 
-Alpha site: http://coinaly.io (synced with the `master` branche)
+Alpha site: https://coinaly.io (synced with the `master` branche)
 
-**Important:** 
-This project is in the very early development stage, some features might not work yet. Progress for the first beta release can be tracked here: [github.com/jvandenaardweg/simpletrade/projects/1](https://github.com/jvandenaardweg/simpletrade/projects/1)
+**Important:**
+This project is in the very early development stage, some features might not work yet. Progress for the first beta release can be tracked here: [github.com/jvandenaardweg/coinaly/projects/1](https://github.com/jvandenaardweg/coinaly/projects/1)
 
 We currently only support Bittrex. We plan on adding more exchanges in the future.
 
 ![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
 
-## 📱 Our mission 
+## 📱 Our mission
 We are here to create a fast and easy to use mobile (website) trade and portfolio interface for your favorite exchange. No more missed opportunities or trades because the website of your favorite exchange is too slow or too complicated to use. We optimize our website for easy mobile usage and give you the tools and insights you need on a daily basis. It’s more about you and your trades, and less about the exchange pushing you to buy coins.
 
 ## 🚀 Features
@@ -25,7 +25,7 @@ We are here to create a fast and easy to use mobile (website) trade and portfoli
 - Live updates all market data. No need to refresh yourself
 - Easily browse and filter all available markets
 
-## 👷‍♂️ Javascript devs wanted 
+## 👷‍♂️ Javascript devs wanted
 We are currently looking for Javascript developers to speed up the development process, so we can add more exchanges in the near future. Preferably we are looking for skilled developers with professional VueJS en NodeJS experience. If you don’t fit that description, but you still want to help us out? That’s awesome! Please contact [Jordy](https://github.com/jvandenaardweg) directly or send him a message in our [Slack](https://join.slack.com/t/coinaly/shared_invite/enQtMjk1OTcxMTc2MTE4LWJjMzJkOTg2ODY4MzI4MzRiNmMxNmRlODY1OWZjNjA0MGVlOWFkNGJiNjMyYjNhNzRjMjY4YmI2MzI5MTFiMzg).
 
 ## 🔓 Bittrex API permissions
@@ -38,18 +38,18 @@ In order to use this you need to have a Bittrex API key so we can read your orde
 
 [View example](https://www.dropbox.com/s/h6d7r3qdox0fvt7/bittrexapikeypermissions.png?raw=1)
 
-## 💰 Fuel our efforts 
-We are a hard working bunch of people and are not affiliated with Bittrex in any way. We are just using our spare time to create a better mobile experience for what we love to do: trading cryptocurrencies. 
+## 💰 Fuel our efforts
+We are a hard working bunch of people and are not affiliated with Bittrex in any way. We are just using our spare time to create a better mobile experience for what we love to do: trading cryptocurrencies.
 
-Do you like what we create? A donation of any size is very welcome! 
+Do you like what we create? A donation of any size is very welcome!
 
-* BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo 
+* BTC: 1P1sUUWxMXVCJX9T9M4SwoQW9Rpg51chfo
 * ETH: 0x5442026e8c4CDA6361763D56318FbE94f1b1Cb9b
 
 We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
 
 ## 🚧 Developing for this project
-Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: http://coinaly.io 
+Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://coinaly.io
 
 This project is in early development, some features might not work yet.
 
