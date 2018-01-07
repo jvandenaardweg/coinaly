@@ -80,12 +80,6 @@ $navigation-height: 60px;
       text-decoration: none;
       line-height: 4rem;
       position: relative;
-      opacity: 0.5;
-      transition: 200ms all;
-
-      &.is-active {
-        opacity: 1;
-      }
     }
 
     svg {
