@@ -128,7 +128,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       short_name: 'Coinaly',
       description: 'Fast and easy to use mobile trade interface for cryptocurrencies',
       theme_color: '#0077FF',
-      background_color: '#ffffff',
+      background_color: '#0077FF',
+      start_url: '/',
       icons: [
         {
           src: path.resolve('src/assets/images/brand/icon-512.png'),
