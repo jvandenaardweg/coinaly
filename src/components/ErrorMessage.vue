@@ -9,11 +9,6 @@
 export default {
   name: 'ErrorMessage',
   props: ['message'],
-  data () {
-    return {
-      isOpen: true
-    }
-  },
   methods: {
     handleClose () {
       this.$emit('close')
