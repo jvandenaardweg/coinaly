@@ -11,6 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CriticalPlugin = require('webpack-plugin-critical').CriticalPlugin;
+const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -121,6 +122,24 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
+
+    new WebpackPwaManifest({
+      name: 'Coinaly',
+      short_name: 'Coinaly',
+      description: 'Fast and easy to use mobile trade interface for cryptocurrencies',
+      theme_color: '#0077FF',
+      background_color: '#ffffff',
+      icons: [
+        {
+          src: path.resolve('src/assets/images/brand/icon-512.png'),
+          sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+        },
+        {
+          src: path.resolve('src/assets/images/brand/icon-1024.png'),
+          size: '1024x1024' // you can also use the specifications pattern
+        }
+      ]
+    }),
 
     new CriticalPlugin({
       src: 'index.html',
