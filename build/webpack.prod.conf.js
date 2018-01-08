@@ -12,6 +12,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CriticalPlugin = require('webpack-plugin-critical').CriticalPlugin;
 const WebpackPwaManifest = require('webpack-pwa-manifest')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -140,6 +141,40 @@ const webpackConfig = merge(baseWebpackConfig, {
           size: '1024x1024' // you can also use the specifications pattern
         }
       ]
+    }),
+
+    new FaviconsWebpackPlugin({
+      // Your source logo
+      logo: path.resolve('src/assets/images/brand/icon-512.png'),
+      // The prefix for all image files (might be a folder or a name)
+      prefix: 'static/images/icons-[hash]/',
+      // Emit all stats of the generated icons
+      emitStats: false,
+      // The name of the json containing all favicon information
+      statsFilename: 'iconstats-[hash].json',
+      // Generate a cache file with control hashes and
+      // don't rebuild the favicons until those hashes change
+      persistentCache: true,
+      // Inject the html into the html-webpack-plugin
+      inject: true,
+      // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
+      background: '#0077FF',
+      // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
+      title: 'Coinaly',
+
+      // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+      icons: {
+        android: true,
+        appleIcon: true,
+        appleStartup: true,
+        coast: false,
+        favicons: true,
+        firefox: true,
+        opengraph: false,
+        twitter: false,
+        yandex: false,
+        windows: false
+      }
     }),
 
     new CriticalPlugin({
