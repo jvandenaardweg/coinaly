@@ -102,7 +102,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-pickled-bluewood;
-  padding-top: 80px;
+  padding-top: 75px;
 }
 
 label {
