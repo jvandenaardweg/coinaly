@@ -18,6 +18,11 @@ app.use(serveStatic(path.join(__dirname, 'dist'), {
   maxAge: '30d'
 }))
 
+if (!process.env.ENCODE_SECRET) {
+  console.log('Please add a ENCODE_SECRET to the .env file. This is used to encrypt and decrypt the API keys and secrets.')
+  return false
+}
+
 // Disable CORS
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === 'production') {

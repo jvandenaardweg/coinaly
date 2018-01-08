@@ -36,8 +36,9 @@ export default {
   },
   data () {
     return {
-      apiKey: this.$store.getters['auth/getApiKey'],
-      apiSecret: this.$store.getters['auth/getApiSecret'],
+      apiKey: null,
+      apiSecret: null,
+      exchange: 'bittrex',
       isLoading: false
     }
   },
@@ -58,14 +59,22 @@ export default {
   },
   methods: {
     handleForm () {
+      this.isLoading = true
       this.removeError()
-      this.$store.dispatch('auth/setApiKey', { apiKey: this.apiKey, apiSecret: this.apiSecret })
+      const payload = [
+        {
+          exchange: this.exchange,
+          apiKey: this.apiKey,
+          apiSecret: this.apiSecret
+        }
+      ]
+      this.$store.dispatch('auth/getToken', payload)
       .then(() => {
         this.$router.push('/home')
       })
     },
     removeError () {
-      this.$store.dispatch('auth/removeError')
+      this.$store.commit('auth/removeError')
     },
     handleCancel () {
       this.$router.push('/home')

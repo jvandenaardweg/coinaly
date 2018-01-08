@@ -3,16 +3,12 @@ import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
 
-const apiKey = Vue.cookie.get('bittrexApiKey') || null
-const apiSecret = Vue.cookie.get('bittrexApiSecret') || null
+const initialToken = Vue.cookie.get('token') || null
 
 export default {
   namespaced: true,
   state: {
-    bittrex: {
-      apiKey: apiKey,
-      apiSecret: apiSecret
-    },
+    token: initialToken,
     error: null
   },
   mutations: {
@@ -22,48 +18,36 @@ export default {
     removeError (state) {
       state.error = null
     },
-    setApiKey (state, apiCredentials) {
-      Vue.cookie.set('bittrexApiKey', apiCredentials.apiKey, { expires: '99Y' })
-      Vue.cookie.set('bittrexApiSecret', apiCredentials.apiSecret, { expires: '99Y' })
-      state.bittrex.apiKey = apiCredentials.apiKey
-      state.bittrex.apiSecret = apiCredentials.apiSecret
+    setToken (state, token) {
+      Vue.cookie.set('token', token, { expires: '99Y' })
+      state.token = token
     },
-    removeApiKeys (state) {
-      Vue.cookie.delete('bittrexApiKey')
-      Vue.cookie.delete('bittrexApiSecret')
-      state.bittrex.apiKey = null
-      state.bittrex.apiSecret = null
+    removeToken (state) {
+      Vue.cookie.delete('token')
+      state.token = null
     }
   },
   getters: {
-    getApiKey (state) {
-      return state.bittrex.apiKey
-    },
-    getApiSecret (state) {
-      return state.bittrex.apiSecret
-    },
     isAuthorized (state) {
-      return Boolean(state.bittrex.apiKey && state.bittrex.apiSecret)
+      return Boolean(state.token)
     },
     error (state) {
       return state.error
     }
   },
   actions: {
-    removeError (context) {
-      context.commit('removeError')
-    },
-    setError (context, message) {
-      context.commit('addError', message)
-    },
-    setApiKey (context, apiCredentials) {
-      context.commit('setApiKey', apiCredentials)
-    },
-    removeApiKey (context, apiCredentials) {
-      context.commit('removeApiKeys')
-    },
-    checkValidity (context) {
-      return axios.get('api/balance')
+    getToken (context, payload) {
+      return axios.post('api/auth', payload)
+      .then(response => {
+        if (response.data.status === 'success') {
+          context.commit('setToken', response.data.token)
+        } else {
+          context.commit('addError', response.data.message)
+        }
+      })
+      .catch(error => {
+        context.commit('addError', error.response.data.message)
+      })
     }
   }
 }

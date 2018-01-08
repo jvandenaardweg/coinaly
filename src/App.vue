@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     handleLogout () {
-      this.$store.dispatch('auth/removeApiKey')
+      this.$store.commit('auth/removeToken')
       window.clearInterval(this.marketInterval)
       window.location.reload()
     },
@@ -58,8 +58,8 @@ export default {
         }, 2000)
       })
       .catch(error => {
-        this.$store.dispatch('auth/removeApiKey')
-        this.$store.dispatch('auth/setError', 'The given API key and secret seem to be invalid.')
+        this.$store.commit('auth/removeToken')
+        this.$store.commit('auth/addError', 'The given API key and secret seem to be invalid.')
         this.$router.push('/setup')
         console.error(error)
       })
