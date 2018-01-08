@@ -16,9 +16,9 @@ We currently only support Bittrex. We plan on adding more exchanges in the futur
 We are here to create a fast and easy to use mobile (website) trade and portfolio interface for your favorite exchange. No more missed opportunities or trades because the website of your favorite exchange is too slow or too complicated to use. We optimize our website for easy mobile usage and give you the tools and insights you need on a daily basis. It’s more about you and your trades, and less about the exchange pushing you to buy coins.
 
 ## 🚀 Features
+- Optimized for mobile screens and fast mobile performance
 - Instantly see the current status of your balances and orders. Am I making a profit? Or am I losing money?
 - Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin (in progress)
-- Optimized for mobile screens and fast mobile performance
 - Overview open orders. How are my orders performing? Should I cancel or adjust them?
 - Easily see how far an open order is from the current market price
 - Better live candlestick chart by [TradingView.com](https://www.tradingview.com/)
