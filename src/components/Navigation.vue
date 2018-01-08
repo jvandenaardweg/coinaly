@@ -48,6 +48,8 @@ export default {
 
 <style lang="scss" scoped>
 $navigation-height: 60px;
+$navigation-logo-height: 40px;
+$navigation-logo-width: 80px;
 
 .navigation {
   position: fixed;
@@ -74,8 +76,8 @@ $navigation-height: 60px;
 
     a {
       display: block;
-      height: 100%;
-      width: 80px;
+      height: $navigation-logo-height;
+      width: $navigation-logo-width;
       color: $color-black;
       text-decoration: none;
       line-height: 4rem;
@@ -84,7 +86,7 @@ $navigation-height: 60px;
 
     svg {
       width: 100%;
-      height: $navigation-height;
+      height: $navigation-logo-height;
       position: absolute;
       top: 0;
       left: 0;
