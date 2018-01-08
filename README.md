@@ -18,7 +18,7 @@ We are here to create a fast and easy to use mobile (website) trade and portfoli
 ## 🚀 Features
 - Instantly see the current status of your balances and orders. Am I making a profit? Or am I losing money?
 - Fast selling and buying. Instantly react on market movements and quickly sell or buy a crypto coin (in progress)
-- Optimized for mobile screens and mobile performance. Always there with you
+- Optimized for mobile screens and fast mobile performance
 - Overview open orders. How are my orders performing? Should I cancel or adjust them?
 - Easily see how far an open order is from the current market price
 - Better live candlestick chart by [TradingView.com](https://www.tradingview.com/)
