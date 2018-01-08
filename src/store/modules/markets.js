@@ -36,7 +36,7 @@ export default {
       state.isLoading = false
     },
     setSelectedMarket (state, market) {
-      Vue.cookie.set('selectedMarket', market)
+      Vue.cookie.set('selectedMarket', market, { expires: '99Y' })
       state.selectedMarket = market
     },
     removeSelectedMarket (state) {

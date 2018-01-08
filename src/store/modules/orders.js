@@ -28,7 +28,7 @@ export default {
       state.isLoading = false
     },
     setSelectedOrderType (state, type) {
-      Vue.cookie.set('selectedOrderType', type)
+      Vue.cookie.set('selectedOrderType', type, { expires: '99Y' })
       state.selectedOrderType = type
     },
     removeSelectedOrderType (state, type) {
