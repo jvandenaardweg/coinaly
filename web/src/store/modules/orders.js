@@ -28,7 +28,11 @@ export default {
       state.isLoading = false
     },
     setSelectedOrderType (state, type) {
-      Vue.cookie.set('selectedOrderType', type, { expires: '99Y' })
+      if (process.env.NODE_ENV === 'production') {
+        Vue.cookie.set('selectedOrderType', type, { expires: '99Y', domain: 'coinaly.io' })
+      } else {
+        Vue.cookie.set('selectedOrderType', type, { expires: '99Y', domain: 'localhost' })
+      }
       state.selectedOrderType = type
     },
     removeSelectedOrderType (state, type) {
