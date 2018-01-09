@@ -6,9 +6,24 @@ cache:
 env:
 - NODE_ENV=test
 deploy:
-  provider: heroku
-  api_key:
-    secure: AM6tDSBBhy+WSzCDXbMXpZYN7zpD4RyP7zKrkV9Cz5kkLQLp+2gRc9M9Hls1ikoej6bBEkerr/tMoUGKqQNmM7Z7PXfv/Gqaea4Mg1+++F6gfTgs1L1A7WlND5yfjKRydot1FAGmy2cJ1IxcSXg/WunO6voxiJt+rI0XRur1CbVdJZkhUM+pE/IQoRs4tys9Yq4s1Xg+kq6Rz7ctQ+jp2QMXRT6ggA1TlwK5KLYH7G3hxvuUqu9JVOROFToCAOgMzEqGQUZ37AhARrEm5w4vTcA6l7LT2PLyMJd5UTkXrRk8F4U+vFMvnRypbib2+7igbeVblEcE/5wuuK3jEtBdNRb3PSRDz/kN17DXtFDXAmo8GFDxhWEIEacj3YgCqXTOOa1kJsn/OHzqK9sHWihkWUoesPYP4BoGBeL4LBW7iFymQ02m6T/4TTbItNNrA17AdvlepyuPrROgAtV3aa2XFnRnv6RpsIHeWC98eC7j7Xhg1qGUO6INbsxjQ/L/rViIEUpAx0Zfybxhxy1ZAWOpX2h6IazPFHbsIT1rzl1bFz/6HArtrXbeND1EqEIE7pBO1T9wsXqzABi4coSM1C41cqVx+DB+c4C+fwzpjilVXLZ1wk7cq6zOVCpBLlEaOOxMwVnXrTzdg14jSdFplKgiC33P9uCcSb8R9taPqR73nwQ=
-  app: coinaly
-  on:
-    repo: jvandenaardweg/coinaly
+  - provider: heroku
+    api_key:
+      secure: ODCeyQS2v1uxLXPzTvOxENzE/8Jr4qQ6IJMSKlnZNMFToJx+Br8rP11GdP3rVR5eEbJOOVlDn/owRGTVTxy91GXrkHhbUW4Qo3s/HdZhh4RaQ+MqFnyr3QWrRW5lZtPHcU6gcwClkHZmrl5QyEbQj4TcHkajzS7O6h9Ab/RraiKLNsNalUtfYkUOZBZboJWxa/dlx8QwaVOB593JsblS6EcaQUFUvI0Qt1IZNQFiig3ryKq0T5aOke8N7cBZNYVGSVONw++KL6ePzOxLctBa/iH0E+LBoBeIL3BcJfCaDJUeXCycIW/66vF/0RFHE3N4jdiSjvQA3IDDxy0qARacMJm9ojhqhC/f2v0e1AgZENFADHN9qFpgd0/A4l0SCfP76ybXTFlcEyezA0bT1prGXZFlJCbj7iyFIohbN+czqNUak/6tljGldTfJESkovNrVQNIZ8LfHpjovmtQnqUtmZfpFnuhCSk6b1iQRR5d8LUeAdWotQS5vx/jdWE20A5jg8/E5tBVSGr4pSxQ0KBwk6hTJB3w3+83NhaoPkphJKI1EJGQmjSP9ShqvkA6OPWFOtnQ17vNx3Izz7WYB9oIMEimoqs3USU0VzoXAKji1OmxyeMECgjcmKL/OcEJFugkxCvVXlVNhrjWNSv6aQbW2q5dcYvmUHI7fayeTFrIJMsc=
+    app: coinaly
+    on:
+      repo: jvandenaardweg/coinaly
+      branche: master
+  - provider: heroku
+    api_key:
+      secure: ODCeyQS2v1uxLXPzTvOxENzE/8Jr4qQ6IJMSKlnZNMFToJx+Br8rP11GdP3rVR5eEbJOOVlDn/owRGTVTxy91GXrkHhbUW4Qo3s/HdZhh4RaQ+MqFnyr3QWrRW5lZtPHcU6gcwClkHZmrl5QyEbQj4TcHkajzS7O6h9Ab/RraiKLNsNalUtfYkUOZBZboJWxa/dlx8QwaVOB593JsblS6EcaQUFUvI0Qt1IZNQFiig3ryKq0T5aOke8N7cBZNYVGSVONw++KL6ePzOxLctBa/iH0E+LBoBeIL3BcJfCaDJUeXCycIW/66vF/0RFHE3N4jdiSjvQA3IDDxy0qARacMJm9ojhqhC/f2v0e1AgZENFADHN9qFpgd0/A4l0SCfP76ybXTFlcEyezA0bT1prGXZFlJCbj7iyFIohbN+czqNUak/6tljGldTfJESkovNrVQNIZ8LfHpjovmtQnqUtmZfpFnuhCSk6b1iQRR5d8LUeAdWotQS5vx/jdWE20A5jg8/E5tBVSGr4pSxQ0KBwk6hTJB3w3+83NhaoPkphJKI1EJGQmjSP9ShqvkA6OPWFOtnQ17vNx3Izz7WYB9oIMEimoqs3USU0VzoXAKji1OmxyeMECgjcmKL/OcEJFugkxCvVXlVNhrjWNSv6aQbW2q5dcYvmUHI7fayeTFrIJMsc=
+    app: coinaly-api
+    on:
+      repo: jvandenaardweg/coinaly
+      branche: master
+  - provider: heroku
+    api_key:
+      secure: ODCeyQS2v1uxLXPzTvOxENzE/8Jr4qQ6IJMSKlnZNMFToJx+Br8rP11GdP3rVR5eEbJOOVlDn/owRGTVTxy91GXrkHhbUW4Qo3s/HdZhh4RaQ+MqFnyr3QWrRW5lZtPHcU6gcwClkHZmrl5QyEbQj4TcHkajzS7O6h9Ab/RraiKLNsNalUtfYkUOZBZboJWxa/dlx8QwaVOB593JsblS6EcaQUFUvI0Qt1IZNQFiig3ryKq0T5aOke8N7cBZNYVGSVONw++KL6ePzOxLctBa/iH0E+LBoBeIL3BcJfCaDJUeXCycIW/66vF/0RFHE3N4jdiSjvQA3IDDxy0qARacMJm9ojhqhC/f2v0e1AgZENFADHN9qFpgd0/A4l0SCfP76ybXTFlcEyezA0bT1prGXZFlJCbj7iyFIohbN+czqNUak/6tljGldTfJESkovNrVQNIZ8LfHpjovmtQnqUtmZfpFnuhCSk6b1iQRR5d8LUeAdWotQS5vx/jdWE20A5jg8/E5tBVSGr4pSxQ0KBwk6hTJB3w3+83NhaoPkphJKI1EJGQmjSP9ShqvkA6OPWFOtnQ17vNx3Izz7WYB9oIMEimoqs3USU0VzoXAKji1OmxyeMECgjcmKL/OcEJFugkxCvVXlVNhrjWNSv6aQbW2q5dcYvmUHI7fayeTFrIJMsc=
+    app: coinaly-socket
+    on:
+      repo: jvandenaardweg/coinaly
+      branche: master
