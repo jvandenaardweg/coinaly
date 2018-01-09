@@ -28,12 +28,12 @@ export default {
   actions: {
     getAllHistory (context) {
       context.commit('startLoading')
-      return axios.get(`api/deposithistory`)
+      return axios.get(`withdrawalhistory`)
       .then(response => {
         context.commit('addAllHistory', response.data.result)
       })
       .catch(error => {
-        console.error('Failed to get the deposithistory history.', error)
+        console.error('Failed to get the withdrawalhistory history.', error)
       })
       .finally(() => {
         context.commit('stopLoading')

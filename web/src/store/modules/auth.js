@@ -19,7 +19,11 @@ export default {
       state.error = null
     },
     setToken (state, token) {
-      Vue.cookie.set('token', token, { expires: '99Y' })
+      if (process.env.NODE_ENV === 'production') {
+        Vue.cookie.set('token', token, { expires: '99Y', domain: 'coinaly.io' })
+      } else {
+        Vue.cookie.set('token', token, { expires: '99Y', domain: 'localhost' })
+      }
       state.token = token
     },
     removeToken (state) {
@@ -37,7 +41,7 @@ export default {
   },
   actions: {
     getToken (context, payload) {
-      return axios.post('api/auth', payload)
+      return axios.post('auth', payload)
       .then(response => {
         if (response.data.status === 'success') {
           context.commit('setToken', response.data.token)

@@ -133,11 +133,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       start_url: '/',
       icons: [
         {
-          src: path.resolve('src/assets/images/brand/icon-512.png'),
+          src: path.resolve('web/src/assets/images/brand/icon-512.png'),
           sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
         },
         {
-          src: path.resolve('src/assets/images/brand/icon-1024.png'),
+          src: path.resolve('web/src/assets/images/brand/icon-1024.png'),
           size: '1024x1024' // you can also use the specifications pattern
         }
       ]
@@ -145,7 +145,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 
     new FaviconsWebpackPlugin({
       // Your source logo
-      logo: path.resolve('src/assets/images/brand/icon-512.png'),
+      logo: path.resolve('web/src/assets/images/brand/icon-512.png'),
       // The prefix for all image files (might be a folder or a name)
       prefix: 'static/images/icons-[hash]/',
       // Emit all stats of the generated icons

@@ -52,7 +52,7 @@ export default {
   actions: {
     getAll (context) {
       context.commit('startLoading')
-      return axios.get(`api/balances`)
+      return axios.get(`balances`)
       .then(response => {
         context.commit('addAll', response.data)
       })

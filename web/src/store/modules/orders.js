@@ -28,7 +28,11 @@ export default {
       state.isLoading = false
     },
     setSelectedOrderType (state, type) {
-      Vue.cookie.set('selectedOrderType', type, { expires: '99Y' })
+      if (process.env.NODE_ENV === 'production') {
+        Vue.cookie.set('selectedOrderType', type, { expires: '99Y', domain: 'coinaly.io' })
+      } else {
+        Vue.cookie.set('selectedOrderType', type, { expires: '99Y', domain: 'localhost' })
+      }
       state.selectedOrderType = type
     },
     removeSelectedOrderType (state, type) {
@@ -70,11 +74,11 @@ export default {
   },
   actions: {
     cancelOrder (context, uuid) {
-      return axios.get(`api/cancelorder?uuid=${uuid}`)
+      return axios.get(`cancelorder?uuid=${uuid}`)
     },
     getAllHistory (context) {
       context.commit('startLoading')
-      return axios.get(`api/orders`)
+      return axios.get(`orders`)
       .then(response => {
         context.commit('addAllHistory', response.data)
       })
@@ -87,7 +91,7 @@ export default {
     },
     getOpenOrders (context) {
       context.commit('startLoading')
-      return axios.get(`api/orders?status=open`)
+      return axios.get(`orders?status=open`)
       .then(response => {
         context.commit('addAllOpen', response.data)
       })
