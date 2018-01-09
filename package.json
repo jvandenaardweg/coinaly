@@ -17,7 +17,9 @@
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "build": "node build/build.js",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "api": "node server.js",
+    "socket": "node server.js"
   },
   "dependencies": {
     "autoprefixer": "^7.1.2",

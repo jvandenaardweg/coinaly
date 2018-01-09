@@ -1,3 +1,3 @@
 web: npm start
-api: node server.js
-socket: node server.js
+web: npm run api
+web: npm run socket
