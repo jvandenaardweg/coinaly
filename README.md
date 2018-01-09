@@ -56,12 +56,15 @@ This project is in early development, some features might not work yet.
 ### Installation
 1. Download this Git repo
 2. Install all the dependencies: `yarn install`. See `package.json` engines for the required Node, NPM and Yarn versions.
-3. Run: `npm run dev`
-4. Fill in your API key and secret on the homepage
+3. Add a `.env` file in the project root containing your own encode secret `ENCODE_SECRET=your_super_secret_string`
+4. Run: `npm run dev`
+5. Fill in your API key and secret on the homepage
 
 After started successfully, the website is in development mode and available at http://localhost:8080.
 
-The API is available at http://localhost:5000.
+The API is available at http://localhost:5000
+
+The Websocket is available at http://localhost:6000
 
 ### Run development mode
 ``` bash
