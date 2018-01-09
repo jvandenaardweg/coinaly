@@ -1,22 +1,19 @@
 require('dotenv').config()
 const express = require('express')
-const path = require('path')
-const cookieParser = require('cookie-parser')
 const app = express()
-app.use(cookieParser())
 const bodyParser = require('body-parser')
 const slashes = require('connect-slashes')
-const serveStatic = require('serve-static')
 const compression = require('compression')
-const router = express.Router()
-const routesApi = require('./routes/api')
+const cookieParser = require('cookie-parser')
 
+const apiRoutes = require('./routes')
+
+const port = process.env.PORT || 5000
+
+app.use(cookieParser())
 app.use(compression())
 app.use(bodyParser.json())
 app.use(slashes(false))
-app.use(serveStatic(path.join(__dirname, 'dist'), {
-  maxAge: '30d'
-}))
 
 if (!process.env.ENCODE_SECRET) {
   console.log('Please add a ENCODE_SECRET to the .env file. This is used to encrypt and decrypt the API keys and secrets.')
@@ -35,13 +32,13 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/api', routesApi)
+app.use('/api', apiRoutes)
 
 // Catch 404
 app.use(function (request, response, next) {
   response.status(404).json({message: 'Not found.'})
 })
 
-var port = process.env.PORT || 5000
 app.listen(port)
-console.log('server started ' + port)
+
+console.log('api: Server started at port ' + port)

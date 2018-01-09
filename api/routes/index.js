@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const cookieParser = require('cookie-parser')
 const ccxt = require('ccxt')
 const log = require('ololog').configure({ locate: false })
 const compression = require('compression')
@@ -10,7 +9,6 @@ const Cryptorjs = require('cryptorjs')
 const secret = process.env.ENCODE_SECRET
 const myCryptor = new Cryptorjs(secret)
 const app = express()
-app.use(cookieParser())
 app.use(compression())
 app.use(bodyParser.json())
 

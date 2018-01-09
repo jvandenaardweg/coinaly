@@ -10,16 +10,22 @@
     "yarn": "1.3.2"
   },
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js | nodemon server.js",
-    "start": "node server.js",
-    "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "e2e": "node test/e2e/runner.js",
+    "dev": "concurrently --kill-others \"npm run dev:webpack\" \"npm run dev:api\" \"npm run dev:socket\"",
+
+    "start": "npm run start:all",
+    "start:web": "node web/server.js",
+    "start:api": "node api/server.js",
+    "start:socket": "node socket/server.js",
+    "unit": "jest --config web/test/unit/jest.conf.js --coverage",
+    "e2e": "node web/test/e2e/runner.js",
     "test": "npm run unit",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "build": "node build/build.js",
-    "heroku-postbuild": "npm run build",
-    "api": "node server.js",
-    "socket": "node server.js"
+    "lint": "eslint --ext .js,.vue web/src web/test/unit/specs web/test/e2e/specs",
+    "build:web": "node web/build/build.js",
+    "heroku-postbuild": "npm run build:web",
+    "dev:web": "nodemon web/server.js",
+    "dev:api": "nodemon api/server.js",
+    "dev:socket": "nodemon socket/server.js",
+    "dev:webpack": "webpack-dev-server --inline --progress --config web/build/webpack.dev.conf.js"
   },
   "dependencies": {
     "autoprefixer": "^7.1.2",
@@ -42,6 +48,7 @@
     "chalk": "^2.3.0",
     "chromedriver": "^2.27.2",
     "compression": "^1.7.1",
+    "concurrently": "^3.5.1",
     "connect-slashes": "^1.3.1",
     "cookie-parser": "^1.4.3",
     "copy-webpack-plugin": "^4.0.1",
