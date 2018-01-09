@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/api', apiRoutes)
+app.use('/', apiRoutes)
 
 // Catch 404
 app.use(function (request, response, next) {

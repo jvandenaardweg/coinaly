@@ -98,7 +98,7 @@ export default {
   actions: {
     getAll (context) {
       context.commit('startLoading')
-      return axios.get(`api/tickers`)
+      return axios.get(`tickers`)
       .then(response => {
         context.commit('addAllMarkets', response.data)
       })

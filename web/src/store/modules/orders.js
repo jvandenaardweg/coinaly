@@ -70,11 +70,11 @@ export default {
   },
   actions: {
     cancelOrder (context, uuid) {
-      return axios.get(`api/cancelorder?uuid=${uuid}`)
+      return axios.get(`cancelorder?uuid=${uuid}`)
     },
     getAllHistory (context) {
       context.commit('startLoading')
-      return axios.get(`api/orders`)
+      return axios.get(`orders`)
       .then(response => {
         context.commit('addAllHistory', response.data)
       })
@@ -87,7 +87,7 @@ export default {
     },
     getOpenOrders (context) {
       context.commit('startLoading')
-      return axios.get(`api/orders?status=open`)
+      return axios.get(`orders?status=open`)
       .then(response => {
         context.commit('addAllOpen', response.data)
       })

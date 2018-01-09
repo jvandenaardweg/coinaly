@@ -28,7 +28,7 @@ export default {
   actions: {
     getAllHistory (context) {
       context.commit('startLoading')
-      return axios.get(`api/deposithistory`)
+      return axios.get(`deposithistory`)
       .then(response => {
         context.commit('addAllHistory', response.data.result)
       })

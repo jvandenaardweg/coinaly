@@ -37,7 +37,7 @@ export default {
   },
   actions: {
     getToken (context, payload) {
-      return axios.post('api/auth', payload)
+      return axios.post('auth', payload)
       .then(response => {
         if (response.data.status === 'success') {
           context.commit('setToken', response.data.token)
