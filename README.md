@@ -25,6 +25,9 @@ We are here to create a fast and easy to use mobile (website) trade and portfoli
 - Live updates all market data. No need to refresh yourself
 - Easily browse and filter all available markets
 
+### 🔐 Safe to use
+It's important you can trust a website that uses your cryptocurrency exchange data. That's why our servers use the [latest SSL encryption techniques](https://www.ssllabs.com/ssltest/analyze.html?viaform=on&d=coinaly.io) to secure your connection. Also, your API keys and secrets are encrypted and saved only in your browser. We don't store any API keys and secrets in plain text on our servers.
+
 ## 👷‍♂️ Javascript devs wanted
 We are currently looking for Javascript developers to speed up the development process, so we can add more exchanges in the near future. Preferably we are looking for skilled developers with professional VueJS en NodeJS experience. If you don’t fit that description, but you still want to help us out? That’s awesome! Please contact [Jordy](https://github.com/jvandenaardweg) directly or send him a message in our [Slack](https://join.slack.com/t/coinaly/shared_invite/enQtMjk1OTcxMTc2MTE4LWJjMzJkOTg2ODY4MzI4MzRiNmMxNmRlODY1OWZjNjA0MGVlOWFkNGJiNjMyYjNhNzRjMjY4YmI2MzI5MTFiMzg).
 
