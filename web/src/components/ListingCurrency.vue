@@ -3,7 +3,7 @@
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
       <div class="listing-currency__symbol"><strong>{{ currencyName }}</strong></div>
       <div class="listing-currency__meta">{{ currency.total }}</div>
-      <div class="listing-currency__percentage"><span v-if="allMarkets">{{ currentWorth(currency.total, currencyName) }}</span></div>
+      <div class="listing-currency__percentage"><span v-if="allMarkets">{{ currentWorthUsd(currencyName) }}</span></div>
     </div>
     <div class="listing-currency__stats">
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Button from '@/components/Button'
 import ButtonIcon from '@/components/ButtonIcon'
 import OrderTable from '@/components/OrderTable'
@@ -63,6 +65,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      allMarkets: 'markets/allMarkets',
+      allWorth: 'balances/allWorth'
+    }),
     currencyPair () {
       const currency = this.currencyName
       if (currency === 'BTC') {
@@ -91,9 +97,6 @@ export default {
       } else {
         return difference.toFixed(8)
       }
-    },
-    allMarkets () {
-      return this.$store.getters['markets/allMarkets']
     },
     percentageClass () {
       if (this.currency.percentage < 0) {
@@ -211,39 +214,11 @@ export default {
     toggleShowOrderHistory () {
       this.showOrderHistory = !this.showOrderHistory
     },
-    currentWorth (amount, currency) {
-      let worth = 0
-      let worthBtc = 0
-      let worthUsd = 0
-
-      // Check if the markets are already in the store, because we load them async
-      if (this.allMarkets.length) {
-        // Get market date for selected currency
-
-        // TODO: optimize performance, this is slow
-        const currencyMarket = this.allMarkets.filter(market => {
-          return market.symbol === `${currency}/BTC` // TODO: make dynamic, BTC can be something else
-        })[0]
-
-        // Get the USD market data for BTC
-        // TODO: optimize performance, this is slow
-        const usdMarket = this.allMarkets.filter(market => {
-          return market.symbol === `BTC/USDT` // TODO: make dynamic, BTC can be something else
-        })[0]
-
-        // If the currency is just BTC, show the USD market data
-        if (currency === 'BTC') {
-          const worth = (amount * usdMarket.last).toFixed(2)
-          return `$${worth}`
-        } else {
-          if (currencyMarket && usdMarket) {
-            worthBtc = amount * currencyMarket.last
-            worthUsd = (worthBtc * usdMarket.last).toFixed(2)
-            return `$${worthUsd}`
-          } else {
-            return worth
-          }
-        }
+    currentWorthUsd (currency) {
+      if (this.allWorth[currency]) {
+        return `$${this.allWorth[currency].usd}`
+      } else {
+        return null
       }
     }
   },

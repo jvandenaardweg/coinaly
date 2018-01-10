@@ -1,5 +1,6 @@
 import axios from '../../axios'
 import pickBy from 'lodash/pickBy'
+import numeral from 'numeral'
 
 function filterFilledCurrencies (currencies) {
   return pickBy(currencies, (currency, currencyName) => {
@@ -12,7 +13,8 @@ export default {
   state: {
     currencies: [],
     isLoading: false,
-    hasError: false
+    hasError: false,
+    worth: []
   },
   mutations: {
     addAll (state, items) {
@@ -30,9 +32,24 @@ export default {
     },
     removeError (state) {
       state.hasError = false
+    },
+    setWorth (state, payload) {
+      state.worth = payload
     }
   },
   getters: {
+    allWorth: state => {
+      return state.worth
+    },
+    totalWorth: state => {
+      const worths = Object.values(state.worth)
+      if (worths.length) {
+        const total = worths.reduce((total, worth) => total + worth.usd, 0).toFixed(2)
+        return numeral(total).format('$0,0.00')
+      } else {
+        return null
+      }
+    },
     allCurrencies: state => {
       return state.currencies
     },

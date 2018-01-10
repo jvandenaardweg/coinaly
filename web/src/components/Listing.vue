@@ -1,7 +1,7 @@
 <template>
   <div class="listing">
     <header class="listing__header">
-      <h2 class="listing__header-title">{{ title }}</h2>
+      <h2 class="listing__header-title">{{ title }} <span v-if="totalWorth !== null">{{ totalWorth }}</span></h2>
       <div class="listing__header-control">
         <Button :className="'link'" @click.native="toggleShowAll()" :label="showAllLabel"></Button>
       </div>
@@ -21,6 +21,9 @@
 </template>
 
 <script>
+import numeral from 'numeral'
+import { mapGetters } from 'vuex'
+
 import ListingCurrency from '@/components/ListingCurrency'
 import Button from '@/components/Button'
 
@@ -32,7 +35,22 @@ export default {
     Button
   },
   created () {
-    console.log('create listing')
+    // Listen for market changes, recalculate the current worth of our whole balance
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'markets/addAllMarkets') {
+        const filledCurrencies = Object.entries(this.allFilledCurrencies)
+        let payload = {}
+
+        for (const [currencyName, obj] of filledCurrencies) {
+          payload[currencyName] = {
+            usd: this.currentUsdWorth(obj.total, currencyName),
+            btc: this.currentBtcWorth(obj.total, currencyName)
+          }
+        }
+
+        this.$store.commit('balances/setWorth', payload)
+      }
+    })
   },
   data () {
     return {
@@ -40,17 +58,21 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      allCurrencies: 'balances/allCurrencies',
+      allFilledCurrencies: 'balances/allFilledCurrencies',
+      allCurrenciesTotal: 'balances/allCurrenciesTotal',
+      allFilledCurrenciesTotal: 'balances/allFilledCurrenciesTotal',
+      allMarkets: 'markets/allMarkets',
+      totalWorth: 'balances/totalWorth',
+      balancesIsLoading: 'balances/isLoading',
+      ordersIsLoading: 'orders/isLoading'
+    }),
     isLoading () {
-      return this.$store.getters['balances/isLoading'] || this.$store.getters['orders/isLoading']
+      return this.balancesIsLoading || this.ordersIsLoading
     },
     showLoadingIndicator () {
       return !this.allCurrenciesTotal && this.isLoading
-    },
-    allCurrencies () {
-      return this.$store.getters['balances/allCurrencies']
-    },
-    allFilledCurrencies () {
-      return this.$store.getters['balances/allFilledCurrencies']
     },
     currencies () {
       if (this.showAll) {
@@ -58,15 +80,6 @@ export default {
       } else {
         return this.allFilledCurrencies
       }
-    },
-    allCurrenciesTotal () {
-      return this.$store.getters['balances/allCurrenciesTotal']
-    },
-    allFilledCurrenciesTotal () {
-      return this.$store.getters['balances/allFilledCurrenciesTotal']
-    },
-    openOrders () {
-      return this.$store.getters['orders/allOpenOrders']
     },
     showAllLabel () {
       if (!this.showAll) {
@@ -84,6 +97,64 @@ export default {
       } else {
         this.currencies = this.allCurrencies
         this.showAll = true
+      }
+    },
+    currentUsdWorth (amount, currency) {
+      let worthBtc = 0
+      let worthUsd = 0
+
+      // Check if the markets are already in the store, because we load them async
+      if (this.allMarkets.length) {
+        // Get market date for selected currency
+
+        // TODO: optimize performance, this is slow
+        const currencyMarket = this.allMarkets.filter(market => {
+          return market.symbol === `${currency}/BTC` // TODO: make dynamic, BTC can be something else
+        })[0]
+
+        // Get the USD market data for BTC
+        // TODO: optimize performance, this is slow
+        const usdMarket = this.allMarkets.filter(market => {
+          return market.symbol === `BTC/USDT` // TODO: make dynamic, BTC can be something else
+        })[0]
+
+        // If the currency is just BTC, show the USD market data
+        // Else, calculate the USD worth based on the total amount of BTC worth
+        // TODO: calculate other pairs like ETH and USDT, we only do BTC (for now)
+        if (currency === 'BTC') {
+          worthUsd = (amount * usdMarket.last).toFixed(2)
+        } else {
+          if (currencyMarket && usdMarket) {
+            worthBtc = amount * currencyMarket.last
+            worthUsd = (worthBtc * usdMarket.last).toFixed(2)
+          }
+        }
+
+        return numeral(worthUsd).value()
+      }
+    },
+    currentBtcWorth (amount, currency) {
+      let worthBtc = 0
+
+      // Check if the markets are already in the store, because we load them async
+      if (this.allMarkets.length) {
+        // Get market date for selected currency
+
+        // TODO: optimize performance, this is slow
+        const currencyMarket = this.allMarkets.filter(market => {
+          return market.symbol === `${currency}/BTC` // TODO: make dynamic, BTC can be something else
+        })[0]
+
+        // If the currency is just BTC, show the USD market data
+        // Else, calculate the USD worth based on the total amount of BTC worth
+        // TODO: calculate other pairs like ETH and USDT, we only do BTC (for now)
+        if (currency === 'BTC') {
+          worthBtc = amount
+        } else {
+          worthBtc = amount * currencyMarket.last
+        }
+
+        return numeral(worthBtc).value()
       }
     }
   }
@@ -106,6 +177,14 @@ export default {
     .listing__header-title {
       display: inline-block;
       margin: 0;
+
+      span {
+        font-weight: normal;
+        opacity: 0.5;
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+        margin-left: 2px;
+      }
     }
 
     .listing__header-control {
