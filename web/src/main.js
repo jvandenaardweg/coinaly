@@ -3,8 +3,10 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
+import './filters'
 import router from './router'
 import store from './store'
+
 import VueCookie from 'vue-cookie'
 import VueAnalytics from 'vue-analytics'
 import { sync } from 'vuex-router-sync'

@@ -8,7 +8,7 @@
         <Progress v-once :blue="0" :green="0" :orange="0" :black="currencyVolumePercentage"></Progress>
       </div>
       <div class="market__percentage" :class="{'is-positive': isPositiveOneDayDiff === true, 'is-negative': isPositiveOneDayDiff === false }">
-        <span>{{ oneDayDiffPercentage }}%</span>
+        <span>{{ oneDayDiffPercentage | percentage }}</span>
       </div>
     </div>
     <div v-if="isExpanded" class="market__body">

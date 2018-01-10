@@ -30,7 +30,7 @@
       </ul>
       <ul v-if="!isClosed">
         <li><small>Market price</small><span>{{ currentMarket.last }}</span></li>
-        <li><small>Order difference</small><span :class="{'is-positive': differencePercentage > 5, 'is-negative': differencePercentage < 0, 'is-warning': differencePercentage < 5}">{{ differencePercentage }}%</span></li>
+        <li><small>Order difference</small><span :class="{'is-positive': differencePercentage > 5, 'is-negative': differencePercentage < 0, 'is-warning': differencePercentage < 5}">{{ differencePercentage | percentage }}</span></li>
       </ul>
       <p v-if="order.info.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>

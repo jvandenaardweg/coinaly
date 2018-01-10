@@ -3,7 +3,7 @@
     <div class="listing-currency__header" @click.prevent="toggleExpand()">
       <div class="listing-currency__symbol"><strong>{{ currencyName }}</strong></div>
       <div class="listing-currency__meta">{{ currency.total }}</div>
-      <div class="listing-currency__percentage"><span v-if="allMarkets">{{ currentWorthUsd(currencyName) }}</span></div>
+      <div class="listing-currency__percentage" :class="{'is-positive': currentWorthChangeIsPositive === true, 'is-negative': currentWorthChangeIsPositive === false }"><span v-if="allMarkets">{{ currentWorthUsd | currency('$') }}</span></div>
     </div>
     <div class="listing-currency__stats">
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
@@ -61,7 +61,8 @@ export default {
       modalType: null,
       showModal: false,
       showOrderHistory: false,
-      openChart: false
+      openChart: false,
+      currentWorthChangeIsPositive: null
     }
   },
   computed: {
@@ -105,6 +106,13 @@ export default {
         return 'is-warning'
       } else {
         return 'is-positive'
+      }
+    },
+    currentWorthUsd () {
+      if (this.allWorth[this.currencyName]) {
+        return this.allWorth[this.currencyName].usd
+      } else {
+        return null
       }
     }
   },
@@ -213,21 +221,23 @@ export default {
     },
     toggleShowOrderHistory () {
       this.showOrderHistory = !this.showOrderHistory
-    },
-    currentWorthUsd (currency) {
-      if (this.allWorth[currency]) {
-        return `$${this.allWorth[currency].usd}`
-      } else {
-        return null
-      }
     }
   },
-  filters: {
-    percentage (value) {
-      return value + '%'
-    },
-    currency (value, prefix) {
-      return prefix + value
+  watch: {
+    'currentWorthUsd' (newValue, oldValue) {
+      if (oldValue !== null) {
+        if (newValue >= oldValue) {
+          this.currentWorthChangeIsPositive = true
+          setTimeout(() => {
+            this.currentWorthChangeIsPositive = null
+          }, 1000)
+        } else if (newValue < oldValue) {
+          this.currentWorthChangeIsPositive = false
+          setTimeout(() => {
+            this.currentWorthChangeIsPositive = null
+          }, 1000)
+        }
+      }
     }
   }
 }
@@ -330,7 +340,23 @@ export default {
   .listing-currency__percentage {
     align-self: right;
     margin-left: auto;
-    opacity: 0.5;
+
+    span {
+      transition: 100ms color;
+      color: rgba(44, 62, 80, 0.5);
+    }
+
+    &.is-negative {
+      span {
+        color: $color-alizarin-crimson;
+      }
+    }
+
+    &.is-positive {
+      span {
+        color: $color-chateau-green;
+      }
+    }
   }
 
   .listing-currency__body {

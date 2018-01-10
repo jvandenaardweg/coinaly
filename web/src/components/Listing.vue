@@ -1,7 +1,7 @@
 <template>
   <div class="listing">
     <header class="listing__header">
-      <h2 class="listing__header-title">{{ title }} <span v-if="totalWorth !== null">{{ totalWorth }}</span></h2>
+      <h2 class="listing__header-title">{{ title }} <span v-if="totalWorthUsd !== null" :class="{'is-positive': totalWorthChangeIsPositive === true, 'is-negative': totalWorthChangeIsPositive === false }">{{ totalWorthUsd | currency('$') }}</span></h2>
       <div class="listing__header-control">
         <Button :className="'link'" @click.native="toggleShowAll()" :label="showAllLabel"></Button>
       </div>
@@ -34,6 +34,12 @@ export default {
     ListingCurrency,
     Button
   },
+  data () {
+    return {
+      totalWorthChangeIsPositive: null,
+      showAll: false
+    }
+  },
   created () {
     // Listen for market changes, recalculate the current worth of our whole balance
     this.$store.subscribe((mutation, state) => {
@@ -52,11 +58,6 @@ export default {
       }
     })
   },
-  data () {
-    return {
-      showAll: false
-    }
-  },
   computed: {
     ...mapGetters({
       allCurrencies: 'balances/allCurrencies',
@@ -64,7 +65,7 @@ export default {
       allCurrenciesTotal: 'balances/allCurrenciesTotal',
       allFilledCurrenciesTotal: 'balances/allFilledCurrenciesTotal',
       allMarkets: 'markets/allMarkets',
-      totalWorth: 'balances/totalWorth',
+      totalWorthUsd: 'balances/totalWorthUsd',
       balancesIsLoading: 'balances/isLoading',
       ordersIsLoading: 'orders/isLoading'
     }),
@@ -157,6 +158,24 @@ export default {
         return numeral(worthBtc).value()
       }
     }
+  },
+  watch: {
+    'totalWorthUsd' (newValue, oldValue) {
+      console.log(newValue, oldValue)
+      if (oldValue !== null) {
+        if (newValue >= oldValue) {
+          this.totalWorthChangeIsPositive = true
+          setTimeout(() => {
+            this.totalWorthChangeIsPositive = null
+          }, 1000)
+        } else if (newValue < oldValue) {
+          this.totalWorthChangeIsPositive = false
+          setTimeout(() => {
+            this.totalWorthChangeIsPositive = null
+          }, 1000)
+        }
+      }
+    }
   }
 }
 </script>
@@ -180,10 +199,19 @@ export default {
 
       span {
         font-weight: normal;
-        opacity: 0.5;
         font-size: 1.6rem;
         line-height: 1.6rem;
         margin-left: 2px;
+        transition: 100ms color;
+        color: rgba(44, 62, 80, 0.5);
+
+        &.is-negative {
+          color: $color-alizarin-crimson;
+        }
+
+        &.is-positive {
+          color: $color-chateau-green;
+        }
       }
     }
 
