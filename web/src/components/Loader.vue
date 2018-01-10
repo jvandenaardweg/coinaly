@@ -1,7 +1,7 @@
 <template>
   <div class="loader" :class="{'is-hidden': !isLoading }">
-    <span v-show="isLoading">Loading:</span>
-    <span v-show="!isLoading">Done!</span>
+    <span v-if="isLoading">Loading:</span>
+    <span v-if="!isLoading">Done!</span>
     <span v-if="this.$store.getters['balances/isLoading']">balances</span>
     <span v-if="this.$store.getters['orders/isLoading']">orders</span>
     <span v-if="this.$store.getters['deposits/isLoading']">deposits</span>

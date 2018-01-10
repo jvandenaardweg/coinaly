@@ -1,9 +1,9 @@
 <template>
   <div class="progress">
-    <div class="progress__blue" v-show="blue" :style="{ 'width': `${blue}%` }"></div>
-    <div class="progress__orange" v-show="orange" :style="{ 'width': `${orange}%` }"></div>
-    <div class="progress__green" v-show="green" :style="{ 'width': `${green}%` }"></div>
-    <div class="progress__black" v-show="black" :style="{ 'width': `${black}%` }"></div>
+    <div class="progress__blue" v-if="blue" :style="{ 'width': `${blue}%` }"></div>
+    <div class="progress__orange" v-if="orange" :style="{ 'width': `${orange}%` }"></div>
+    <div class="progress__green" v-if="green" :style="{ 'width': `${green}%` }"></div>
+    <div class="progress__black" v-if="black" :style="{ 'width': `${black}%` }"></div>
   </div>
 </template>
 

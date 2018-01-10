@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <header class="history__header">
-      <h2 class="history__header-title">Order activity <span v-show="historyOrdersTotal">({{ historyOrdersTotal }})</span></h2>
+      <h2 class="history__header-title">Order activity <span v-if="historyOrdersTotal">({{ historyOrdersTotal }})</span></h2>
     </header>
 
     <Tabs :items="tabItems"></Tabs>

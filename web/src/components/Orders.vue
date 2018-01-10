@@ -1,7 +1,7 @@
 <template>
   <div class="orders">
     <header class="orders__header">
-      <h2 class="orders__header-title">Open orders <span v-show="totalOpenOrders">({{ totalOpenOrders }})</span></h2>
+      <h2 class="orders__header-title">Open orders <span v-if="totalOpenOrders">({{ totalOpenOrders }})</span></h2>
       <div class="orders__header-control">
         <Button :label="'New order'" @click.native="showOrderModal()"></Button>
       </div>
