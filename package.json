@@ -11,7 +11,6 @@
   },
   "scripts": {
     "dev": "concurrently --kill-others \"npm run dev:webpack\" \"npm run dev:api\" \"npm run dev:socket\"",
-
     "start": "npm run start:all",
     "start:web": "node web/server.js",
     "start:api": "node api/server.js",

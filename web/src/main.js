@@ -19,10 +19,12 @@ sync(store, router)
 
 Vue.use(VueCookie)
 
-Vue.use(VueAnalytics, {
-  id: 'UA-258356-37',
-  router
-})
+if (process.env.ANALYTICS_ID) {
+  Vue.use(VueAnalytics, {
+    id: process.env.ANALYTICS_ID,
+    router
+  })
+}
 
 Vue.config.productionTip = false
 
