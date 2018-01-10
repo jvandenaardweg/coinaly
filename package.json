@@ -20,7 +20,6 @@
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue web/src web/test/unit/specs web/test/e2e/specs",
     "build:web": "node web/build/build.js",
-    "heroku-postbuild": "npm run build:web",
     "dev:web": "nodemon web/server.js",
     "dev:api": "nodemon api/server.js",
     "dev:socket": "nodemon socket/server.js",
