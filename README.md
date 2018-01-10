@@ -25,7 +25,7 @@ We are here to create a fast and easy to use mobile (website) trade and portfoli
 - Live updates all market data. No need to refresh yourself
 - Easily browse and filter all available markets
 
-**🔐 Safe to use**
+**Safe to use**
 
 It's important you can trust a website that uses your cryptocurrency exchange data. That's why our servers use the [latest SSL encryption techniques](https://www.ssllabs.com/ssltest/analyze.html?viaform=on&d=coinaly.io) to secure your connection. Also, your API keys and secrets are encrypted and saved only in your browser. We don't store any API keys and secrets in plain text on our servers.
 
