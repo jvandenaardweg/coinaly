@@ -51,10 +51,12 @@ Do you like what we create? A donation of any size is very welcome!
 
 We use these donations to pay the bills, like web hosting and services to keep this project running. Ultimately we hope that with enough donations some of us can work on this project fulltime so we can push updates faster.
 
-## 🚧 Developing for this project
+## 🚧 Develop for this project
 Setup is only needed when you want to develop yourself. If you just want to try it out you can at our Alpha website: https://coinaly.io
 
 This project is in early development, some features might not work yet.
+
+[Join Coinaly on Slack](https://join.slack.com/t/coinaly/shared_invite/enQtMjk1OTcxMTc2MTE4LWJjMzJkOTg2ODY4MzI4MzRiNmMxNmRlODY1OWZjNjA0MGVlOWFkNGJiNjMyYjNhNzRjMjY4YmI2MzI5MTFiMzg) to talk with other contributers.
 
 ### Installation
 1. Download this Git repo
