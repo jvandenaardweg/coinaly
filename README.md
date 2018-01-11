@@ -1,6 +1,8 @@
 # Coinaly
 [![Build Status](https://travis-ci.org/jvandenaardweg/coinaly.svg?branch=master)](https://travis-ci.org/jvandenaardweg/coinaly)&nbsp;&nbsp;[![Join Coinaly on Slack](https://img.shields.io/badge/slack-coinaly-brightgreen.svg)](https://join.slack.com/t/coinaly/shared_invite/enQtMjk1OTcxMTc2MTE4LWJjMzJkOTg2ODY4MzI4MzRiNmMxNmRlODY1OWZjNjA0MGVlOWFkNGJiNjMyYjNhNzRjMjY4YmI2MzI5MTFiMzg)
 
+Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Are my coins taking off or crashing down? Better insights in your cryptocurrency endeavours.
+
 Alpha site: https://coinaly.io (synced with the `master` branche)
 
 **Important:**
