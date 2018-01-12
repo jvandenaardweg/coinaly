@@ -4,15 +4,19 @@ cache:
   directories:
   - node_modules
 stages:
-- tests
+- tests and builds
 - deploy to coinaly.io
 
 jobs:
   include:
-    - stage: tests
+    - stage: tests and builds
       script: npm test
       env:
         - NODE_ENV=test
+    - stage: tests and builds
+      script: npm run build:web
+      env:
+        - NODE_ENV=production
     - stage: deploy to coinaly.io
       script: npm run build:web
       env:
@@ -28,6 +32,7 @@ jobs:
         skip_cleanup: true
     - stage: deploy to coinaly.io
       script: skip
+      install: skip
       env:
         - NODE_ENV=production
       deploy: &heroku
@@ -40,6 +45,7 @@ jobs:
           branche: master
     - stage: deploy to coinaly.io
       script: skip
+      install: skip
       env:
         - NODE_ENV=production
       deploy: &heroku
