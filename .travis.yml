@@ -12,12 +12,6 @@ env:
     # include $HOME/.local/bin for `aws`
     - PATH=$HOME/.local/bin:$PATH
 
-before_install:
-  # set up awscli packages
-  - pip install --user awscli
-  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
-  - aws s3 sync s3://coinaly/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
-
 jobs:
   include:
   - stage: tests and build
@@ -25,12 +19,22 @@ jobs:
     env:
     - NODE_ENV=test
   - stage: tests and build
-    script: npm run build:web | tee > ~/$TRAVIS_BUILD_NUMBER/one
+    script: npm run build:web
     env:
     - NODE_ENV=production
+    before_install:
+      # set up awscli packages, create dir and sync
+      - pip install --user awscli
+      - mkdir -p ~/$TRAVIS_BUILD_NUMBER
+      - aws s3 sync s3://coinaly/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
+    after_success:
+      - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://coinaly/$TRAVIS_BUILD_NUMBER
   - stage: deploy to coinaly.io
-    script:
-      - cat ~/$TRAVIS_BUILD_NUMBER/*
+    script: skip
+    before_install:
+      # set up awscli packages and sync with the already created dir
+      - pip install --user awscli
+      - aws s3 sync s3://coinaly/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
     env:
     - NODE_ENV=production
     deploy:
@@ -43,8 +47,7 @@ jobs:
         branche: master
       skip_cleanup: true
   - stage: deploy to coinaly.io
-    script:
-      - cat ~/$TRAVIS_BUILD_NUMBER/*
+    script: skip
     env:
     - NODE_ENV=production
     deploy:
@@ -56,8 +59,7 @@ jobs:
         repo: jvandenaardweg/coinaly
         branche: master
   - stage: deploy to coinaly.io
-    script:
-      - cat ~/$TRAVIS_BUILD_NUMBER/*
+    script: skip
     env:
     - NODE_ENV=production
     deploy:
@@ -69,5 +71,4 @@ jobs:
         repo: jvandenaardweg/coinaly
         branche: master
 
-after_success:
-  - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://coinaly/$TRAVIS_BUILD_NUMBER
+
