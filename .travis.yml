@@ -17,6 +17,8 @@ jobs:
       script: npm run build:web
       env:
         - NODE_ENV=production
+        - ANALYTICS_ID=UA-258356-37
+        - SENTRY_URL=https://3b02901b7b0a418ca9d76303a9217881@sentry.io/265611
       skip_cleanup: true
     - stage: deploy to coinaly.io
       script: skip
