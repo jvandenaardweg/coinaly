@@ -3,20 +3,17 @@ cache:
   yarn: true
   directories:
   - node_modules
-after_success:
- - npm run build:web
 env:
 - NODE_ENV=test
 stages:
-- unit tests
-- build for production
+- tests and build
 - deploy to coinaly.io
 
 jobs:
   include:
-    - stage: unit tests
+    - stage: tests and build
       script: npm test
-    - stage: build for production
+    - stage: tests and build
       script: npm run build:web
     - stage: deploy to coinaly.io
       script: ./deploy coinaly
