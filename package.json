@@ -23,8 +23,7 @@
     "dev:web": "nodemon web/server.js",
     "dev:api": "nodemon api/server.js",
     "dev:socket": "nodemon socket/server.js",
-    "dev:webpack": "webpack-dev-server --inline --progress --config web/build/webpack.dev.conf.js",
-    "heroku-postbuild": "npm run build:web"
+    "dev:webpack": "webpack-dev-server --inline --progress --config web/build/webpack.dev.conf.js"
   },
   "dependencies": {
     "autoprefixer": "^7.1.2",
