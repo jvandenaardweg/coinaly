@@ -27,6 +27,7 @@ jobs:
       - pip install --user awscli
       - mkdir -p ~/$TRAVIS_BUILD_NUMBER
       - aws s3 sync s3://coinaly/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
+      - cd ~/$TRAVIS_BUILD_NUMBER
     after_success:
       - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://coinaly/$TRAVIS_BUILD_NUMBER
   - stage: deploy to coinaly.io
