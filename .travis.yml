@@ -15,6 +15,7 @@ jobs:
         - NODE_ENV=test
     - stage: deploy to coinaly.io
       script: npm run build:web
+      skip_cleanup: true
       env:
         - NODE_ENV=production
       deploy: &heroku
