@@ -7,28 +7,47 @@ after_success:
  - npm run build:web
 env:
 - NODE_ENV=test
-deploy:
-  - provider: heroku
-    api_key:
-      secure: GqwnDZPl/0V/4AZ7Sty1xwTw3Q2H4FhiLqCxAUl2DrshCpL4HzT7kA+HnTMOML8PAL9GmPEFo9k9us0cTkbXKa0cp8xFfkEy8QrkGcg70L9FSL2L7fkfLG3ORkl/0002kQKNqlvUZvbQezN0xajpBH+DsX7OzIsY1LPZL3l8vATrCf89yfSkmPDCkRkJ3Atk4wqFb2ZTxlpIMZL5bCQfXBEQ1jex8arsuhZdPtWW7F5LX43ETBpHcDovt4VGsIPRj7u4SLk8QgRQs9lS//l8hQ4VmcBxZcA3nyin6UI8/pg8xRMHVaM8DFhIJxNP5sUhga7FWvS7FbueczVmV3AeJz5vb7DNlpNR+uTh9SPNzHU34gD8KgFs0cMkczJZMmUK4jUCJLAZJ0m7J1QHnWtdf5LkLksY0Xn65rSBbi1JC6pSDvM9NTI0NvqMfFyJG0H+uTa7nqP9TQsnnrvtnCf5YDAatY1//IpRUKsmnpqZ/uwZsoitlLkXddBA7Vm4ndvlQhR76oES4B0YRIVrQv0ETJFnnGjvXhTObA7vwQtdXXv8TOVxSXF7w5xYC70o2xB4NzIL2ghgFucKqOpZzKHSbYMx3tT5bvMuG95zatBXivlxDI3H4w54LL0sdVwGe/AX0NNjN2JShajkPXu2aitpRsksQVcVhe35KDj0oieGS8c=
-    app: coinaly
-    on:
-      repo: jvandenaardweg/coinaly
-      branche: master
-    skip_cleanup: true
-  - provider: heroku
-    api_key:
-      secure: GqwnDZPl/0V/4AZ7Sty1xwTw3Q2H4FhiLqCxAUl2DrshCpL4HzT7kA+HnTMOML8PAL9GmPEFo9k9us0cTkbXKa0cp8xFfkEy8QrkGcg70L9FSL2L7fkfLG3ORkl/0002kQKNqlvUZvbQezN0xajpBH+DsX7OzIsY1LPZL3l8vATrCf89yfSkmPDCkRkJ3Atk4wqFb2ZTxlpIMZL5bCQfXBEQ1jex8arsuhZdPtWW7F5LX43ETBpHcDovt4VGsIPRj7u4SLk8QgRQs9lS//l8hQ4VmcBxZcA3nyin6UI8/pg8xRMHVaM8DFhIJxNP5sUhga7FWvS7FbueczVmV3AeJz5vb7DNlpNR+uTh9SPNzHU34gD8KgFs0cMkczJZMmUK4jUCJLAZJ0m7J1QHnWtdf5LkLksY0Xn65rSBbi1JC6pSDvM9NTI0NvqMfFyJG0H+uTa7nqP9TQsnnrvtnCf5YDAatY1//IpRUKsmnpqZ/uwZsoitlLkXddBA7Vm4ndvlQhR76oES4B0YRIVrQv0ETJFnnGjvXhTObA7vwQtdXXv8TOVxSXF7w5xYC70o2xB4NzIL2ghgFucKqOpZzKHSbYMx3tT5bvMuG95zatBXivlxDI3H4w54LL0sdVwGe/AX0NNjN2JShajkPXu2aitpRsksQVcVhe35KDj0oieGS8c=
-    app: coinaly-api
-    on:
-      repo: jvandenaardweg/coinaly
-      branche: master
-    skip_cleanup: true
-  - provider: heroku
-    api_key:
-      secure: GqwnDZPl/0V/4AZ7Sty1xwTw3Q2H4FhiLqCxAUl2DrshCpL4HzT7kA+HnTMOML8PAL9GmPEFo9k9us0cTkbXKa0cp8xFfkEy8QrkGcg70L9FSL2L7fkfLG3ORkl/0002kQKNqlvUZvbQezN0xajpBH+DsX7OzIsY1LPZL3l8vATrCf89yfSkmPDCkRkJ3Atk4wqFb2ZTxlpIMZL5bCQfXBEQ1jex8arsuhZdPtWW7F5LX43ETBpHcDovt4VGsIPRj7u4SLk8QgRQs9lS//l8hQ4VmcBxZcA3nyin6UI8/pg8xRMHVaM8DFhIJxNP5sUhga7FWvS7FbueczVmV3AeJz5vb7DNlpNR+uTh9SPNzHU34gD8KgFs0cMkczJZMmUK4jUCJLAZJ0m7J1QHnWtdf5LkLksY0Xn65rSBbi1JC6pSDvM9NTI0NvqMfFyJG0H+uTa7nqP9TQsnnrvtnCf5YDAatY1//IpRUKsmnpqZ/uwZsoitlLkXddBA7Vm4ndvlQhR76oES4B0YRIVrQv0ETJFnnGjvXhTObA7vwQtdXXv8TOVxSXF7w5xYC70o2xB4NzIL2ghgFucKqOpZzKHSbYMx3tT5bvMuG95zatBXivlxDI3H4w54LL0sdVwGe/AX0NNjN2JShajkPXu2aitpRsksQVcVhe35KDj0oieGS8c=
-    app: coinaly-socket
-    on:
-      repo: jvandenaardweg/coinaly
-      branche: master
-    skip_cleanup: true
+stages:
+- unit tests
+- build for production
+- deploy to coinaly.io
+
+jobs:
+  include:
+    - stage: unit tests
+      script: npm test
+    - stage: build for production
+      script: npm run build:web
+    - stage: deploy to coinaly.io
+      script: ./deploy coinaly
+      deploy: &heroku
+        provider: heroku
+        api_key:
+          secure: GqwnDZPl/0V/4AZ7Sty1xwTw3Q2H4FhiLqCxAUl2DrshCpL4HzT7kA+HnTMOML8PAL9GmPEFo9k9us0cTkbXKa0cp8xFfkEy8QrkGcg70L9FSL2L7fkfLG3ORkl/0002kQKNqlvUZvbQezN0xajpBH+DsX7OzIsY1LPZL3l8vATrCf89yfSkmPDCkRkJ3Atk4wqFb2ZTxlpIMZL5bCQfXBEQ1jex8arsuhZdPtWW7F5LX43ETBpHcDovt4VGsIPRj7u4SLk8QgRQs9lS//l8hQ4VmcBxZcA3nyin6UI8/pg8xRMHVaM8DFhIJxNP5sUhga7FWvS7FbueczVmV3AeJz5vb7DNlpNR+uTh9SPNzHU34gD8KgFs0cMkczJZMmUK4jUCJLAZJ0m7J1QHnWtdf5LkLksY0Xn65rSBbi1JC6pSDvM9NTI0NvqMfFyJG0H+uTa7nqP9TQsnnrvtnCf5YDAatY1//IpRUKsmnpqZ/uwZsoitlLkXddBA7Vm4ndvlQhR76oES4B0YRIVrQv0ETJFnnGjvXhTObA7vwQtdXXv8TOVxSXF7w5xYC70o2xB4NzIL2ghgFucKqOpZzKHSbYMx3tT5bvMuG95zatBXivlxDI3H4w54LL0sdVwGe/AX0NNjN2JShajkPXu2aitpRsksQVcVhe35KDj0oieGS8c=
+        app: coinaly
+        on:
+          repo: jvandenaardweg/coinaly
+          branche: master
+        skip_cleanup: true
+    - stage: deploy to coinaly.io
+      script: ./deploy coinaly-api
+      deploy: &heroku
+        provider: heroku
+        api_key:
+          secure: GqwnDZPl/0V/4AZ7Sty1xwTw3Q2H4FhiLqCxAUl2DrshCpL4HzT7kA+HnTMOML8PAL9GmPEFo9k9us0cTkbXKa0cp8xFfkEy8QrkGcg70L9FSL2L7fkfLG3ORkl/0002kQKNqlvUZvbQezN0xajpBH+DsX7OzIsY1LPZL3l8vATrCf89yfSkmPDCkRkJ3Atk4wqFb2ZTxlpIMZL5bCQfXBEQ1jex8arsuhZdPtWW7F5LX43ETBpHcDovt4VGsIPRj7u4SLk8QgRQs9lS//l8hQ4VmcBxZcA3nyin6UI8/pg8xRMHVaM8DFhIJxNP5sUhga7FWvS7FbueczVmV3AeJz5vb7DNlpNR+uTh9SPNzHU34gD8KgFs0cMkczJZMmUK4jUCJLAZJ0m7J1QHnWtdf5LkLksY0Xn65rSBbi1JC6pSDvM9NTI0NvqMfFyJG0H+uTa7nqP9TQsnnrvtnCf5YDAatY1//IpRUKsmnpqZ/uwZsoitlLkXddBA7Vm4ndvlQhR76oES4B0YRIVrQv0ETJFnnGjvXhTObA7vwQtdXXv8TOVxSXF7w5xYC70o2xB4NzIL2ghgFucKqOpZzKHSbYMx3tT5bvMuG95zatBXivlxDI3H4w54LL0sdVwGe/AX0NNjN2JShajkPXu2aitpRsksQVcVhe35KDj0oieGS8c=
+        app: coinaly-api
+        on:
+          repo: jvandenaardweg/coinaly
+          branche: master
+        skip_cleanup: true
+    - stage: deploy to coinaly.io
+      script: ./deploy coinaly-socket
+      deploy: &heroku
+        provider: heroku
+        api_key:
+          secure: GqwnDZPl/0V/4AZ7Sty1xwTw3Q2H4FhiLqCxAUl2DrshCpL4HzT7kA+HnTMOML8PAL9GmPEFo9k9us0cTkbXKa0cp8xFfkEy8QrkGcg70L9FSL2L7fkfLG3ORkl/0002kQKNqlvUZvbQezN0xajpBH+DsX7OzIsY1LPZL3l8vATrCf89yfSkmPDCkRkJ3Atk4wqFb2ZTxlpIMZL5bCQfXBEQ1jex8arsuhZdPtWW7F5LX43ETBpHcDovt4VGsIPRj7u4SLk8QgRQs9lS//l8hQ4VmcBxZcA3nyin6UI8/pg8xRMHVaM8DFhIJxNP5sUhga7FWvS7FbueczVmV3AeJz5vb7DNlpNR+uTh9SPNzHU34gD8KgFs0cMkczJZMmUK4jUCJLAZJ0m7J1QHnWtdf5LkLksY0Xn65rSBbi1JC6pSDvM9NTI0NvqMfFyJG0H+uTa7nqP9TQsnnrvtnCf5YDAatY1//IpRUKsmnpqZ/uwZsoitlLkXddBA7Vm4ndvlQhR76oES4B0YRIVrQv0ETJFnnGjvXhTObA7vwQtdXXv8TOVxSXF7w5xYC70o2xB4NzIL2ghgFucKqOpZzKHSbYMx3tT5bvMuG95zatBXivlxDI3H4w54LL0sdVwGe/AX0NNjN2JShajkPXu2aitpRsksQVcVhe35KDj0oieGS8c=
+        app: coinaly-socket
+        on:
+          repo: jvandenaardweg/coinaly
+          branche: master
+        skip_cleanup: true
