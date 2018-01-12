@@ -3,8 +3,6 @@ cache:
   yarn: true
   directories:
   - node_modules
-env:
-- NODE_ENV=test
 stages:
 - tests and build
 - deploy to coinaly.io
@@ -13,11 +11,17 @@ jobs:
   include:
     - stage: tests and build
       script: npm test
+      env:
+        - NODE_ENV=test
     - stage: tests and build
       script: npm run build:web
+      env:
+        - NODE_ENV=production
       skip_cleanup: true
     - stage: deploy to coinaly.io
-      script: ./deploy coinaly
+      script: skip
+      env:
+        - NODE_ENV=production
       skip_cleanup: true
       deploy: &heroku
         provider: heroku
@@ -28,7 +32,9 @@ jobs:
           repo: jvandenaardweg/coinaly
           branche: master
     - stage: deploy to coinaly.io
-      script: ./deploy coinaly-api
+      script: skip
+      env:
+        - NODE_ENV=production
       skip_cleanup: true
       deploy: &heroku
         provider: heroku
@@ -39,7 +45,9 @@ jobs:
           repo: jvandenaardweg/coinaly
           branche: master
     - stage: deploy to coinaly.io
-      script: ./deploy coinaly-socket
+      script: skip
+      env:
+        - NODE_ENV=production
       skip_cleanup: true
       deploy: &heroku
         provider: heroku
