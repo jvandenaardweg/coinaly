@@ -3,10 +3,10 @@ cache:
   yarn: true
   directories:
   - node_modules
+script:
+  - NODE_ENV=test npm test
 after_success:
  - NODE_ENV=production npm run build:web
-env:
-- NODE_ENV=test
 deploy:
   - provider: heroku
     api_key:
