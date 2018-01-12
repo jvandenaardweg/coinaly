@@ -15,8 +15,10 @@ jobs:
       script: npm test
     - stage: tests and build
       script: npm run build:web
+      skip_cleanup: true
     - stage: deploy to coinaly.io
       script: ./deploy coinaly
+      skip_cleanup: true
       deploy: &heroku
         provider: heroku
         api_key:
@@ -25,9 +27,9 @@ jobs:
         on:
           repo: jvandenaardweg/coinaly
           branche: master
-        skip_cleanup: true
     - stage: deploy to coinaly.io
       script: ./deploy coinaly-api
+      skip_cleanup: true
       deploy: &heroku
         provider: heroku
         api_key:
@@ -36,9 +38,9 @@ jobs:
         on:
           repo: jvandenaardweg/coinaly
           branche: master
-        skip_cleanup: true
     - stage: deploy to coinaly.io
       script: ./deploy coinaly-socket
+      skip_cleanup: true
       deploy: &heroku
         provider: heroku
         api_key:
@@ -47,4 +49,3 @@ jobs:
         on:
           repo: jvandenaardweg/coinaly
           branche: master
-        skip_cleanup: true
