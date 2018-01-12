@@ -4,7 +4,7 @@ cache:
   directories:
   - node_modules
 stages:
-- tests
+- tests and build
 - deploy to coinaly.io
 
 env:
