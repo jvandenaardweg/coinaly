@@ -4,27 +4,19 @@ cache:
   directories:
   - node_modules
 stages:
-- tests and build
+- tests
 - deploy to coinaly.io
 
 jobs:
   include:
-    - stage: tests and build
+    - stage: tests
       script: npm test
       env:
         - NODE_ENV=test
-    - stage: tests and build
-      script: npm run build:web
-      env:
-        - NODE_ENV=production
-        - ANALYTICS_ID=UA-258356-37
-        - SENTRY_URL=https://3b02901b7b0a418ca9d76303a9217881@sentry.io/265611
-      skip_cleanup: true
     - stage: deploy to coinaly.io
       script: skip
       env:
         - NODE_ENV=production
-      skip_cleanup: true
       deploy: &heroku
         provider: heroku
         api_key:
@@ -37,7 +29,6 @@ jobs:
       script: skip
       env:
         - NODE_ENV=production
-      skip_cleanup: true
       deploy: &heroku
         provider: heroku
         api_key:
@@ -50,7 +41,6 @@ jobs:
       script: skip
       env:
         - NODE_ENV=production
-      skip_cleanup: true
       deploy: &heroku
         provider: heroku
         api_key:
