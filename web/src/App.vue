@@ -96,7 +96,7 @@ body {
 }
 
 #app {
-  max-width: 800px;
+  max-width: $max-page-width;
   margin: 0 auto;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
