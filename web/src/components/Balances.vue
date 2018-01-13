@@ -1,19 +1,19 @@
 <template>
-  <div class="listing">
-    <header class="listing__header">
-      <h2 class="listing__header-title">{{ title }} <span v-if="totalWorthUsd !== null" :class="{'is-positive': totalWorthChangeIsPositive === true, 'is-negative': totalWorthChangeIsPositive === false }">{{ totalWorthUsd | currency('$') }}</span></h2>
-      <div class="listing__header-control">
+  <div class="balances">
+    <header class="balances__header">
+      <h2 class="balances__header-title">{{ title }} <span v-if="totalWorthUsd !== null" :class="{'is-positive': totalWorthChangeIsPositive === true, 'is-negative': totalWorthChangeIsPositive === false }">{{ totalWorthUsd | currency('$') }}</span></h2>
+      <div class="balances__header-control">
         <Button :className="'link'" @click.native="toggleShowAll()" :label="showAllLabel"></Button>
       </div>
     </header>
-    <div class="listing__body">
-      <div v-if="!showLoadingIndicator" class="listing__legend">
-        <div class="listing__legend-symbol">Coin</div>
-        <div class="listing__legend-amount">Amount</div>
-        <div class="listing__legend-worth">Worth</div>
+    <div class="balances__body">
+      <div v-if="!showLoadingIndicator" class="balances__legend">
+        <div class="balances__legend-symbol">Coin</div>
+        <div class="balances__legend-amount">Amount</div>
+        <div class="balances__legend-worth">Worth</div>
       </div>
-      <ListingCurrency v-for="(currency, key, index) in currencies" :key="key" :currency="currency" :currencyName="key" :index="index"></ListingCurrency>
-      <div v-if="showLoadingIndicator" class="listing__empty">
+      <Balance v-for="(currency, key, index) in currencies" :key="key" :currency="currency" :currencyName="key" :index="index"></Balance>
+      <div v-if="showLoadingIndicator" class="balances__empty">
         <p>Loading your balances...</p>
       </div>
     </div>
@@ -24,14 +24,14 @@
 import numeral from 'numeral'
 import { mapGetters } from 'vuex'
 
-import ListingCurrency from '@/components/ListingCurrency'
+import Balance from '@/components/Balance'
 import Button from '@/components/Button'
 
 export default {
-  name: 'Listing',
+  name: 'Balances',
   props: ['title'],
   components: {
-    ListingCurrency,
+    Balance,
     Button
   },
   data () {
@@ -182,18 +182,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.listing {
+.balances {
   text-align: left;
   margin-bottom: 15px;
 
-  .listing__header {
+  .balances__header {
     text-align: left;
     padding: 0 15px;
     display: flex;
     line-height: 4rem;
     margin-bottom: 10px;
 
-    .listing__header-title {
+    .balances__header-title {
       display: inline-block;
       margin: 0;
 
@@ -215,37 +215,33 @@ export default {
       }
     }
 
-    .listing__header-control {
+    .balances__header-control {
       margin-left: auto;
     }
   }
 
-  .listing__body {
+  .balances__body {
     padding: 0 15px 15px 15px;
-
-    .listing-currency {
-      margin-bottom: 5px;
-    }
   }
 
-  .listing__legend {
+  .balances__legend {
     display: flex;
     width: 100%;
     padding: 10px 15px;
     font-weight: bold;
 
-    .listing__legend-symbol {
+    .balances__legend-symbol {
       flex-basis: 60px;
       flex-shrink: 0;
     }
 
-    .listing__legend-amount {
+    .balances__legend-amount {
       flex-grow: 1;
       max-width: 100%;
       width: 100%;
     }
 
-    .listing__legend-worth {
+    .balances__legend-worth {
       flex-basis: 70px;
       flex-shrink: 0;
       text-align: right;
@@ -253,7 +249,7 @@ export default {
     }
   }
 
-  .listing__empty {
+  .balances__empty {
     padding-top: 15px;
     font-size: 1.6rem;
     opacity: 0.5;

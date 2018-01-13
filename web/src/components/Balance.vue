@@ -1,13 +1,13 @@
 <template>
-  <div class="listing-currency" :class="{ 'is-expanded': isExpanded }">
-    <div class="listing-currency__header" @click.prevent="toggleExpand()">
-      <div class="listing-currency__symbol"><strong>{{ currencyName }}</strong></div>
-      <div class="listing-currency__meta">{{ currency.total }}</div>
-      <div class="listing-currency__percentage" :class="{'is-positive': currentWorthChangeIsPositive === true, 'is-negative': currentWorthChangeIsPositive === false }"><span v-if="allMarkets">{{ currentWorthUsd | currency('$') }}</span></div>
+  <div class="balance" :class="{ 'is-expanded': isExpanded }">
+    <div class="balance__header" @click.prevent="toggleExpand()">
+      <div class="balance__symbol"><strong>{{ currencyName }}</strong></div>
+      <div class="balance__meta">{{ currency.total }}</div>
+      <div class="balance__percentage" :class="{'is-positive': currentWorthChangeIsPositive === true, 'is-negative': currentWorthChangeIsPositive === false }"><span v-if="allMarkets">{{ currentWorthUsd | currency('$') }}</span></div>
     </div>
-    <div class="listing-currency__stats">
+    <div class="balance__stats">
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
-      <div v-if="isExpanded" class="listing-currency__legenda">
+      <div v-if="isExpanded" class="balance__legenda">
         <ul>
           <li><span>Available:</span> <p>{{ currency.free }}</p></li>
           <li><span>In open orders:</span> <p>{{ difference }}</p></li>
@@ -15,19 +15,16 @@
         </ul>
       </div>
     </div>
-    <div v-if="isExpanded" class="listing-currency__body">
-      <!-- <div v-if="currency.Balance < buySellDifference(currency.Currency)">
-        <p>{{ buySellDifference(currency.Currency) }} {{ currency.Currency }} is transfered from Bittrex to something else.</p>
-      </div> -->
-      <div class="listing-currency__controls">
+    <div v-if="isExpanded" class="balance__body">
+      <div class="balance__controls">
         <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
         <Button :label="'Sell'" :className="'danger'" @click.native="handleClick('sell')" :disabled="!currency.free"></Button>
         <Button :label="'Buy'" @click.native="handleClick('buy')"></Button>
       </div>
-      <div class="listing-currency__history">
-          <Button v-if="totalOrderHistory(currencyName)" :className="'link'" :label="`View history (${totalOrderHistory(currencyName)})`" @click.native="toggleShowOrderHistory()"></Button>
-          <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currencyName)" :key="index" :order="order"></OrderTable>
-        </div>
+      <div v-if="totalOrderHistory(currencyName)" class="balance__history">
+        <Button :className="'link'" :label="`View history (${totalOrderHistory(currencyName)})`" @click.native="toggleShowOrderHistory()"></Button>
+        <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currencyName)" :key="index" :order="order"></OrderTable>
+      </div>
     </div>
     <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
     <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
@@ -45,7 +42,7 @@ import Progress from '@/components/Progress'
 import ChartOverlay from '@/components/ChartOverlay'
 
 export default {
-  name: 'Listing',
+  name: 'Balance',
   props: ['currency', 'currencyName'],
   components: {
     Button,
@@ -245,20 +242,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.listing-currency {
+.balance {
   background-color: $color-white;
-  border-radius: 3px;
   border: 1px $color-iron solid;
+  border-bottom: 0;
+
+  &:last-child {
+    border-bottom: 1px $color-iron solid;
+  }
 
   &.is-expanded {
-    .listing-currency__header {
+    .balance__header {
       &:after {
         transform: rotate(-180deg);
       }
     }
   }
 
-  .listing-currency__header {
+  .balance__header {
     display: flex;
     position: relative;
     padding: 15px 45px 15px 15px;
@@ -280,19 +281,19 @@ export default {
     }
   }
 
-  .listing-currency__stats {
+  .balance__stats {
     padding: 0 15px 15px 15px;
     margin-top: -6px;
   }
 
-  .listing-currency__history {
+  .balance__history {
     text-align: center;
     border-top: 1px $color-iron solid;
     padding-top: 5px;
   }
 
-  .listing-currency__legenda {
-    font-size: 1.1rem;
+  .balance__legenda {
+    font-size: 1.2rem;
     padding-top: 10px;
 
     ul {
@@ -327,17 +328,17 @@ export default {
     }
   }
 
-  .listing-currency__symbol {
+  .balance__symbol {
     width: 60px;
     text-align: left;
   }
 
-  .listing-currency__meta {
+  .balance__meta {
     opacity: 0.5;
     padding-right: 5px;
   }
 
-  .listing-currency__percentage {
+  .balance__percentage {
     align-self: right;
     margin-left: auto;
 
@@ -359,12 +360,12 @@ export default {
     }
   }
 
-  .listing-currency__body {
+  .balance__body {
     text-align: left;
     padding: 0 15px 12px 15px;
   }
 
-  .listing-currency__controls {
+  .balance__controls {
     text-align: right;
     padding: 0 0 15px 0;
     display: flex;
