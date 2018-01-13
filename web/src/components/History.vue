@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Button from '@/components/Button'
 import Order from '@/components/Order'
 import Tabs from '@/components/Tabs'
@@ -79,9 +80,14 @@ export default {
     }
   },
   computed: {
-    orderHistoryServerError () {
-      return this.$store.getters['orders/orderHistoryServerError']
-    },
+    ...mapGetters({
+      orderHistoryServerError: 'orders/orderHistoryServerError',
+      allHistory: 'orders/getAllHistory',
+      allBuyOrders: 'orders/getAllBuyHistory',
+      allSellOrders: 'orders/getAllSellHistory',
+      isLoading: 'orders/isLoading',
+      selectedExchanges: 'exchanges/selectedExchanges'
+    }),
     showLoadingIndicator () {
       return !this.hasFilteredOrders && this.isLoading && !this.searchQuery
     },
@@ -111,23 +117,11 @@ export default {
         return orderHistory
       }
     },
-    allHistory () {
-      return this.$store.getters['orders/getAllHistory']
-    },
-    allBuyOrders () {
-      return this.$store.getters['orders/getAllBuyHistory']
-    },
-    allSellOrders () {
-      return this.$store.getters['orders/getAllSellHistory']
-    },
     filteredHistoryOrdersTotal () {
       return this.historyOrders.length
     },
     historyOrdersTotal () {
       return this.allHistory.length
-    },
-    isLoading () {
-      return this.$store.getters['orders/isLoading']
     }
   },
   methods: {
