@@ -2,7 +2,7 @@
   <div class="order" :class="{'is-expanded': isExpanded}">
     <div class="order__header" @click.prevent="toggleExpand()">
       <div class="order__symbol">
-        <strong>{{ order.symbol }}</strong>
+        <strong>{{ currency }}</strong><span>/ {{ mainPair }}</span>
       </div>
       <div class="order__meta">
         <span>{{ order.amount }}</span>
@@ -18,7 +18,10 @@
     </div>
     <div v-if="isExpanded" class="order__body">
       <div v-if="isClosedBuy && delta !== null" class="order__panel" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false, 'is-neutral': isPositiveDelta === null }">
-        <strong>Worth:</strong> <span>{{ currentWorth }} ({{ delta }}%)</span>
+        <strong>Worth:</strong>
+        <span>{{ currentWorth }}
+          <span v-if="usdPrice">({{ usdPrice | currency }})</span>
+        </span>
       </div>
       <ul>
         <li><small>Quantity</small><span>{{ order.amount }}</span></li>
@@ -64,10 +67,24 @@ export default {
     }
   },
   computed: {
+    priceIndexes () {
+      return this.$store.getters['markets/priceIndexes']
+    },
+    usdPrice () {
+      if (this.currentWorth) {
+        if (this.mainPair === 'USDT') {
+          return null // TODO: we need to return some value here, need to figure out how
+        } else {
+          return this.priceIndexes[this.mainPair].rate * this.currentWorth
+        }
+      } else {
+        return null
+      }
+    },
     mainPair () {
       return this.order.symbol.split('/')[1]
     },
-    coinName () {
+    currency () {
       return this.order.symbol.split('/')[0]
     },
     isBuy () {
@@ -186,11 +203,15 @@ export default {
 <style lang="scss" scoped>
 .order {
   background-color: $color-white;
-  margin-bottom: -1px;
-  border: 1px $color-iron solid;
+  border-top: 1px $color-iron solid;
   border-bottom: 0;
   border-radius: 0;
   text-align: left;
+
+  @include breakpoint(tablet) {
+    border-left: 1px $color-iron solid;
+    border-right: 1px $color-iron solid;
+  }
 
   &:last-child {
     border-bottom: 1px $color-iron solid;
@@ -205,7 +226,7 @@ export default {
   }
 
   .order__header {
-    padding: 15px 45px 15px 15px;
+    padding: 12px 45px 15px 15px;
     display: flex;
     width: 100%;
     position: relative;
@@ -215,13 +236,13 @@ export default {
     &:after {
       content: "";
       height: 50px;
-      width: 50px;
+      width: 40px;
       background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M225.813 48.907L128 146.72 30.187 48.907 0 79.093l128 128 128-128z"/></svg>');
       position: absolute;
-      right: -2px;
+      right: 0;
       top: 0;
       bottom: 0;
-      background-size: 25%;
+      background-size: 11px;
       background-repeat: no-repeat;
       background-position: center center;
     }
@@ -261,10 +282,18 @@ export default {
     white-space: nowrap;
     flex-basis: 90px;
     flex-shrink: 0;
+
+    span {
+      font-weight: normal;
+      opacity: 0.5;
+      display: inline-block;
+      font-size: 1.2rem;
+      margin-left: 3px;
+    }
   }
 
   .order__body {
-    padding: 15px 15px 10px 15px;
+    padding: 0 15px 10px 15px;
 
     ul {
       list-style: none;

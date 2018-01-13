@@ -191,7 +191,7 @@ export default {
     padding: 0 15px;
     display: flex;
     line-height: 4rem;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 
     .balances__header-title {
       display: inline-block;
@@ -204,6 +204,8 @@ export default {
         margin-left: 2px;
         transition: 100ms color;
         color: rgba(44, 62, 80, 0.5);
+        position: relative;
+        top: -1px;
 
         &.is-negative {
           color: $color-alizarin-crimson;
@@ -221,7 +223,9 @@ export default {
   }
 
   .balances__body {
-    padding: 0 15px 15px 15px;
+    @include breakpoint(desktop) {
+      padding: 0 15px;
+    }
   }
 
   .balances__legend {
@@ -250,11 +254,11 @@ export default {
   }
 
   .balances__empty {
-    padding-top: 15px;
     font-size: 1.6rem;
     opacity: 0.5;
     font-weight: normal;
     text-align: center;
+    padding: 15px;
   }
 }
 </style>

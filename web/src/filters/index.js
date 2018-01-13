@@ -19,3 +19,9 @@ Vue.filter('percentage', function (value) {
 Vue.filter('readableDate', function (value) {
   return moment(value).format('DD-MM-YYYY HH:mm:ss')
 })
+
+Vue.filter('toFixed', function (value, decimals = 8) {
+  // if (decimals === null) decimals = 8
+  if (value === null) return value
+  return value.toFixed(decimals)
+})

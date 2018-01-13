@@ -64,15 +64,17 @@ export default {
   margin-bottom: 15px;
 
   .orders__body {
-    padding: 0 15px 15px 15px;
+    @include breakpoint(desktop) {
+      padding: 0 15px;
+    }
   }
 
   .orders__empty {
-    padding-top: 30px;
     font-size: 1.6rem;
     opacity: 0.5;
     font-weight: normal;
     text-align: center;
+    padding: 15px;
   }
 
   .orders__header {
@@ -80,7 +82,7 @@ export default {
     padding: 0 15px;
     display: flex;
     line-height: 4rem;
-    margin-bottom: 10px;
+    margin-bottom: 11px;
 
     .orders__header-title {
       display: inline-block;
@@ -95,7 +97,7 @@ export default {
   .orders__legend {
     display: flex;
     width: 100%;
-    padding: 10px 15px;
+    padding: 6px 15px 10px 15px;
     font-weight: bold;
 
     .orders__legend-symbol {

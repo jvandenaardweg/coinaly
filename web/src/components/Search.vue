@@ -23,7 +23,7 @@ export default {
 
 <style lang="scss" scoped>
 .search {
-  padding: 15px;
+  padding: 11px 15px;
   position: relative;
 
   label {
@@ -37,7 +37,6 @@ export default {
     border-radius: 3px;
     color: $color-black;
     font-size: 1.4rem;
-    line-height: 4rem;
     height: 4rem;
     width: 100%;
     display: block;

@@ -150,12 +150,14 @@ export default {
   margin-bottom: 15px;
 
   .history__body {
-    padding: 0 15px 15px 15px;
+    @include breakpoint(desktop) {
+      padding: 0 15px;
+    }
   }
 
   .history__footer {
     text-align: center;
-    padding: 0 30px 15px 30px;
+    padding: 15px 30px 15px 30px;
 
     p {
       opacity: 0.5;
@@ -163,11 +165,11 @@ export default {
   }
 
   .history__empty {
-    padding-top: 30px;
     font-size: 1.6rem;
     opacity: 0.5;
     font-weight: normal;
     text-align: center;
+    padding: 15px;
   }
 
   .history__header {
@@ -175,7 +177,7 @@ export default {
     padding: 0 15px;
     display: flex;
     line-height: 4rem;
-    margin-bottom: 10px;
+    margin-bottom: 11px;
 
     .history__header-title {
       display: inline-block;
@@ -187,18 +189,10 @@ export default {
     }
   }
 
-  .history__empty {
-    padding-top: 15px;
-    font-size: 1.6rem;
-    opacity: 0.5;
-    font-weight: normal;
-    text-align: center;
-  }
-
   .history__legend {
     display: flex;
     width: 100%;
-    padding: 10px 15px;
+    padding: 6px 15px 10px 15px;
     font-weight: bold;
 
     .history__legend-symbol {

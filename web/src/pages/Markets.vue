@@ -85,7 +85,7 @@ export default {
   padding: 0 15px;
   display: flex;
   line-height: 4rem;
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 
   .page-header__title {
     margin: 0;
@@ -98,65 +98,6 @@ export default {
 
     > div {
       margin-left: 5px;
-    }
-  }
-}
-
-.tabs {
-  list-style: none;
-  padding: 0 15px;
-  margin: 0;
-  display: flex;
-  border-radius: 3px;
-  overflow: hidden;
-
-  .tabs__item {
-    display: block;
-    width: 100%;
-    margin-right: -1px;
-
-    &:first-child {
-      .tabs__item-link {
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-      }
-    }
-
-    &:last-child {
-      .tabs__item-link {
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-      }
-    }
-
-    span {
-      font-size: 1rem;
-      position: relative;
-      top: -1px;
-    }
-  }
-
-  .tabs__item-link {
-    border: 1px rgba(0,0,0, 0.3) solid;
-    height: 35px;
-    padding: 0 12px;
-    line-height: 3.5rem;
-    font-size: 1.4rem;
-    width: 100%;
-    display: block;
-    color: rgba(0,0,0, 0.3);
-    // background-color: $color-white;
-    text-decoration: none;
-    text-align: center;
-    z-index: 0;
-
-    &.is-active {
-      background-color: $color-azure-radiance;
-      border: 1px $color-azure-radiance solid;
-      color: $color-white;
-      position: relative;
-      z-index: 1;
-      font-weight: bold;
     }
   }
 }

@@ -244,8 +244,13 @@ export default {
 <style lang="scss" scoped>
 .balance {
   background-color: $color-white;
-  border: 1px $color-iron solid;
+  border-top: 1px $color-iron solid;
   border-bottom: 0;
+
+  @include breakpoint(desktop) {
+    border-left: 1px $color-iron solid;
+    border-right: 1px $color-iron solid;
+  }
 
   &:last-child {
     border-bottom: 1px $color-iron solid;
@@ -269,13 +274,13 @@ export default {
     &:after {
       content: "";
       height: 50px;
-      width: 50px;
+      width: 40px;
       background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M225.813 48.907L128 146.72 30.187 48.907 0 79.093l128 128 128-128z"/></svg>');
       position: absolute;
-      right: -2px;
+      right: 0;
       top: 0;
       bottom: 0;
-      background-size: 25%;
+      background-size: 11px;
       background-repeat: no-repeat;
       background-position: center center;
     }
