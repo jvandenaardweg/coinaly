@@ -8,7 +8,7 @@ script:
 after_success:
  - NODE_ENV=production npm run build:web
 before_deploy:
-- rm -r node_modules
+- rm -rf node_modules
 deploy:
   - provider: heroku
     api_key:
