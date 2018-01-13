@@ -2,7 +2,7 @@
   <div class="order" :class="{'is-expanded': isExpanded}">
     <div class="order__header" @click.prevent="toggleExpand()">
       <div class="order__symbol">
-        <strong>{{ order.symbol }}</strong>
+        <strong>{{ currency }}<span>/ {{ mainPair }}</span></strong>
       </div>
       <div class="order__meta">
         <span>{{ order.amount }}</span>
@@ -67,7 +67,7 @@ export default {
     mainPair () {
       return this.order.symbol.split('/')[1]
     },
-    coinName () {
+    currency () {
       return this.order.symbol.split('/')[0]
     },
     isBuy () {
@@ -261,6 +261,14 @@ export default {
     white-space: nowrap;
     flex-basis: 90px;
     flex-shrink: 0;
+
+    span {
+      font-weight: normal;
+      opacity: 0.5;
+      display: inline-block;
+      font-size: 1.2rem;
+      margin-left: 3px;
+    }
   }
 
   .order__body {

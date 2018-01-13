@@ -8,7 +8,6 @@
         <div class="market__meta-volume">
           <span v-once>Vol. {{ currencyVolumePercentage | percentage }}</span>
         </div>
-
       </div>
       <div class="market__price">
         <div v-if="mainPair === 'USDT'" class="market__price-crypto">{{ market.last | toFixed(2) }}</div>
@@ -210,7 +209,6 @@ export default {
         font-size: 1.2rem;
         margin-left: 3px;
       }
-
     }
 
     .market__meta-volume {
