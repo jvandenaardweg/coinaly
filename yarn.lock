@@ -1593,9 +1593,9 @@ cave@2.0.0:
     lodash "^2.4.1"
     minimist "^1.1.0"
 
-ccxt@^1.10.549:
-  version "1.10.549"
-  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.10.549.tgz#8de7fe45cb5ab0485a45f03e1d4c6cb07261a4f4"
+ccxt@^1.10.682:
+  version "1.10.683"
+  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.10.683.tgz#22ca07c294ebf3a0416bdf189880817d5fe72ad0"
   dependencies:
     crypto-js "3.1.9-1"
     fetch-ponyfill "^4.1.0"
