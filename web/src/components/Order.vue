@@ -18,7 +18,10 @@
     </div>
     <div v-if="isExpanded" class="order__body">
       <div v-if="isClosedBuy && delta !== null" class="order__panel" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false, 'is-neutral': isPositiveDelta === null }">
-        <strong>Worth:</strong> <span>{{ currentWorth }} ({{ delta }}%)</span>
+        <strong>Worth:</strong>
+        <span>{{ currentWorth }}
+          <span v-if="usdPrice">({{ usdPrice | currency }})</span>
+        </span>
       </div>
       <ul>
         <li><small>Quantity</small><span>{{ order.amount }}</span></li>
@@ -64,6 +67,20 @@ export default {
     }
   },
   computed: {
+    priceIndexes () {
+      return this.$store.getters['markets/priceIndexes']
+    },
+    usdPrice () {
+      if (this.currentWorth) {
+        if (this.mainPair === 'USDT') {
+          return null // TODO: we need to return some value here, need to figure out how
+        } else {
+          return this.priceIndexes[this.mainPair].rate * this.currentWorth
+        }
+      } else {
+        return null
+      }
+    },
     mainPair () {
       return this.order.symbol.split('/')[1]
     },
@@ -276,7 +293,7 @@ export default {
   }
 
   .order__body {
-    padding: 15px 15px 10px 15px;
+    padding: 0 15px 10px 15px;
 
     ul {
       list-style: none;
