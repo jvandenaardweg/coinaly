@@ -119,6 +119,7 @@ input[type="text"] {
   line-height: 4rem;
   border: 1px $color-iron solid;
   width: 100%;
+  appearance: none;
 
   &:focus {
     border-color: $color-azure-radiance;
