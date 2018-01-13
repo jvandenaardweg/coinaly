@@ -23,11 +23,31 @@ export default {
   state: {
     markets: [],
     isLoading: true,
-    selectedMarket: initialSelectedMarket
+    selectedMarket: initialSelectedMarket,
+    priceIndexes: null
   },
   mutations: {
-    addAllMarkets (state, items) {
-      state.markets = Object.values(items)
+    addAllMarkets (state, markets) {
+      state.markets = markets
+    },
+    addPriceIndexes (state, markets) {
+      let payload = {
+        BTC: {},
+        ETH: {}
+      }
+      const filteredMarkets = markets.filter(market => {
+        return market.symbol === 'BTC/USDT' || market.symbol === 'ETH/USDT'
+      }, 0)
+
+      filteredMarkets.forEach(market => {
+        if (market.symbol === 'BTC/USDT') {
+          payload['BTC'].rate = market.last
+        } else if (market.symbol === 'ETH/USDT') {
+          payload['ETH'].rate = market.last
+        }
+      })
+
+      state.priceIndexes = payload
     },
     startLoading (state) {
       state.isLoading = true
@@ -49,7 +69,10 @@ export default {
     }
   },
   getters: {
-    selectedMarket (state) {
+    priceIndexes: state => {
+      return state.priceIndexes
+    },
+    selectedMarket: state => {
       return state.selectedMarket
     },
     allMarkets: state => {
@@ -104,7 +127,9 @@ export default {
       context.commit('startLoading')
       return axios.get(`tickers`)
       .then(response => {
-        context.commit('addAllMarkets', response.data)
+        const markets = Object.values(response.data)
+        context.commit('addAllMarkets', markets)
+        context.commit('addPriceIndexes', markets)
       })
       .catch(error => {
         console.error('Failed to get the markets.', error)

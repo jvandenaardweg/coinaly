@@ -6,23 +6,17 @@
           <strong v-once>{{ currency}}</strong><span>/ {{ mainPair }}</span>
         </div>
         <div class="market__meta-volume">
-          <span v-once>Vol. {{ currencyVolumePercentage | percentage }}</span>
+          <span>Vol. {{ currencyVolumePercentage | percentage }}</span>
         </div>
       </div>
       <div class="market__price">
-        <div v-if="mainPair === 'USDT'" class="market__price-crypto">{{ market.last | toFixed(2) }}</div>
-        <div v-if="mainPair !== 'USDT'" class="market__price-crypto">{{ market.last | toFixed }}</div>
-        <div class="market__price-fiat">$12,50</div>
+        <div class="market__price-crypto">{{ market.last | toFixed }}</div>
+        <div class="market__price-fiat">{{ calculateUsdPrice(market.last, mainPair) | currency }}</div>
       </div>
-      <!-- <div class="market__volume">
-        <Progress v-once :blue="0" :green="0" :orange="0" :black="currencyVolumePercentage"></Progress>
-      </div> -->
       <div class="market__percentage" :class="{'is-positive': isPositiveOneDayDiff === true, 'is-negative': isPositiveOneDayDiff === false }">
         <span>{{ oneDayDiffPercentage | percentage }}</span>
       </div>
     </div>
-
-
     <div v-if="isExpanded" class="market__body">
       <ul>
         <li>Vol: {{ Math.floor(market.quoteVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage }})</span></li>
@@ -45,6 +39,7 @@
 <script>
 import numeral from 'numeral'
 import pickBy from 'lodash/pickBy'
+import { mapGetters } from 'vuex'
 
 import Progress from '@/components/Progress'
 import Button from '@/components/Button'
@@ -70,18 +65,13 @@ export default {
     console.log('created market component')
   },
   computed: {
-    allFilledCurrenciesInBalance () {
-      return this.$store.getters['balances/allFilledCurrencies']
-    },
-    totalBtcVolume () {
-      return this.$store.getters['markets/totalBtcVolume']
-    },
-    totalEthVolume () {
-      return this.$store.getters['markets/totalEthVolume']
-    },
-    totalUsdVolume () {
-      return this.$store.getters['markets/totalUsdVolume']
-    },
+    ...mapGetters({
+      priceIndexes: 'markets/priceIndexes',
+      allFilledCurrenciesInBalance: 'balances/allFilledCurrencies',
+      totalBtcVolume: 'markets/totalBtcVolume',
+      totalEthVolume: 'markets/totalEthVolume',
+      totalUsdVolume: 'markets/totalUsdVolume'
+    }),
     currencyVolumePercentage () {
       let volume = 0
       if (this.mainPair === 'USDT') {
@@ -122,6 +112,13 @@ export default {
     }
   },
   methods: {
+    calculateUsdPrice (rate, currency) {
+      if (currency === 'USDT') {
+        return this.market.last
+      } else {
+        return this.priceIndexes[currency].rate * rate
+      }
+    },
     number (number) {
       return numeral(number).format('0,0')
     },
