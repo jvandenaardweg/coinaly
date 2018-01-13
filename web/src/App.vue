@@ -54,7 +54,7 @@ export default {
 
         // TODO: do with websockets
         this.marketInterval = setInterval(() => {
-          // this.$store.dispatch('markets/getAll')
+          this.$store.dispatch('markets/getAll')
         }, 2000)
       })
       .catch(error => {
