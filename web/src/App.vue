@@ -33,6 +33,8 @@ export default {
     if (this.isAuthorized) {
       this.getAllData()
     }
+
+    this.$store.commit('exchanges/setSelectedExchange', 'bittrex')
   },
   methods: {
     handleLogout () {
