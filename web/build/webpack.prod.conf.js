@@ -35,7 +35,11 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': env
+      'process.env': {
+        NODE_ENV: process.env.NODE_ENV,
+        ANALYTICS_ID: process.env.ANALYTICS_ID,
+        SENTRY_URL: process.env.SENTRY_URL
+      },
     }),
     new UglifyJsPlugin({
       uglifyOptions: {
