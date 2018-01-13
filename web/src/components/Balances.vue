@@ -1,7 +1,15 @@
 <template>
   <div class="balances">
     <header class="balances__header">
-      <h2 class="balances__header-title">{{ title }} <span v-if="totalWorthUsd !== null" :class="{'is-positive': totalWorthChangeIsPositive === true, 'is-negative': totalWorthChangeIsPositive === false }">{{ totalWorthUsd | currency('$') }}</span></h2>
+      <h2 class="balances__header-title">{{ title }}
+        <span v-if="totalWorthUsd !== null"
+          :class="{
+            'is-positive': totalWorthChangeIsPositive === true,
+            'is-negative': totalWorthChangeIsPositive === false }">
+            {{ totalWorthUsd | currency('$') }}
+        </span>
+        <span v-if="isCalculatingWorth">Calculating...</span>
+      </h2>
       <div class="balances__header-control">
         <Button :className="'link'" @click.native="toggleShowAll()" :label="showAllLabel"></Button>
       </div>
@@ -37,7 +45,8 @@ export default {
   data () {
     return {
       totalWorthChangeIsPositive: null,
-      showAll: false
+      showAll: false,
+      isCalculatingWorth: true
     }
   },
   created () {
@@ -55,6 +64,8 @@ export default {
         }
 
         this.$store.commit('balances/setWorth', payload)
+
+        if (this.isCalculatingWorth) this.isCalculatingWorth = false
       }
     })
   },
