@@ -1,16 +1,16 @@
 <template>
   <div id="balance">
-    <Listing :title="'My Balance'"></Listing>
+    <Balances :title="'My Balance'"></Balances>
   </div>
 </template>
 
 <script>
-import Listing from '@/components/Listing'
+import Balances from '@/components/Balances'
 
 export default {
   name: 'BalancesPage',
   components: {
-    Listing
+    Balances
   },
   created () {
     console.log('created balances page')
