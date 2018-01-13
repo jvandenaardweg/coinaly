@@ -30,6 +30,7 @@
     </div>
     <div class="history__footer">
       <Button :className="'link'" :label="'Show all history'" v-if="filteredHistoryOrdersTotal > paginationLimit" @click.native="showAllHistory()"></Button>
+      <p v-if="!showLoadingIndicator">Due to Bittrex limitations, we can only show the order history up to 30 days in the past.</p>
     </div>
   </div>
 </template>
@@ -155,6 +156,10 @@ export default {
   .history__footer {
     text-align: center;
     padding: 15px 0;
+
+    p {
+      opacity: 0.5;
+    }
   }
 
   .history__empty {
