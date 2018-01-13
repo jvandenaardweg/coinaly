@@ -17,7 +17,7 @@
       <Progress :blue="0" :orange="0" :green="filledPercentage"></Progress>
     </div>
     <div v-if="isExpanded" class="order__body">
-      <div v-if="isClosedBuy" class="order__panel" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false, 'is-neutral': isPositiveDelta === null }">
+      <div v-if="isClosedBuy && delta !== null" class="order__panel" :class="{'is-positive': isPositiveDelta === true, 'is-negative': isPositiveDelta === false, 'is-neutral': isPositiveDelta === null }">
         <strong>Worth:</strong> <span>{{ currentWorth }} ({{ delta }}%)</span>
       </div>
       <ul>
@@ -113,7 +113,7 @@ export default {
       }
     },
     delta () {
-      if (this.allMarkets.length) {
+      if (this.allMarkets.length && this.currentWorth !== null) {
         if (this.isBuy) {
           const percentage = ((this.currentWorth - this.order.cost) / this.order.cost * 100).toFixed(2)
           return percentage
