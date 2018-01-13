@@ -62,7 +62,6 @@ export default {
 .orders {
   text-align: left;
   margin-bottom: 15px;
-  // border-bottom: 1px $color-iron solid;
 
   .orders__body {
     padding: 0 15px 15px 15px;

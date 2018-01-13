@@ -186,10 +186,15 @@ export default {
 <style lang="scss" scoped>
 .order {
   background-color: $color-white;
-  margin-bottom: 5px;
+  margin-bottom: -1px;
   border: 1px $color-iron solid;
-  border-radius: 3px;
+  border-bottom: 0;
+  border-radius: 0;
   text-align: left;
+
+  &:last-child {
+    border-bottom: 1px $color-iron solid;
+  }
 
   &.is-expanded {
     .order__header {
@@ -223,7 +228,7 @@ export default {
   }
 
   .order__percentage {
-    flex-basis: 110px;
+    flex-basis: 115px;
     flex-shrink: 0;
     text-align: right;
 
@@ -269,7 +274,6 @@ export default {
       flex-wrap: wrap;
       flex-direction: row;
       justify-content: flex-start;
-      border-bottom: 1px $color-iron solid;
       margin-bottom: 10px;
 
       li {
@@ -309,8 +313,9 @@ export default {
   }
 
   .order__footer {
-    padding: 0 15px 15px 15px;
+    padding: 15px;
     text-align: right;
+    border-top: 1px $color-iron solid;
   }
 
   .order__stats {
