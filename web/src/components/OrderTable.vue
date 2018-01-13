@@ -2,7 +2,7 @@
   <table class="order-table">
     <thead>
       <tr>
-        <th>{{ readableOrderType }} ({{ order.amount }}) <span>at {{ readableDate(order.datetime) }}</span></th>
+        <th>{{ readableOrderType }} ({{ order.amount }}) <span>at {{ order.datetime | readableDate }}</span></th>
       </tr>
     </thead>
     <tbody>
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-const moment = require('moment')
-
 export default {
   name: 'OrderTable',
   props: ['order'],
@@ -81,11 +79,6 @@ export default {
       } else {
         return '-'
       }
-    }
-  },
-  methods: {
-    readableDate (date) {
-      return moment(date).format('DD-MM-YYYY HH:mm:ss')
     }
   }
 }

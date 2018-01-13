@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import numeral from 'numeral'
+const moment = require('moment')
 
 Vue.filter('capitalize', function (value) {
   return value.toUpperCase()
@@ -13,4 +14,8 @@ Vue.filter('currency', function (value, prefix) {
 
 Vue.filter('percentage', function (value) {
   return value + '%'
+})
+
+Vue.filter('readableDate', function (value) {
+  return moment(value).format('DD-MM-YYYY HH:mm:ss')
 })
