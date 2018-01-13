@@ -92,7 +92,7 @@ body {
   padding: 0;
   margin: 0;
   font-size: 1.4rem;
-  line-height: 1.5;
+  line-height: 2.4rem;
 }
 
 #app {
@@ -102,7 +102,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-pickled-bluewood;
-  padding-top: 75px;
+  padding-top: 76px;
 }
 
 label {

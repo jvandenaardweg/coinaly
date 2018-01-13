@@ -205,7 +205,7 @@ export default {
   }
 
   .order__header {
-    padding: 15px 45px 15px 15px;
+    padding: 12px 45px 15px 15px;
     display: flex;
     width: 100%;
     position: relative;

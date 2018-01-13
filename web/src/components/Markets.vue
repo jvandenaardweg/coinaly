@@ -3,7 +3,7 @@
     <div class="markets__body">
       <div v-if="!showLoadingIndicator && hasFilteredMarkets" class="markets__legend">
         <div class="markets__legend-symbol" @click="sortBy('MarketName')">Market</div>
-        <div class="markets__legend-volume" @click="sortBy('Volume')">Volume</div>
+        <div class="markets__legend-price" @click="sortBy('Price')">Price</div>
         <div class="markets__legend-percentage" @click="sortBy('percentage')">Change</div>
       </div>
       <Market v-if="hasFilteredMarkets && isWithinPageLimit(index)" v-for="(market, index) in filteredMarkets" :key="market.symbol" :market="market"></Market>
@@ -85,7 +85,7 @@ export default {
 
   .markets__legend {
     display: flex;
-    padding: 10px 15px;
+    padding: 6px 45px 10px 15px;
     width: 100%;
 
     > div {
@@ -93,11 +93,12 @@ export default {
     }
 
     .markets__legend-symbol {
-      flex-basis: 90px;
+      flex-basis: 36%;
       flex-shrink: 0;
+      max-width: 120px;
     }
 
-    .markets__legend-volume {
+    .markets__legend-price {
       flex-grow: 1;
       max-width: 100%;
     }
@@ -106,7 +107,6 @@ export default {
       flex-basis: 70px;
       flex-shrink: 0;
       text-align: right;
-      padding-right: 30px;
     }
   }
 

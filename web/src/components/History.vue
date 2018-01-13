@@ -175,7 +175,7 @@ export default {
     padding: 0 15px;
     display: flex;
     line-height: 4rem;
-    margin-bottom: 10px;
+    margin-bottom: 11px;
 
     .history__header-title {
       display: inline-block;
@@ -198,7 +198,7 @@ export default {
   .history__legend {
     display: flex;
     width: 100%;
-    padding: 10px 15px;
+    padding: 6px 15px 10px 15px;
     font-weight: bold;
 
     .history__legend-symbol {

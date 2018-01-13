@@ -1,16 +1,29 @@
 <template>
   <div class="market" :class="{ 'is-in-balance': isInBalance, 'is-expanded': isExpanded }">
     <div class="market__header" @click.prevent="toggleExpand()">
-      <div class="market__symbol">
-        <strong>{{ market.symbol }}</strong>
+      <div class="market__meta">
+        <div class="market__meta-symbol">
+          <strong v-once>{{ currency}}<span>/ {{ mainPair }}</span></strong>
+        </div>
+        <div class="market__meta-volume">
+          <span v-once>Vol. {{ currencyVolumePercentage | percentage }}</span>
+        </div>
+
       </div>
-      <div class="market__volume">
+      <div class="market__price">
+        <div v-if="mainPair === 'USDT'" class="market__price-crypto">{{ market.last | toFixed(2) }}</div>
+        <div v-if="mainPair !== 'USDT'" class="market__price-crypto">{{ market.last | toFixed }}</div>
+        <div class="market__price-fiat">$12,50</div>
+      </div>
+      <!-- <div class="market__volume">
         <Progress v-once :blue="0" :green="0" :orange="0" :black="currencyVolumePercentage"></Progress>
-      </div>
+      </div> -->
       <div class="market__percentage" :class="{'is-positive': isPositiveOneDayDiff === true, 'is-negative': isPositiveOneDayDiff === false }">
         <span>{{ oneDayDiffPercentage | percentage }}</span>
       </div>
     </div>
+
+
     <div v-if="isExpanded" class="market__body">
       <ul>
         <li>Vol: {{ Math.floor(market.quoteVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage }})</span></li>
@@ -130,20 +143,13 @@ export default {
   border-bottom: 0;
   position: relative;
 
-  &:first-child {
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-  }
-
   &:last-child {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
     border-bottom: 1px $color-iron solid;
   }
 
-  &.is-in-balance {
-    border: 1px $color-azure-radiance solid;
-  }
+  // &.is-in-balance {
+  //   border: 1px $color-azure-radiance solid;
+  // }
 
   &.is-expanded {
     .market__header {
@@ -154,20 +160,20 @@ export default {
   }
 
   .market__header {
-    padding: 15px 45px 15px 15px;
+    padding: 10px 40px 9px 15px;
     display: flex;
     width: 100%;
     position: relative;
-    height: 50px;
     cursor: pointer;
+    overflow: hidden;
 
     &:after {
       content: "";
-      height: 50px;
-      width: 50px;
+      height: 66px;
+      width: 40px;
       background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M225.813 48.907L128 146.72 30.187 48.907 0 79.093l128 128 128-128z"/></svg>');
       position: absolute;
-      right: -2px;
+      right: 0;
       top: 0;
       bottom: 0;
       background-size: 25%;
@@ -188,17 +194,88 @@ export default {
     }
   }
 
-  .market__symbol {
+  .market__meta {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    flex-basis: 90px;
+    flex-basis: 36%;
+    max-width: 120px;
     flex-shrink: 0;
+
+    .market__meta-symbol {
+      span {
+        font-weight: normal;
+        opacity: 0.5;
+        display: inline-block;
+        font-size: 1.2rem;
+        margin-left: 3px;
+      }
+
+    }
+
+    .market__meta-volume {
+      opacity: 0.5;
+      font-size: 1.2rem;
+      margin-top: -6px;
+    }
   }
+
+  // .market__volume {
+  //   padding: 0 15px 12px 15px;
+  // }
 
   .market__volume {
     flex-grow: 1;
     max-width: 100%;
+
+    .progress {
+      position: relative;
+      top: 20px;
+    }
+  }
+
+  .market__price {
+    flex-grow: 1;
+    max-width: 100%;
+    font-size: 1.2rem;
+    // padding: 0 0 0 12px;
+    // margin-top: -11px;
+
+    .market__price-crypto {
+      font-size: 1.4rem;
+    }
+
+    .market__price-fiat {
+      opacity: 0.5;
+      margin-top: -5px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      width: 100%;
+
+      li {
+        margin-left: 5px;
+
+        &:first-child {
+          margin-left: 0;
+          white-space: nowrap;
+          // flex-basis: 90px;
+          flex-basis: 50%;
+          flex-shrink: 0;
+        }
+
+        &:last-child {
+          // flex-basis: 70px;
+          flex-basis: 50%;
+          flex-shrink: 0;
+          text-align: right;
+        }
+      }
+    }
 
     > span {
       font-size: .9rem;
@@ -209,16 +286,18 @@ export default {
       opacity: 0.5;
     }
 
-    .progress {
-      position: relative;
-      top: 8px;
-    }
+
   }
 
   .market__percentage {
     flex-basis: 70px;
     flex-shrink: 0;
     text-align: right;
+
+    span {
+      position: relative;
+      top: 9px;
+    }
 
     &.is-negative {
       span {

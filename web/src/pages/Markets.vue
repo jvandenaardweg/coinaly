@@ -85,7 +85,7 @@ export default {
   padding: 0 15px;
   display: flex;
   line-height: 4rem;
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 
   .page-header__title {
     margin: 0;
