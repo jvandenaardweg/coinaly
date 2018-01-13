@@ -62,7 +62,7 @@ $navigation-logo-width: 80px;
   z-index: 99;
 
   .navigation__container {
-    max-width: 800px;
+    max-width: $max-page-width;
     margin: 0 auto;
     width: 100%;
     display: flex;

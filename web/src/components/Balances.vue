@@ -223,7 +223,9 @@ export default {
   }
 
   .balances__body {
-    padding: 0 15px 15px 15px;
+    @include breakpoint(desktop) {
+      padding: 0 15px;
+    }
   }
 
   .balances__legend {
@@ -252,11 +254,11 @@ export default {
   }
 
   .balances__empty {
-    padding-top: 15px;
     font-size: 1.6rem;
     opacity: 0.5;
     font-weight: normal;
     text-align: center;
+    padding: 15px;
   }
 }
 </style>

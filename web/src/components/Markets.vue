@@ -75,8 +75,14 @@ export default {
 
 <style lang="scss" scoped>
 .markets {
-  padding: 0 15px;
+  // padding: 0 15px;
   border-radius: 3px;
+
+  .markets__body {
+    @include breakpoint(desktop) {
+      padding: 0 15px;
+    }
+  }
 
   .markets__footer {
     text-align: center;
@@ -111,11 +117,11 @@ export default {
   }
 
   .markets__empty {
-    padding-top: 15px;
     font-size: 1.6rem;
     opacity: 0.5;
     font-weight: normal;
     text-align: center;
+    padding: 15px;
   }
 }
 </style>

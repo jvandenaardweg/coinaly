@@ -244,8 +244,13 @@ export default {
 <style lang="scss" scoped>
 .balance {
   background-color: $color-white;
-  border: 1px $color-iron solid;
+  border-top: 1px $color-iron solid;
   border-bottom: 0;
+
+  @include breakpoint(desktop) {
+    border-left: 1px $color-iron solid;
+    border-right: 1px $color-iron solid;
+  }
 
   &:last-child {
     border-bottom: 1px $color-iron solid;

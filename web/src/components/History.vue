@@ -150,7 +150,9 @@ export default {
   margin-bottom: 15px;
 
   .history__body {
-    padding: 0 15px 15px 15px;
+    @include breakpoint(desktop) {
+      padding: 0 15px;
+    }
   }
 
   .history__footer {
@@ -163,11 +165,11 @@ export default {
   }
 
   .history__empty {
-    padding-top: 30px;
     font-size: 1.6rem;
     opacity: 0.5;
     font-weight: normal;
     text-align: center;
+    padding: 15px;
   }
 
   .history__header {
@@ -185,14 +187,6 @@ export default {
     .history__header-control {
       margin-left: auto;
     }
-  }
-
-  .history__empty {
-    padding-top: 15px;
-    font-size: 1.6rem;
-    opacity: 0.5;
-    font-weight: normal;
-    text-align: center;
   }
 
   .history__legend {

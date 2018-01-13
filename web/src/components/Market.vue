@@ -3,7 +3,7 @@
     <div class="market__header" @click.prevent="toggleExpand()">
       <div class="market__meta">
         <div class="market__meta-symbol">
-          <strong v-once>{{ currency}}<span>/ {{ mainPair }}</span></strong>
+          <strong v-once>{{ currency}}</strong><span>/ {{ mainPair }}</span>
         </div>
         <div class="market__meta-volume">
           <span v-once>Vol. {{ currencyVolumePercentage | percentage }}</span>
@@ -137,18 +137,29 @@ export default {
 
 <style lang="scss" scoped>
 .market {
-  border: 1px $color-iron solid;
+  border-top: 1px $color-iron solid;
   background-color: $color-white;
   border-bottom: 0;
   position: relative;
+
+  @include breakpoint(desktop) {
+    border-left: 1px $color-iron solid;
+    border-right: 1px $color-iron solid;
+  }
 
   &:last-child {
     border-bottom: 1px $color-iron solid;
   }
 
-  // &.is-in-balance {
-  //   border: 1px $color-azure-radiance solid;
-  // }
+  &.is-in-balance {
+    .market__meta {
+      .market__meta-symbol {
+        strong {
+          color: $color-azure-radiance;
+        }
+      }
+    }
+  }
 
   &.is-expanded {
     .market__header {
