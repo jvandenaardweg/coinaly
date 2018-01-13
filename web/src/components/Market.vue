@@ -19,13 +19,14 @@
     </div>
     <div v-if="isExpanded" class="market__body">
       <ul>
-        <li>Vol: {{ Math.floor(market.quoteVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage }})</span></li>
+        <li>Vol: {{ Math.floor(market.quoteVolume) }} ({{ mainPair }}) <span v-once>({{ currencyVolumePercentage | percentage }})</span></li>
         <li>Last: {{ market.last}} </li>
         <li>Today low: {{ market.low }}</li>
         <li>Today high: {{ market.high }}</li>
         <li>Yesterday: {{ market.info.PrevDay }}</li>
         <li>Open buy orders: {{ market.info.OpenBuyOrders }}</li>
         <li>Open sell orders: {{ market.info.OpenSellOrders }}</li>
+        <li>In your balance: {{ totalInBalance }} <span v-if="currencyBalanceWorth">({{ currencyBalanceWorth | currency }})</span></li>
       </ul>
     </div>
     <div v-if="isExpanded" class="market__footer">
@@ -70,7 +71,8 @@ export default {
       allFilledCurrenciesInBalance: 'balances/allFilledCurrencies',
       totalBtcVolume: 'markets/totalBtcVolume',
       totalEthVolume: 'markets/totalEthVolume',
-      totalUsdVolume: 'markets/totalUsdVolume'
+      totalUsdVolume: 'markets/totalUsdVolume',
+      balanceWorth: 'balances/allWorth'
     }),
     currencyVolumePercentage () {
       let volume = 0
@@ -104,11 +106,24 @@ export default {
         return null
       }
     },
-    isInBalance () {
+    balance () {
       const inBalanceCurrencyNames = pickBy(this.allFilledCurrenciesInBalance, (currency, currencyName) => {
         return this.currency === currencyName
       })
-      return Object.keys(inBalanceCurrencyNames).length
+      return inBalanceCurrencyNames
+    },
+    isInBalance () {
+      return Object.keys(this.balance).length
+    },
+    currencyBalanceWorth () {
+      return this.totalInBalance * this.calculateUsdPrice(this.market.last, this.mainPair)
+    },
+    totalInBalance () {
+      if (this.balance && this.balance[this.currency]) {
+        return this.balance[this.currency].total
+      } else {
+        return 0
+      }
     }
   },
   methods: {
