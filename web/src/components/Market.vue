@@ -186,7 +186,7 @@ export default {
       right: 0;
       top: 0;
       bottom: 0;
-      background-size: 25%;
+      background-size: 11px;
       background-repeat: no-repeat;
       background-position: center center;
     }

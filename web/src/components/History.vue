@@ -157,7 +157,7 @@ export default {
 
   .history__footer {
     text-align: center;
-    padding: 0 30px 15px 30px;
+    padding: 15px 30px 15px 30px;
 
     p {
       opacity: 0.5;
