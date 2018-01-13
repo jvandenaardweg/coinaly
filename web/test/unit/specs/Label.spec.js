@@ -1,7 +1,7 @@
 import { mount } from 'vue-test-utils'
 import Label from '@/components/Label'
 
-describe('Button.vue', () => {
+describe('Label.vue', () => {
   it('is a Vue instance', () => {
     const wrapper = mount(Label)
     expect(wrapper.isVueInstance()).toBeTruthy()

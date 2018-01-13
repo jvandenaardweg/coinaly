@@ -19,6 +19,8 @@
 
       <Order v-if="historyOrders && isWithinPageLimit(index)" v-for="(order, index) in historyOrders" :key="order.id" :order="order"></Order>
 
+      <ServerError v-if="orderHistoryServerError" :message="orderHistoryServerError.message"></ServerError>
+
       <div v-if="!hasFilteredOrders" class="history__empty">
         <p v-if="searchQuery">No orders found for "{{ searchQuery }}".</p>
       </div>
@@ -37,6 +39,7 @@ import Button from '@/components/Button'
 import Order from '@/components/Order'
 import Tabs from '@/components/Tabs'
 import Search from '@/components/Search'
+import ServerError from '@/components/ServerError'
 
 export default {
   name: 'History',
@@ -44,7 +47,8 @@ export default {
     Button,
     Order,
     Tabs,
-    Search
+    Search,
+    ServerError
   },
   data () {
     return {
@@ -75,6 +79,9 @@ export default {
     }
   },
   computed: {
+    orderHistoryServerError () {
+      return this.$store.getters['orders/orderHistoryServerError']
+    },
     showLoadingIndicator () {
       return !this.hasFilteredOrders && this.isLoading && !this.searchQuery
     },

@@ -13,7 +13,7 @@ import { sync } from 'vuex-router-sync'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
-if (process.env.NODE_ENV === 'production' && process.env.SENTRY_URL) {
+if (process.env.SENTRY_URL) {
   Raven.config(process.env.SENTRY_URL).addPlugin(RavenVue, Vue).install()
 }
 

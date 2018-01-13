@@ -1,7 +1,7 @@
 import { mount } from 'vue-test-utils'
 import Progress from '@/components/Progress'
 
-describe('Button.vue', () => {
+describe('Progress.vue', () => {
   it('is a Vue instance', () => {
     const wrapper = mount(Progress)
     expect(wrapper.isVueInstance()).toBeTruthy()

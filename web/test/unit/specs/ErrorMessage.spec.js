@@ -1,7 +1,7 @@
 import { mount } from 'vue-test-utils'
 import ErrorMessage from '@/components/ErrorMessage'
 
-describe('Button.vue', () => {
+describe('ErrorMessage.vue', () => {
   it('is a Vue instance', () => {
     const wrapper = mount(ErrorMessage)
     expect(wrapper.isVueInstance()).toBeTruthy()

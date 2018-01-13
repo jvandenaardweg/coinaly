@@ -12,7 +12,11 @@ export default {
     history: [],
     open: [],
     isLoading: false,
-    selectedOrderType: initialSelectedOrderType
+    selectedOrderType: initialSelectedOrderType,
+    serverErrors: {
+      history: null,
+      open: null
+    }
   },
   mutations: {
     addAllHistory (state, items) {
@@ -38,6 +42,12 @@ export default {
     removeSelectedOrderType (state, type) {
       Vue.cookie.delete('selectedOrderType')
       state.selectedOrderType = null
+    },
+    addServerErrorHistory (state, error) {
+      state.serverErrors.history = error
+    },
+    addServerErrorOpen (state, error) {
+      state.serverErrors.open = error
     }
   },
   getters: {
@@ -70,6 +80,12 @@ export default {
     },
     isLoading: state => {
       return state.isLoading
+    },
+    orderHistoryServerError: state => {
+      return state.serverErrors.history
+    },
+    openOrdersServerError: state => {
+      return state.serverErrors.open
     }
   },
   actions: {
@@ -83,6 +99,7 @@ export default {
         context.commit('addAllHistory', response.data)
       })
       .catch(error => {
+        context.commit('addServerErrorHistory', error.response.data)
         console.error('Failed to get the order history.', error)
       })
       .finally(() => {
@@ -96,6 +113,7 @@ export default {
         context.commit('addAllOpen', response.data)
       })
       .catch(error => {
+        context.commit('addServerErrorOpen', error.response.data)
         console.error('Failed to get the open orders.', error)
       })
       .finally(() => {
