@@ -22,7 +22,9 @@ We are here to create a fast and easy to use mobile (website) trade and portfoli
 - Overview open orders. How are my orders performing? Should I cancel or adjust them?
 - Easily see how far an open order is from the current market price
 - Better live candlestick chart by [TradingView.com](https://www.tradingview.com/)
+- View the charts directly from your orders, your balance and the market. No need to go to seperate pages.
 - Live updates all market data. No need to refresh yourself
+- Shows the current (fiat) worth of all your coins in realtime
 - Easily browse and filter all available markets
 
 ### Safe to use
