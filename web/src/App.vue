@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Navigation></Navigation>
-    <!-- <Loader></Loader> -->
     <keep-alive include="HomePage,MarketsPage,OrdersPage,BalancesPage">
       <router-view></router-view>
     </keep-alive>
@@ -13,14 +12,12 @@
 </template>
 
 <script>
-import Loader from '@/components/Loader'
 import Navigation from '@/components/Navigation'
 import Button from '@/components/Button'
 
 export default {
   name: 'app',
   components: {
-    Loader,
     Navigation,
     Button
   },
