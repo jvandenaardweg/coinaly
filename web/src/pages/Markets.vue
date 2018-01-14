@@ -4,6 +4,7 @@
       <h2 class="page-header__title">Markets</h2>
     </header>
     <Tabs :items="tabItems"></Tabs>
+
     <router-view></router-view>
   </div>
 </template>

@@ -26,7 +26,7 @@
         <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currencyName)" :key="index" :order="order"></OrderTable>
       </div>
     </div>
-    <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
+    <OrderModal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></OrderModal>
     <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
   </div>
 </template>
@@ -36,7 +36,7 @@ import { mapGetters } from 'vuex'
 
 import Button from '@/components/Button'
 import OrderTable from '@/components/OrderTable'
-import Modal from '@/components/Modal'
+import OrderModal from '@/components/OrderModal'
 import Progress from '@/components/Progress'
 import ChartOverlay from '@/components/ChartOverlay'
 
@@ -46,7 +46,7 @@ export default {
   components: {
     Button,
     OrderTable,
-    Modal,
+    OrderModal,
     Progress,
     ChartOverlay
   },

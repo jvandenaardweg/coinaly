@@ -1,13 +1,14 @@
 <template>
   <div class="search">
-    <input type="search" :aria-label="placeholder" name="search" v-model="searchQuery" :placeholder="placeholder" />
+    <label v-if="label">{{ label }}</label>
+    <input type="search" :aria-label="placeholder" name="search" v-model="searchQuery" :placeholder="placeholder" autocomplete="off" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'Search',
-  props: ['placeholder'],
+  props: ['placeholder', 'label'],
   data () {
     return {
       searchQuery: null
@@ -23,12 +24,8 @@ export default {
 
 <style lang="scss" scoped>
 .search {
-  padding: 11px 15px;
+  // padding: 11px 15px;
   position: relative;
-
-  label {
-    display: none;
-  }
 
   input[type="search"] {
     border: 1px $color-iron solid;

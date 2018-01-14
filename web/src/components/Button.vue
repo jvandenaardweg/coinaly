@@ -1,12 +1,13 @@
 <template>
-  <button :type="(!typeName ? 'button': typeName)" class="button" :class="{
+  <button :type="(!typeName ? 'button': typeName)" class="button" :selected="selected" :class="{
     'button--primary': !className,
     'button--danger': className === 'danger',
     'button--success': className === 'success',
     'button--warning': className === 'warning',
     'button--outlined': className === 'outlined',
     'button--link': className === 'link',
-    'button--link-gray': className === 'link-gray'
+    'button--link-gray': className === 'link-gray',
+    'button--size--tiny': size === 'tiny'
   }">
     {{ label }}
   </button>
@@ -15,7 +16,7 @@
 <script>
 export default {
   name: 'Button',
-  props: ['label', 'typeName', 'className']
+  props: ['label', 'typeName', 'className', 'size', 'selected']
 }
 </script>
 
@@ -36,6 +37,23 @@ export default {
 
   &[disabled] {
     opacity: 0.5;
+  }
+
+  &.button--size--tiny {
+    padding: 0 7px;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color: $color-black;
+    background: none;
+    border-color: $color-black;
+    font-weight: normal;
+    // opacity: 0.5;
+
+    // &[selected] {
+    //   opacity: 1;
+    //   color: $color-azure-radiance;
+    //   border-color: $color-azure-radiance;
+    // }
   }
 
   &.button--icon {
