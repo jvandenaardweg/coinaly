@@ -10,7 +10,7 @@ This project is in the very early development stage, some features might not wor
 
 We currently only support Bittrex. We plan on adding more exchanges in the future.
 
-![Screenshots](https://www.dropbox.com/s/i9wrtxoqb6hxj45/github-banner.png?raw=1)
+![Screenshots](https://www.dropbox.com/s/kkuyae813w9ozn5/github-banner-v2.png?raw=1)
 
 ## 📱 Our mission
 We are here to create a fast and easy to use mobile (website) trade and portfolio interface for your favorite exchange. No more missed opportunities or trades because the website of your favorite exchange is too slow or too complicated to use. We optimize our website for easy mobile usage and give you the tools and insights you need on a daily basis. It’s more about you and your trades, and less about the exchange pushing you to buy coins.
