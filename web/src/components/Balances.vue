@@ -8,7 +8,7 @@
             'is-negative': totalWorthChangeIsPositive === false }">
             {{ totalWorthUsd | currency('$') }}
         </span>
-        <span v-if="isCalculatingWorth">Calculating...</span>
+        <span v-if="isCalculatingWorth && totalWorthUsd === null">Calculating...</span>
       </h2>
       <div class="balances__header-control">
         <Button :className="'link'" @click.native="toggleShowAll()" :label="showAllLabel"></Button>
@@ -50,21 +50,12 @@ export default {
     }
   },
   created () {
+    this.setBalanceWorth()
+
     // Listen for market changes, recalculate the current worth of our whole balance
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'markets/addAllMarkets') {
-        const filledCurrencies = Object.entries(this.allFilledCurrencies)
-        let payload = {}
-
-        for (const [currencyName, obj] of filledCurrencies) {
-          payload[currencyName] = {
-            usd: this.currentUsdWorth(obj.total, currencyName),
-            btc: this.currentBtcWorth(obj.total, currencyName)
-          }
-        }
-
-        this.$store.commit('balances/setWorth', payload)
-
+        this.setBalanceWorth()
         if (this.isCalculatingWorth) this.isCalculatingWorth = false
       }
     })
@@ -102,6 +93,18 @@ export default {
     }
   },
   methods: {
+    setBalanceWorth () {
+      const filledCurrencies = Object.entries(this.allFilledCurrencies)
+      let payload = {}
+
+      for (const [currencyName, obj] of filledCurrencies) {
+        payload[currencyName] = {
+          usd: this.currentUsdWorth(obj.total, currencyName),
+          btc: this.currentBtcWorth(obj.total, currencyName)
+        }
+      }
+      this.$store.commit('balances/setWorth', payload)
+    },
     toggleShowAll () {
       if (this.showAll) {
         this.showAll = false
