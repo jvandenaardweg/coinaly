@@ -38,9 +38,11 @@
       <p v-if="order.info.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>
     <div v-if="isExpanded" class="order__footer">
-      <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
-      <Button v-if="order.remaining" :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.id)"></Button>
-      <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
+      <div class="order__footer-body">
+        <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
+        <Button v-if="order.remaining" :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.id)"></Button>
+        <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
+      </div>
     </div>
     <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
   </div>
@@ -356,9 +358,13 @@ export default {
   }
 
   .order__footer {
-    padding: 15px;
     text-align: right;
-    border-top: 1px $color-iron solid;
+    padding: 0 15px;
+
+    .order__footer-body {
+      padding: 15px 0;
+      border-top: 1px $color-iron solid;
+    }
   }
 
   .order__stats {
