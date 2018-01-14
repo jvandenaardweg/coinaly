@@ -175,7 +175,6 @@ export default {
   },
   watch: {
     'totalWorthUsd' (newValue, oldValue) {
-      console.log(newValue, oldValue)
       if (oldValue !== null) {
         if (newValue >= oldValue) {
           this.totalWorthChangeIsPositive = true
