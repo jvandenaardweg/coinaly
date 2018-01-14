@@ -30,6 +30,7 @@ export default {
   outline: none;
   appearance: none;
   background: none;
+  vertical-align: bottom;
 
   &[disabled] {
     opacity: 0.5;

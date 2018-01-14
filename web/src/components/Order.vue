@@ -37,10 +37,12 @@
       </ul>
       <p v-if="order.info.Condition !== 'NONE'">{{ readableOrder }}</p>
     </div>
-    <div v-if="order.remaining && isExpanded" class="order__footer">
-      <Button :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.id)"></Button>
+    <div v-if="isExpanded" class="order__footer">
+      <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
+      <Button v-if="order.remaining" :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.id)"></Button>
       <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
     </div>
+    <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
   </div>
 </template>
 
@@ -49,24 +51,36 @@ import Button from '@/components/Button'
 import Progress from '@/components/Progress'
 import ErrorMessage from '@/components/ErrorMessage'
 import Label from '@/components/Label'
+import ChartOverlay from '@/components/ChartOverlay'
+import ButtonIcon from '@/components/ButtonIcon'
 
 export default {
   name: 'Order',
   props: ['order'],
   components: {
     Button,
+    ButtonIcon,
     Progress,
     ErrorMessage,
-    Label
+    Label,
+    ChartOverlay
   },
   data () {
     return {
       isExpanded: false,
       cancelLoading: false,
-      errorMessage: false
+      errorMessage: false,
+      openChart: false
     }
   },
   computed: {
+    currencyPair () {
+      if (this.currency === 'BTC') {
+        return 'BTC'
+      } else {
+        return `${this.currency}BTC`
+      }
+    },
     priceIndexes () {
       return this.$store.getters['markets/priceIndexes']
     },
