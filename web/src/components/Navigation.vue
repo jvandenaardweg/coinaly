@@ -18,20 +18,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Navigation',
   computed: {
-    isAuthorized () {
-      return this.$store.getters['auth/isAuthorized']
-    },
+    ...mapGetters({
+      isAuthorized: 'auth/isAuthorized',
+      selectedMarket: 'markets/selectedMarket',
+      selectedOrderType: 'orders/selectedOrderType'
+    }),
     marketPath () {
-      const selectedMarket = this.$store.getters['markets/selectedMarket']
-      const path = (selectedMarket && selectedMarket !== null ? `/markets/${selectedMarket}` : '/markets')
+      const path = (this.selectedMarket && this.selectedMarket !== null ? `/markets/${this.selectedMarket}` : '/markets')
       return path
     },
     homePath () {
-      const selectedOrderType = this.$store.getters['orders/selectedOrderType']
-      const path = (selectedOrderType && selectedOrderType !== null ? `/home/${selectedOrderType}` : '/home')
+      const path = (this.selectedOrderType && this.selectedOrderType !== null ? `/home/${this.selectedOrderType}` : '/home')
       return path
     }
   },

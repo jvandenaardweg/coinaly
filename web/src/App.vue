@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Navigation from '@/components/Navigation'
 import Button from '@/components/Button'
 
@@ -22,9 +23,9 @@ export default {
     Button
   },
   computed: {
-    isAuthorized () {
-      return this.$store.getters['auth/isAuthorized']
-    }
+    ...mapGetters({
+      isAuthorized: 'auth/isAuthorized'
+    })
   },
   created () {
     if (this.isAuthorized) {

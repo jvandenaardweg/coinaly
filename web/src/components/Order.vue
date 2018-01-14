@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Button from '@/components/Button'
 import Progress from '@/components/Progress'
 import ErrorMessage from '@/components/ErrorMessage'
@@ -74,15 +75,16 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      priceIndexes: 'markets/priceIndexes',
+      allMarkets: 'markets/allMarkets'
+    }),
     currencyPair () {
       if (this.currency === 'BTC') {
         return 'BTC'
       } else {
         return `${this.currency}BTC`
       }
-    },
-    priceIndexes () {
-      return this.$store.getters['markets/priceIndexes']
     },
     usdPrice () {
       if (this.currentWorth) {
@@ -112,9 +114,6 @@ export default {
     },
     isClosed () {
       return this.order.status === 'closed'
-    },
-    allMarkets () {
-      return this.$store.getters['markets/allMarkets']
     },
     currentMarket () {
       return this.allMarkets.filter(market => {

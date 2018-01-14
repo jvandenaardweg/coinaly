@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Market from '@/components/Market'
 import Button from '@/components/Button'
 
@@ -41,11 +42,11 @@ export default {
     console.log('created markets component')
   },
   computed: {
+    ...mapGetters({
+      isLoading: 'markets/isLoading'
+    }),
     showLoadingIndicator () {
       return !this.hasFilteredMarkets && this.isLoading && !this.searchQuery
-    },
-    isLoading () {
-      return this.$store.getters['markets/isLoading']
     },
     hasFilteredMarkets () {
       return this.filteredMarkets.length

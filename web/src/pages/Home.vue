@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import History from '@/components/History'
 
 export default {
@@ -13,9 +14,9 @@ export default {
     History
   },
   computed: {
-    isAuthorized () {
-      return this.$store.getters['auth/isAuthorized']
-    }
+    ...mapGetters({
+      isAuthorized: 'auth/isAuthorized'
+    })
   },
   created () {
     console.log('created homepage')

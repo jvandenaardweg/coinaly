@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Order from '@/components/Order'
 import Button from '@/components/Button'
 import ServerError from '@/components/ServerError'
@@ -37,17 +38,13 @@ export default {
     ServerError
   },
   computed: {
-    openOrdersServerError () {
-      return this.$store.getters['orders/openOrdersServerError']
-    },
-    isLoading () {
-      return this.$store.getters['orders/isLoading']
-    },
+    ...mapGetters({
+      openOrdersServerError: 'orders/openOrdersServerError',
+      isLoading: 'orders/isLoading',
+      openOrders: 'orders/getOpenOrders'
+    }),
     hasOpenOrders () {
       return this.openOrders.length
-    },
-    openOrders () {
-      return this.$store.getters['orders/getOpenOrders']
     },
     totalOpenOrders () {
       return this.openOrders.length

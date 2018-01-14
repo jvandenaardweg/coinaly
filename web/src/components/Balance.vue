@@ -63,7 +63,12 @@ export default {
   computed: {
     ...mapGetters({
       allMarkets: 'markets/allMarkets',
-      allWorth: 'balances/allWorth'
+      allWorth: 'balances/allWorth',
+      allOrdersHistory: 'orders/getAllHistory',
+      allDepositsHistory: 'deposits/getAllHistory',
+      allWithdrawalsHistory: 'withdrawals/getAllHistory',
+      allSellHistory: 'orders/getAllSellHistory',
+      allBuyHistory: 'orders/getAllBuyHistory'
     }),
     currencyPair () {
       const currency = this.currencyName
@@ -123,20 +128,17 @@ export default {
       this.showModal = true
     },
     orderHistoryByCurrency (currency) {
-      const orderHistory = this.$store.getters['orders/getAllHistory']
-      return orderHistory.filter(order => {
+      return this.allOrdersHistory.filter(order => {
         return order.symbol === `${currency}/BTC` // TODO: market (BTC) can be different, make dynamic
       })
     },
     depositHistoryByCurrency (currency) {
-      const orderHistory = this.$store.getters['deposits/getAllHistory']
-      return orderHistory.filter(order => {
+      return this.allDepositsHistory.filter(order => {
         return this.currencyName === currency
       })
     },
     withdrawalHistoryByCurrency (currency) {
-      const orderHistory = this.$store.getters['withdrawals/getAllHistory']
-      return orderHistory.filter(order => {
+      return this.allWithdrawalsHistory.filter(order => {
         return this.currencyName === currency
       })
     },
@@ -174,9 +176,8 @@ export default {
     },
     totalSell (currency) {
       let amount = 0
-      const orderHistory = this.$store.getters['orders/getAllSellHistory']
 
-      const totalByCurrency = orderHistory.filter(order => {
+      const totalByCurrency = this.allSellHistory.filter(order => {
         return order.symbol === `${currency}/BTC` // TODO: market (BTC) can be different, make dynamic
       })
 
@@ -194,8 +195,7 @@ export default {
     },
     totalBuy (currency) {
       let amount = 0
-      const orderHistory = this.$store.getters['orders/getAllBuyHistory']
-      const totalByCurrency = orderHistory.filter(order => {
+      const totalByCurrency = this.allBuyHistory.filter(order => {
         return order.symbol === `${currency}/BTC` // TODO: market (BTC) can be different, make dynamic
       })
 

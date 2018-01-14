@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Markets from '@/components/Markets'
 import Search from '@/components/Search'
 
@@ -25,6 +26,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      allBtcMarkets: 'markets/allBtcMarkets',
+      allEthMarkets: 'markets/allEthMarkets',
+      allUsdMarkets: 'markets/allUsdMarkets',
+      allMarkets: 'markets/allMarkets'
+    }),
     routeCurrency () {
       return this.$route.params.currency
     },
@@ -38,7 +45,7 @@ export default {
       const currency = this.$route.params.currency
 
       if (currency === 'BTC') {
-        const btcMarkets = this.$store.getters['markets/allBtcMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
+        const btcMarkets = this.allBtcMarkets.sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return btcMarkets.filter(market => {
             return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
@@ -47,7 +54,7 @@ export default {
           return btcMarkets
         }
       } else if (currency === 'ETH') {
-        const ethMarkets = this.$store.getters['markets/allEthMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
+        const ethMarkets = this.allEthMarkets.sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return ethMarkets.filter(market => {
             return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
@@ -56,7 +63,7 @@ export default {
           return ethMarkets
         }
       } else if (currency === 'USD') {
-        const usdMarkets = this.$store.getters['markets/allUsdMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
+        const usdMarkets = this.allUsdMarkets.sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return usdMarkets.filter(market => {
             return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
@@ -65,7 +72,7 @@ export default {
           return usdMarkets
         }
       } else {
-        const allMarkets = this.$store.getters['markets/allMarkets'].sort((a, b) => b.quoteVolume - a.quoteVolume)
+        const allMarkets = this.allMarkets.sort((a, b) => b.quoteVolume - a.quoteVolume)
         if (this.searchQueryInLowerCase) {
           return allMarkets.filter(market => {
             return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
@@ -79,17 +86,6 @@ export default {
   methods: {
     handleSearch (searchQuery) {
       this.searchQuery = searchQuery
-    },
-    marketCount (currency) {
-      if (currency === 'BTC') {
-        return this.$store.getters['markets/allBtcMarkets'].length
-      } else if (currency === 'ETH') {
-        return this.$store.getters['markets/allEthMarkets'].length
-      } else if (currency === 'USD') {
-        return this.$store.getters['markets/allUsdMarkets'].length
-      } else {
-        return this.$store.getters['markets/allMarkets'].length
-      }
     },
     clearSearch () {
       this.searchQuery = null

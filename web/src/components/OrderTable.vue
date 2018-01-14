@@ -30,10 +30,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'OrderTable',
   props: ['order'],
   computed: {
+    ...mapGetters({
+      allMarkets: 'markets/allMarkets'
+    }),
     isBuy () {
       return this.order.side === 'buy'
     },
@@ -50,8 +55,8 @@ export default {
     currentWorth () {
       if (this.isBuy) {
         let currentWorth = null
-        const markets = this.$store.getters['markets/allMarkets']
-        const currentMarket = markets.filter(market => {
+
+        const currentMarket = this.allMarkets.filter(market => {
           return market.symbol === this.order.symbol
         })
 

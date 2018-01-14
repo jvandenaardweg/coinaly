@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Button from '@/components/Button'
 import ErrorMessage from '@/components/ErrorMessage'
 
@@ -43,12 +44,10 @@ export default {
     }
   },
   computed: {
-    isAuthorized () {
-      return this.$store.getters['auth/isAuthorized']
-    },
-    message () {
-      return this.$store.getters['auth/error']
-    },
+    ...mapGetters({
+      isAuthorized: 'auth/isAuthorized',
+      message: 'auth/error'
+    }),
     saveLabel () {
       if (this.isLoading) {
         return 'Saving...'
