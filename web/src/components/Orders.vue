@@ -7,13 +7,14 @@
       </div>
     </header>
     <div class="orders__body">
-      <div v-if="!showLoadingIndicator" class="orders__legend">
+      <div v-if="!showLoadingIndicator && hasOpenOrders" class="orders__legend">
         <div class="orders__legend-symbol">Market</div>
         <div class="orders__legend-amount">Amount</div>
         <div class="orders__legend-type">Type</div>
       </div>
       <Order v-if="hasOpenOrders" v-for="order in openOrders" :key="order.OrderUuid" :order="order"></Order>
-      <div v-if="!hasOpenOrders && !showLoadingIndicator" class="orders__empty">
+      <ServerError v-if="openOrdersServerError" :message="openOrdersServerError.message"></ServerError>
+      <div v-if="!hasOpenOrders && !showLoadingIndicator && !openOrdersServerError" class="orders__empty">
         <p>No open orders found.</p>
       </div>
       <div v-if="showLoadingIndicator" class="orders__empty">
@@ -26,14 +27,19 @@
 <script>
 import Order from '@/components/Order'
 import Button from '@/components/Button'
+import ServerError from '@/components/ServerError'
 
 export default {
   name: 'Orders',
   components: {
     Order,
-    Button
+    Button,
+    ServerError
   },
   computed: {
+    openOrdersServerError () {
+      return this.$store.getters['orders/openOrdersServerError']
+    },
     isLoading () {
       return this.$store.getters['orders/isLoading']
     },

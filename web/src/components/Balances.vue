@@ -15,7 +15,9 @@
       </div>
     </header>
     <div class="balances__body">
-      <div v-if="!showLoadingIndicator" class="balances__legend">
+      <ServerError v-if="balancesServerError" :message="balancesServerError.message"></ServerError>
+
+      <div v-if="!showLoadingIndicator && currencies.length" class="balances__legend">
         <div class="balances__legend-symbol">Coin</div>
         <div class="balances__legend-amount">Amount</div>
         <div class="balances__legend-worth">Worth</div>
@@ -34,13 +36,15 @@ import { mapGetters } from 'vuex'
 
 import Balance from '@/components/Balance'
 import Button from '@/components/Button'
+import ServerError from '@/components/ServerError'
 
 export default {
   name: 'Balances',
   props: ['title'],
   components: {
     Balance,
-    Button
+    Button,
+    ServerError
   },
   data () {
     return {
@@ -69,7 +73,8 @@ export default {
       allMarkets: 'markets/allMarkets',
       totalWorthUsd: 'balances/totalWorthUsd',
       balancesIsLoading: 'balances/isLoading',
-      ordersIsLoading: 'orders/isLoading'
+      ordersIsLoading: 'orders/isLoading',
+      balancesServerError: 'balances/serverError'
     }),
     isLoading () {
       return this.balancesIsLoading || this.ordersIsLoading

@@ -13,7 +13,8 @@ export default {
     currencies: [],
     isLoading: false,
     hasError: false,
-    worth: []
+    worth: [],
+    serverError: null
   },
   mutations: {
     addAll (state, items) {
@@ -34,6 +35,9 @@ export default {
     },
     setWorth (state, payload) {
       state.worth = payload
+    },
+    addServerError (state, error) {
+      state.serverError = error
     }
   },
   getters: {
@@ -62,6 +66,9 @@ export default {
     },
     isLoading: state => {
       return state.isLoading
+    },
+    serverError: state => {
+      return state.serverError
     }
   },
   actions: {
@@ -70,6 +77,10 @@ export default {
       return axios.get(`balances`)
       .then(response => {
         context.commit('addAll', response.data)
+      })
+      .catch(error => {
+        context.commit('addServerError', error.response.data)
+        console.error('Failed to get the balances.', error)
       })
       .finally(() => {
         context.commit('stopLoading')
