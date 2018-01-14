@@ -30,6 +30,7 @@ export default {
   outline: none;
   appearance: none;
   background: none;
+  background-color: $color-azure-radiance;
   vertical-align: bottom;
 
   &[disabled] {
@@ -43,7 +44,7 @@ export default {
 
     svg {
       width: 100%;
-      fill: $color-azure-radiance;
+      fill: $color-white;
     }
   }
 }

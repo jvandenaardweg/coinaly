@@ -30,7 +30,7 @@
       </ul>
     </div>
     <div v-if="isExpanded" class="market__footer">
-      <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
+      <Button :label="`View ${currency} chart`" :className="'outlined'" @click.native="openChart = true"></Button>
       <Button :label="'Buy'" @click.native="handleBuy()"></Button>
     </div>
     <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="chartCurrencyPair"></ChartOverlay>
@@ -44,7 +44,6 @@ import { mapGetters } from 'vuex'
 
 import Progress from '@/components/Progress'
 import Button from '@/components/Button'
-import ButtonIcon from '@/components/ButtonIcon'
 import ChartOverlay from '@/components/ChartOverlay'
 
 export default {
@@ -53,7 +52,6 @@ export default {
   components: {
     Progress,
     Button,
-    ButtonIcon,
     ChartOverlay
   },
   data () {

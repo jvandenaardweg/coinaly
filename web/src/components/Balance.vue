@@ -17,7 +17,7 @@
     </div>
     <div v-if="isExpanded" class="balance__body">
       <div class="balance__controls">
-        <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
+        <Button :label="`View chart`" :className="'outlined'" @click.native="openChart = true"></Button>
         <Button :label="'Sell'" :className="'danger'" @click.native="handleClick('sell')" :disabled="!currency.free"></Button>
         <Button :label="'Buy'" @click.native="handleClick('buy')"></Button>
       </div>
@@ -35,7 +35,6 @@
 import { mapGetters } from 'vuex'
 
 import Button from '@/components/Button'
-import ButtonIcon from '@/components/ButtonIcon'
 import OrderTable from '@/components/OrderTable'
 import Modal from '@/components/Modal'
 import Progress from '@/components/Progress'
@@ -46,7 +45,6 @@ export default {
   props: ['currency', 'currencyName'],
   components: {
     Button,
-    ButtonIcon,
     OrderTable,
     Modal,
     Progress,

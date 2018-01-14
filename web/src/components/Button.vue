@@ -32,6 +32,7 @@ export default {
   border: 1px transparent solid;
   outline: none;
   appearance: none;
+  cursor: pointer;
 
   &[disabled] {
     opacity: 0.5;

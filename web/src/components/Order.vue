@@ -39,7 +39,7 @@
     </div>
     <div v-if="isExpanded" class="order__footer">
       <div class="order__footer-body">
-        <ButtonIcon :icon="'chart'" @click.native="openChart = true"></ButtonIcon>
+        <Button :label="`View ${currency} chart`" :className="'outlined'" @click.native="openChart = true"></Button>
         <Button v-if="order.remaining" :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.id)"></Button>
         <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
       </div>
@@ -54,14 +54,12 @@ import Progress from '@/components/Progress'
 import ErrorMessage from '@/components/ErrorMessage'
 import Label from '@/components/Label'
 import ChartOverlay from '@/components/ChartOverlay'
-import ButtonIcon from '@/components/ButtonIcon'
 
 export default {
   name: 'Order',
   props: ['order'],
   components: {
     Button,
-    ButtonIcon,
     Progress,
     ErrorMessage,
     Label,
