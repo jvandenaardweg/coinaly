@@ -3,23 +3,33 @@
     <div class="modal-popup">
       <form @submit.prevent="handleSubmit()">
         <header class="modal-popup__header">
-          <h2>{{ readableType }} <span v-if="selectedMarket">{{ selectedCurrency }} with {{ selectedMainPair }}</span></h2>
-          <div v-if="selectedMarket && !showMarketsSearch">
-             <Button :className="'link'" :label="'Change'" @click.native="showMarketsSearch = true, searchQuery = null"></button>
+          <div class="modal-popup__header-title">
+            <h2>{{ readableType }} <span v-if="selectedMarket">{{ selectedCurrency }} with {{ selectedMainPair }}</span></h2>
           </div>
-          <small v-if="type === 'sell'">{{ currency.Available }} available</small>
-          <button class="modal-popup__control" type="button" @click.prevent="handleClose()">&times;</button>
+          <div class="modal-popup__header-available">
+            <small v-if="type === 'sell'">{{ currency.Available }} available</small> 
+          </div>
+          <div class="modal-popup__header-control">
+            <button class="modal-popup__control" type="button" @click.prevent="handleClose()">&times;</button>
+          </div>
         </header>
         <div class="modal-popup__body">
 
 
-          <div v-if="showMarketsSearch">
-            <Search :placeholder="'Example: XRP'" :label="'Search market'" @searchQuery="handleMarketSearchQuery"></Search>
+          <div class="markets-search" v-if="showMarketsSearch">
+            <Search :placeholder="'Example: XRP'" :label="'Search market'" @searchQuery="handleMarketSearchQuery" :autoFocus="true"></Search>
+
             <div class="markets-results">
-              <div class="markets-results__market" v-if="filteredMarkets" v-for="market in filteredMarkets" :key="market.symbol">
-                <input type="radio" :id="market.symbol" name="selectedMarket" :value="market.symbol" v-model="selectedMarket" />
-                <label :for="market.symbol">{{ market.symbol }} {{ market.last }}</label>
+              <div v-if="filteredMarkets" class="markets-results__header">
+                <strong>Select a market</strong>
               </div>
+              <div v-if="filteredMarkets" class="markets-results__body">
+                <div class="markets-results__market" v-for="market in filteredMarkets" :key="market.symbol">
+                  <input type="radio" :id="market.symbol" name="selectedMarket" :value="market.symbol" v-model="selectedMarket" />
+                  <label :for="market.symbol"><strong>{{ market.symbol }}</strong> <span>{{ market.last }}</span></label>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -28,42 +38,41 @@
               <div class="input">
                 <div class="input__body">
                   <Market :market="market"></Market>
-               </div>
-            </div>
-
-            <!-- <Button :label="`View ${selectedMarket} chart`"></Button> -->
+                  <Button :className="'link'" :label="'Change market'" @click.native="showMarketsSearch = true, searchQuery = null"></Button>
+                </div>
+              </div>
 
               <div class="input">
                 <div class="input__header">
-                  <label>Price</label>
+                  <label>Price (for 1 {{ selectedCurrency }})</label>
                   <div class="input-helpers">
-                    <Button :size="'tiny'" :label="'last'"></Button>
-                    <Button :size="'tiny'" :label="'24hr high'"></Button>
-                    <Button :size="'tiny'" :label="'24hr low'"></Button>
+                    <Button :size="'tiny'" :label="'last'" @click.native="handleInputPriceSetPrice('last')"></Button>
+                    <Button :size="'tiny'" :label="'24hr high'" @click.native="handleInputPriceSetPrice('high')"></Button>
+                    <Button :size="'tiny'" :label="'24hr low'" @click.native="handleInputPriceSetPrice('low')"></Button>
                   </div>
                 </div>
                 <div class="input__body">
                   <div class="input-group">
-                    <Button :label="'-1%'" :className="'outlined'"></Button>
-                    <input type="text" name="amount" placeholder="Price in [BTC] for one [XRP]" v-model="formData.price" />
-                    <Button :label="'+1%'" :className="'outlined'">+</Button>
+                    <Button :label="'-'" @click.native="handleInputPriceDecreace()"></Button>
+                    <input type="text" name="price" ref="inputPrice" :placeholder="`Price in ${selectedMainPair} for one ${selectedCurrency}`" v-model="formData.price" />
+                    <Button :label="'+'" @click.native="handleInputPriceIncreace()"></Button>
                   </div>
-                  <small>Difference with current market: -1% (0.000123)</small>
+                  <small v-if="formData.price">Difference with current market: {{ priceMarketDifferencePercentage | percentage }} ({{ priceMarketDifference | toFixed }})</small>
                 </div>
               </div>
               <div class="input">
                 <div class="input__header">
                   <label>Amount</label>
                   <div class="input-helpers">
-                    <Button :size="'tiny'" :label="'10%'"></Button>
-                    <Button :size="'tiny'" :label="'25%'"></Button>
-                    <Button :size="'tiny'" :label="'50%'"></Button>
-                    <Button :size="'tiny'" :label="'75%'"></Button>
-                    <Button :size="'tiny'" :label="'100%'"></Button>
+                    <Button :size="'tiny'" :label="'10%'" @click.native="handleInputAmountSetAmountPercentage(10)"></Button>
+                    <Button :size="'tiny'" :label="'25%'" @click.native="handleInputAmountSetAmountPercentage(20)"></Button>
+                    <Button :size="'tiny'" :label="'50%'" @click.native="handleInputAmountSetAmountPercentage(50)"></Button>
+                    <Button :size="'tiny'" :label="'75%'" @click.native="handleInputAmountSetAmountPercentage(75)"></Button>
+                    <Button :size="'tiny'" :label="'100%'" @click.native="handleInputAmountSetAmountPercentage(100)"></Button>
                   </div>
                 </div>
                 <div class="input__body">
-                  <input type="text" name="amount" placeholder="Amount [XRP] you want" v-model="formData.amount" />
+                  <input type="text" name="amount" :placeholder="`Amount of ${selectedCurrency} you want`" v-model="formData.amount" />
                   <small>Maximum amount with given price: 1.000</small>
                 </div>
               </div>
@@ -91,15 +100,15 @@
                 </header>
                 <div class="order-summary__body">
                   <ul>
-                    <li><span>Total XRP:</span> {{ formData.amount }}</li>
-                    <li><span>Price per XRP:</span> {{ formData.price }} BTC ({{ '0.88' | currency }})</li>
-                    <li><span>Bittrex Fee:</span> 0.15 XRP ({{ '0.88' | currency }})</li>
-                    <li><span>Total costs:</span> 10 BTC ({{ '1000,00' | currency }})</li>
+                    <li><span>Total {{ selectedCurrency }}:</span> {{ formData.amount }}</li>
+                    <li><span>Price per {{ selectedCurrency }}:</span> {{ formData.price }} {{ selectedMainPair }} ({{ calculateUsdPrice(formData.price, selectedMainPair) | currency }})</li>
+                    <li><span>Bittrex Fee:</span> 0.15 {{ selectedCurrency }} <!-- ({{ calculateUsdPrice(0.15, selectedMainPair) | currency }}) --></li>
+                    <li><span>Total costs:</span> {{ totalCostsBTC | toFixed }} {{ selectedMainPair }} ({{ calculateUsdPrice(totalCostsBTC, selectedMainPair) | currency }})</li>
                   </ul>
                 </div>
                 <div class="order-summary__footer">
                   <Button :label="'Cancel'" :className="'danger'" @click.native="$emit('close')"></Button>
-                  <Button :typeName="'submit'" :label="`${readableType} 1.000 XRP`" :className="'success'"></Button>
+                  <Button :typeName="'submit'" :label="`${readableType} ${formData.amount} ${selectedCurrency}`" :className="'success'"></Button>
                 </div>
 
               </div>
@@ -118,6 +127,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import Vue from 'vue'
 import Button from '@/components/Button.vue'
 import Search from '@/components/Search.vue'
 import ChartOverlay from '@/components/ChartOverlay.vue'
@@ -141,7 +152,7 @@ export default {
       searchQuery: null,
       showMarketsSearch: true,
       formData: {
-        MarketName: null, // BTC-XRP
+        symbol: null, // BTC-XRP
         OrderType: 'LIMIT', // LIMIT
         amount: null, // 1000
         price: null, // 0.0001
@@ -151,10 +162,15 @@ export default {
       }
     }
   },
+  created () {
+    console.log('created OrderModal')
+  },
   computed: {
-    allFilledBalances () {
-      return this.$store.getters['balances/allFilledBalances']
-    },
+    ...mapGetters({
+      priceIndexes: 'markets/priceIndexes',
+      allFilledBalances: 'balances/allFilledCurrencies',
+      allMarkets: 'markets/allMarkets'
+    }),
     selectedCurrency () {
       return (this.selectedMarket) ? this.selectedMarket.split('/')[0] : null
     },
@@ -167,9 +183,6 @@ export default {
       } else {
         return 'Buy'
       }
-    },
-    allMarkets () {
-      return this.$store.getters['markets/allMarkets']
     },
     market () {
       if (this.selectedMarket) {
@@ -189,9 +202,41 @@ export default {
           return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
         })
       }
+    },
+    priceMarketDifference () {
+      return this.formData.price - this.market.last
+    },
+    priceMarketDifferencePercentage () {
+      return ((this.priceMarketDifference) / this.market.last) * 100
+    },
+    totalCostsBTC () {
+      if (this.formData.amount && this.formData.price) {
+        return this.formData.amount * this.formData.price
+      } else {
+        return null
+      }
     }
   },
   methods: {
+    calculateUsdPrice (rate, currency) {
+      if (currency === 'USDT') {
+        return this.market.last
+      } else {
+        return this.priceIndexes[currency].rate * rate
+      }
+    },
+    handleInputAmountSetAmountPercentage (percentage) {
+      this.formData.amount = percentage
+    },
+    handleInputPriceSetPrice (type) {
+      this.formData.price = this.market[type]
+    },
+    handleInputPriceIncreace () {
+      this.formData.price++
+    },
+    handleInputPriceDecreace () {
+      this.formData.price--
+    },
     handleClose () {
       this.$emit('close')
     },
@@ -200,7 +245,6 @@ export default {
     },
     handleMarketSearchQuery (searchQuery) {
       this.searchQuery = searchQuery
-      console.log(searchQuery)
     },
     isInWallet (currency) {
       const inBalanceCurrencyNames = pickBy(this.allFilledCurrenciesInBalance, (currency, currencyName) => {
@@ -220,6 +264,9 @@ export default {
   watch: {
     selectedMarket: function (newValue, oldValue) {
       this.showMarketsSearch = false
+      Vue.nextTick(() => {
+        this.$refs.inputPrice.focus()
+      })
     }
   }
 }
@@ -236,17 +283,12 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 999;
-  // padding: 15px;
   text-align: center;
-  display: none;
   overflow-y: scroll;
-
-  &.is-visible {
-    display: block;
-  }
+  -webkit-overflow-scrolling: touch;
 
   .market {
-    border-bottom: 1px $color-iron solid;
+    border: 1px $color-loblolly solid;
   }
 
   .modal-popup {
@@ -254,28 +296,30 @@ export default {
     position: relative;
     height: auto;
     background-color: $color-white;
-    padding: 15px;
     max-width: 500px;
     display: inline-block;
     text-align: left;
-    padding-top: 60px;
+    margin-bottom: 30px;
 
     .modal-popup__header {
       max-width: 500px;
       display: flex;
       line-height: 3rem;
       height: 60px;
-      border-bottom: 1px $color-iron solid;
+      border-bottom: 1px $color-loblolly solid;
       padding: 15px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
       margin: auto;
       width: 100%;
       background-color: $color-white;
       z-index: 10;
-      // box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+
+      .modal-popup__header-change {
+        button {
+          position: relative;
+          top: -5px;
+          left: 10px;
+        }
+      }
 
       h2 {
         margin: 0;
@@ -286,10 +330,11 @@ export default {
         font-size: 1.2rem;
         opacity: 0.5;
       }
+      
     }
 
     .modal-popup__body {
-      padding: 15px 0 0 0;
+      padding: 15px;
     }
 
     .modal-popup__footer {
@@ -309,12 +354,27 @@ export default {
     }
   }
 
+  .markets-search {
+    background-color: $color-athens-gray;
+    padding: 12px 15px 15px 15px;
+    margin: -15px;
+  }
+
   .markets-results {
+    margin-top: 12px;
+
+    .markets-results__header {
+      //
+    }
+
+    .markets-results__body {
+      //
+    }
+
     .markets-results__market {
       position: relative;
 
       input {
-        // visibility: hidden;
         position: absolute;
         right: 20px;
         top: 0;
@@ -325,15 +385,27 @@ export default {
       label {
         width: 100%;
         display: block;
-        // background: green;
+        background: $color-white;
         padding: 10px;
-        border: 1px gray solid;
+        border: 1px $color-loblolly solid;
         margin-bottom: -1px;
+        font-weight: normal;
+
+        strong {
+          display: inline-block;
+          width: 100px;
+        }
+
+        span {
+          opacity: 0.5;
+        }
       }
 
       input {
         &:checked + label {
-          background: gray;
+          background-color: $color-azure-radiance;
+          color: $color-white;
+          border-color: $color-azure-radiance;
         }
       }
     }
@@ -342,9 +414,11 @@ export default {
 
   .input-group {
     position: relative;
+
     input {
       padding-left: 45px;
       padding-right: 45px;
+      outline: none;
     }
     button {
       position: absolute;
@@ -354,12 +428,17 @@ export default {
       height: 40px;
       top: 0;
 
+
       &:first-child {
         left: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
 
       &:last-child {
         right: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
       }
     }
   }
@@ -368,7 +447,7 @@ export default {
     margin-top: 15px;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 1px $color-iron solid;
+    // border-bottom: 1px $color-loblolly solid;
 
     &:first-child {
       margin-top: -16px;
@@ -399,13 +478,6 @@ export default {
     }
   }
 
-  .selected-market {
-    // background-color: $color-iron;
-    // padding: 10px;
-    // border-radius: 3px;
-    // margin-bottom: 12px;
-  }
-
   .order-summary {
     background-color: $color-azure-radiance;
     padding: 15px;
@@ -414,7 +486,6 @@ export default {
     margin-right: -15px;
     margin-bottom: -15px;
     margin-top: 15px;
-    // margin-bottom: 15px;
 
     .order-summary__header {
       h2, h3 {

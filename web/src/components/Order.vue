@@ -216,18 +216,18 @@ export default {
 <style lang="scss" scoped>
 .order {
   background-color: $color-white;
-  border-top: 1px $color-iron solid;
+  border-top: 1px $color-loblolly solid;
   border-bottom: 0;
   border-radius: 0;
   text-align: left;
 
   @include breakpoint(tablet) {
-    border-left: 1px $color-iron solid;
-    border-right: 1px $color-iron solid;
+    border-left: 1px $color-loblolly solid;
+    border-right: 1px $color-loblolly solid;
   }
 
   &:last-child {
-    border-bottom: 1px $color-iron solid;
+    border-bottom: 1px $color-loblolly solid;
   }
 
   &.is-expanded {
@@ -337,7 +337,7 @@ export default {
 
   .order__panel {
     padding: 10px 15px;
-    border: 1px $color-iron solid;
+    border: 1px $color-loblolly solid;
     border-radius: 3px;
     margin-bottom: 15px;
 
@@ -360,7 +360,7 @@ export default {
 
     .order__footer-body {
       padding: 15px 0;
-      border-top: 1px $color-iron solid;
+      border-top: 1px $color-loblolly solid;
     }
   }
 

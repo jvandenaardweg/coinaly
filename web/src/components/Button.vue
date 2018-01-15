@@ -43,9 +43,9 @@ export default {
     padding: 0 7px;
     font-size: 1.2rem;
     line-height: 2rem;
-    color: $color-black;
+    color: $color-gray-chateau;
     background: none;
-    border-color: $color-black;
+    border-color: $color-gray-chateau;
     font-weight: normal;
     // opacity: 0.5;
 

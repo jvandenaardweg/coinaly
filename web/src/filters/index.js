@@ -13,7 +13,8 @@ Vue.filter('currency', function (value, prefix) {
 })
 
 Vue.filter('percentage', function (value) {
-  return value + '%'
+  if (!value) return value
+  return parseFloat(value).toFixed(2) + '%'
 })
 
 Vue.filter('readableDate', function (value) {

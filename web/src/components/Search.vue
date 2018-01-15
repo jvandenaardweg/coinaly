@@ -1,17 +1,22 @@
 <template>
   <div class="search">
     <label v-if="label">{{ label }}</label>
-    <input type="search" :aria-label="placeholder" name="search" v-model="searchQuery" :placeholder="placeholder" autocomplete="off" />
+    <input type="search" :aria-label="placeholder" name="search" v-model="searchQuery" :placeholder="placeholder" ref="inputSearch" autocomplete="off" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'Search',
-  props: ['placeholder', 'label'],
+  props: ['placeholder', 'label', 'autoFocus'],
   data () {
     return {
       searchQuery: null
+    }
+  },
+  mounted () {
+    if (this.autoFocus) {
+      this.$refs.inputSearch.focus()
     }
   },
   watch: {
@@ -28,7 +33,7 @@ export default {
   position: relative;
 
   input[type="search"] {
-    border: 1px $color-iron solid;
+    border: 1px $color-loblolly solid;
     padding: 0 15px;
     background-color: $color-white;
     border-radius: 3px;

@@ -103,7 +103,7 @@ input[type="text"] {
   height: 4rem;
   padding: 0 15px;
   line-height: 4rem;
-  border: 1px $color-iron solid;
+  border: 1px $color-loblolly solid;
   width: 100%;
   appearance: none;
 

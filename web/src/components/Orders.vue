@@ -21,7 +21,7 @@
         <p>Loading your orders...</p>
       </div>
     </div>
-    <OrderModal :visible="showModal" :type="modalType" @close="showModal = false" :currency="'XRP'"></OrderModal>
+    <OrderModal v-if="showModal" :type="modalType" @close="showModal = false" :currency="'XRP'"></OrderModal>
   </div>
 </template>
 
