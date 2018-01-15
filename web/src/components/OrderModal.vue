@@ -7,7 +7,7 @@
             <h2>{{ readableType }} <span v-if="selectedMarket">{{ selectedCurrency }} with {{ selectedMainPair }}</span></h2>
           </div>
           <div class="modal-popup__header-available">
-            <small v-if="type === 'sell'">{{ currency.Available }} available</small> 
+            <small v-if="type === 'sell'">{{ currency.Available }} available</small>
           </div>
           <div class="modal-popup__header-control">
             <button class="modal-popup__control" type="button" @click.prevent="handleClose()">&times;</button>
@@ -258,7 +258,13 @@ export default {
       }
     },
     handleSubmit () {
-      console.log('Send this', this.formData)
+      if (this.priceMarketDifferencePercentage < -10) {
+        if (window.confirm(`Your buy price is ${this.priceMarketDifferencePercentage.toFixed(2)}% below the current market price. Are you sure you want to do this?`)) {
+          console.log('Send this', this.formData)
+        }
+      } else {
+        console.log('Send this', this.formData)
+      }
     }
   },
   watch: {
@@ -330,7 +336,7 @@ export default {
         font-size: 1.2rem;
         opacity: 0.5;
       }
-      
+
     }
 
     .modal-popup__body {
