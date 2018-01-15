@@ -26,7 +26,7 @@
         <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currencyName)" :key="index" :order="order"></OrderTable>
       </div>
     </div>
-    <OrderModal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></OrderModal>
+    <OrderModal v-if="showModal" :type="modalType" @close="showModal = false" :currency="currency"></OrderModal>
     <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
   </div>
 </template>

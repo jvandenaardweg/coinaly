@@ -35,9 +35,9 @@ export default {
   appearance: none;
   cursor: pointer;
 
-  &[disabled] {
-    opacity: 0.5;
-  }
+  // &[disabled] {
+  //   opacity: 0.5;
+  // }
 
   &.button--size--tiny {
     padding: 0 7px;

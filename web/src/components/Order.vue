@@ -40,7 +40,7 @@
     <div v-if="isExpanded" class="order__footer">
       <div class="order__footer-body">
         <Button :label="`View ${currency} chart`" :className="'outlined'" @click.native="openChart = true"></Button>
-        <Button v-if="order.remaining" :className="'danger'" :label="cancelLabel" :disabled="cancelLoading" @click.native="handleCancel(order.id)"></Button>
+        <Button v-if="order.remaining" :className="'danger'" :label="cancelLabel" :disabled="isLoading" @click.native="handleCancel(order.id)"></Button>
         <ErrorMessage v-if="errorMessage" :message="errorMessage" @close="errorMessage = false"></ErrorMessage>
       </div>
     </div>
@@ -69,7 +69,7 @@ export default {
   data () {
     return {
       isExpanded: false,
-      cancelLoading: false,
+      isLoading: false,
       errorMessage: false,
       openChart: false
     }
@@ -172,7 +172,7 @@ export default {
       return Math.ceil(filledPercentage)
     },
     cancelLabel () {
-      if (this.cancelLoading) {
+      if (this.isLoading) {
         return 'Cancelling...'
       } else {
         return 'Cancel'
@@ -181,16 +181,24 @@ export default {
   },
   methods: {
     handleCancel (uuid) {
-      this.errorMessage = false
+      if (this.errorMessage) this.errorMessage = false
 
       if (window.confirm('Do you really want to cancel this order?')) {
-        this.cancelLoading = true
+        this.isLoading = true
 
+        // Cancel the order
         this.$store.dispatch('orders/cancelOrder', uuid)
         .then(response => {
+          // Get the balance and order history after placing the order
+          // so everything is up-to-date again
           this.$store.dispatch('balances/getAll')
           this.$store.dispatch('orders/getAllHistory')
+
+          // Finally get the open orders
           this.$store.dispatch('orders/getOpenOrders')
+          .finally(() => {
+            this.isLoading = false
+          })
         })
         .catch(error => {
           let reason
@@ -200,9 +208,7 @@ export default {
           }
           // TODO: if something when wrong, do an extra check to see if the order is canceled or not
           this.errorMessage = `Something went wrong. ${reason} Please try again.`
-        })
-        .finally(() => {
-          this.cancelLoading = false
+          this.isLoading = false
         })
       }
     },

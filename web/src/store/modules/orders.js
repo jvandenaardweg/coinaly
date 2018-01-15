@@ -15,7 +15,8 @@ export default {
     selectedOrderType: initialSelectedOrderType,
     serverErrors: {
       history: null,
-      open: null
+      open: null,
+      buy: null
     }
   },
   mutations: {
@@ -48,6 +49,16 @@ export default {
     },
     addServerErrorOpen (state, error) {
       state.serverErrors.open = error
+    },
+    addServerErrorCreateBuyOrder (state, error) {
+      state.serverErrors.buy = error
+    },
+    removeServerErrors (state) {
+      state.serverErrors = {
+        history: null,
+        open: null,
+        buy: null
+      }
     }
   },
   getters: {
@@ -86,6 +97,15 @@ export default {
     },
     openOrdersServerError: state => {
       return state.serverErrors.open
+    },
+    buyOrderServerError: state => {
+      if (state.serverErrors.buy && state.serverErrors.buy.exchangeErrorCode === 'MIN_TRADE_REQUIREMENT_NOT_MET') {
+        return 'Order not created. Minimum trade requirement is not met.'
+      } else if (state.serverErrors.buy && state.serverErrors.buy.exchangeErrorCode === 'INSUFFICIENT_FUNDS') {
+        return 'Order not created. You have insufficient funds.'
+      } else {
+        return state.serverErrors.buy
+      }
     }
   },
   actions: {
@@ -111,14 +131,19 @@ export default {
       return axios.get(`orders?status=open`)
       .then(response => {
         context.commit('addAllOpen', response.data)
+        return Promise.resolve(response)
       })
       .catch(error => {
         context.commit('addServerErrorOpen', error.response.data)
         console.error('Failed to get the open orders.', error)
+        return Promise.reject(error)
       })
       .finally(() => {
         context.commit('stopLoading')
       })
+    },
+    createBuyOrder (context, formData) {
+      return axios.post(`markets/buy`, formData)
     }
   }
 }

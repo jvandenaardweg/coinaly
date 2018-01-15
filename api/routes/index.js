@@ -53,6 +53,7 @@ function createExchangeInstance (requestQueries, requestCookies) {
 function handleExchangeError (ccxt, e, response) {
   let message
   let reason = null
+  let exchangeErrorCode = null
   if (e instanceof ccxt.DDoSProtection || e.message.includes('ECONNRESET')) {
     log.bright.yellow('[DDoS Protection] ' + e.message)
     message = e.message
@@ -81,10 +82,20 @@ function handleExchangeError (ccxt, e, response) {
     message = e.message
   }
 
+  // Remove weird error structure containing a string and a JSON object
+  if (message.includes('bittrex ')) {
+    const messageJSON = JSON.parse(message.split('bittrex ')[1])
+    exchangeErrorCode = messageJSON.message
+    message = messageJSON
+  }
+
   response.status(500).json({
     status: 'error',
+    success: false,
     reason: reason,
-    message: message
+    exchange: 'bittrex',
+    exchangeErrorCode: exchangeErrorCode,
+    exchangeMessage: message
   })
 }
 
@@ -227,6 +238,23 @@ router.get('/cancelorder', (request, response, next) => {
     try {
       const exchange = createExchangeInstance(request.query, request.cookies)
       const result = await exchange.cancelOrder(orderUuid)
+      response.json(result)
+    } catch (e) {
+      handleExchangeError(ccxt, e, response)
+    }
+  })()
+})
+
+router.post('/markets/buy', (request, response, next) => {
+  // More info about creating buy/sell orders: https://github.com/ccxt/ccxt/wiki/Manual#placing-orders
+  const symbol = request.body.symbol;
+  const amount = request.body.amount;
+  const price = request.body.price;
+
+  (async () => {
+    try {
+      const exchange = createExchangeInstance(request.query, request.cookies)
+      const result = await exchange.createLimitBuyOrder(symbol, amount, price, {})
       response.json(result)
     } catch (e) {
       handleExchangeError(ccxt, e, response)
