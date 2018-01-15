@@ -528,7 +528,7 @@ export default {
     }
 
     input {
-      padding-left: 45px;
+      // padding-left: 45px;
       padding-right: 45px;
       outline: none;
     }
@@ -542,9 +542,9 @@ export default {
 
 
       &:first-child {
-        left: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
+        right: 40px;
+        border-radius: 0;
+        border-right: 1px rgba($color-white, 0.5) solid;
       }
 
       &:last-child {
