@@ -6,9 +6,9 @@ Vue.use(VueCookie)
 const selectedMarketCookie = Vue.cookie.get('selectedMarket') || null
 const initialSelectedMarket = (selectedMarketCookie === 'null' ? null : selectedMarketCookie)
 
-function filterMarkets (array, currency) {
+function filterMarkets (array, symbol) {
   return array.filter(market => {
-    return market.symbol.includes(`/${currency}`) // Symbol is something like: XRP/BTC or ETH/BTC (where /BTC is the main market)
+    return market.symbol.includes(symbol) // Symbol is something like: XRP/BTC or ETH/BTC (where /BTC is the main market)
   })
 }
 
@@ -79,13 +79,16 @@ export default {
       return state.markets
     },
     allBtcMarkets: state => {
-      return filterMarkets(state.markets, 'BTC')
+      return filterMarkets(state.markets, '/BTC')
     },
     allEthMarkets: state => {
-      return filterMarkets(state.markets, 'ETH')
+      return filterMarkets(state.markets, '/ETH')
     },
     allUsdMarkets: state => {
-      return filterMarkets(state.markets, 'USDT')
+      return filterMarkets(state.markets, '/USDT')
+    },
+    btcUsdMarket: state => {
+      return filterMarkets(state.markets, 'BTC/USDT')[0]
     },
     totalVolume: state => {
       if (state.markets.length) {
@@ -96,7 +99,7 @@ export default {
     },
     totalBtcVolume: state => {
       if (state.markets.length) {
-        const filteredMarkets = filterMarkets(state.markets, 'BTC')
+        const filteredMarkets = filterMarkets(state.markets, '/BTC')
         return reduceQuoteVolume(filteredMarkets)
       } else {
         return null
@@ -104,7 +107,7 @@ export default {
     },
     totalEthVolume: state => {
       if (state.markets.length) {
-        const filteredMarkets = filterMarkets(state.markets, 'ETH')
+        const filteredMarkets = filterMarkets(state.markets, '/ETH')
         return reduceQuoteVolume(filteredMarkets)
       } else {
         return null
@@ -112,7 +115,7 @@ export default {
     },
     totalUsdVolume: state => {
       if (state.markets.length) {
-        const filteredMarkets = filterMarkets(state.markets, 'USDT')
+        const filteredMarkets = filterMarkets(state.markets, '/USDT')
         return reduceQuoteVolume(filteredMarkets)
       } else {
         return null

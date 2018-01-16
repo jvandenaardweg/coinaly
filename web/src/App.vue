@@ -4,6 +4,7 @@
     <keep-alive include="HomePage,MarketsPage,OrdersPage,BalancesPage">
       <router-view></router-view>
     </keep-alive>
+    <AlertBar></AlertBar>
     <div class="footer" v-if="isAuthorized">
       <Button :label="'Logout'" :className="'link-gray'" @click.native="handleLogout()"></Button> &nbsp;
       <Button :label="'Setup'" :className="'link-gray'" @click.native="handleSetup()"></Button>
@@ -15,12 +16,14 @@
 import { mapGetters } from 'vuex'
 import Navigation from '@/components/Navigation'
 import Button from '@/components/Button'
+import AlertBar from '@/components/AlertBar'
 
 export default {
   name: 'app',
   components: {
     Navigation,
-    Button
+    Button,
+    AlertBar
   },
   computed: {
     ...mapGetters({
