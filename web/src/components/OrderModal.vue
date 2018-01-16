@@ -104,7 +104,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Vue from 'vue'
 import Button from '@/components/Button.vue'
 import Search from '@/components/Search.vue'
 import ChartOverlay from '@/components/ChartOverlay.vue'
