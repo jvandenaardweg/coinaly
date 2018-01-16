@@ -1,129 +1,102 @@
 <template>
-  <div class="modal" :class="{'is-visible': visible }" @click="handleOutsideClick($event)">
+  <div class="modal" @click="handleOutsideClick($event)">
     <div class="modal-popup">
-      <form @submit.prevent="handleSubmit()" :disabled="isLoading || isSuccess || isLoadingOpenOrders">
+
+      <form @submit.prevent="handleSubmit()" :disabled="formDisabled">
+
         <header class="modal-popup__header">
           <div class="modal-popup__header-title">
-            <h2>{{ readableType }} <span v-if="formData.symbol">{{ selectedCurrency }} with {{ selectedMainPair }}</span></h2>
+            <h2>{{ headerTitle }}</h2>
           </div>
           <div class="modal-popup__header-available">
-            <small v-if="type === 'sell'">{{ currencyInBalance.free }} available</small>
-            <small v-if="type === 'buy' && mainPairInBalance">{{ mainPairInBalance.free }} {{ selectedMainPair }} available</small>
+            <small>{{ headerAvailable }}</small>
           </div>
           <div class="modal-popup__header-control">
             <button class="modal-popup__control" type="button" @click.prevent="handleClose()">&times;</button>
           </div>
         </header>
+
         <div class="modal-popup__body">
-          <fieldset :disabled="isLoading || isSuccess || isLoadingOpenOrders">
-            <div class="markets-search" v-if="showMarketsSearch">
-              <Search :placeholder="'Example: XRP'" :label="'Search market'" @searchQuery="handleMarketSearchQuery" :autoFocus="true"></Search>
 
-              <div class="markets-results">
-                <div v-if="filteredMarkets" class="markets-results__header">
-                  <strong>Select a market</strong>
-                </div>
-                <div v-if="filteredMarkets" class="markets-results__body">
-                  <div class="markets-results__market" v-for="market in filteredMarkets" :key="market.symbol">
-                    <input type="radio" :id="market.symbol" name="selectedMarket" :value="market.symbol" v-model="formData.symbol" />
-                    <label :for="market.symbol"><strong>{{ market.symbol }}</strong> <span>{{ market.last }}</span></label>
-                  </div>
-                </div>
+          <fieldset :disabled="formDisabled">
 
+            <MarketsSelector v-if="showMarketsSelector" @selected="handleSelectMarket"></MarketsSelector>
+
+            <div v-if="formData.symbol && !showMarketsSelector">
+
+              <div class="input">
+                <div class="input__body">
+                  <Market :market="market"></Market>
+                  <Button :className="'link'" :label="'Change market'" @click.native="showMarketsSelector = true, searchQuery = null"></Button>
+                </div>
               </div>
-            </div>
 
-            <div v-if="formData.symbol && !showMarketsSearch">
-              <div>
-                <div class="input">
-                  <div class="input__body">
-                    <Market :market="market"></Market>
-                    <Button :className="'link'" :label="'Change market'" @click.native="showMarketsSearch = true, searchQuery = null"></Button>
+              <div class="input">
+                <div class="input__header">
+                  <label>Price (1 {{ selectedCurrency }})</label>
+                  <div class="input-helpers">
+                    <Button :size="'tiny'" :label="'last'" @click.native="handleInputPriceSetPrice('last')"></Button>
+                    <Button :size="'tiny'" :label="'24hr high'" @click.native="handleInputPriceSetPrice('high')"></Button>
+                    <Button :size="'tiny'" :label="'24hr low'" @click.native="handleInputPriceSetPrice('low')"></Button>
                   </div>
                 </div>
-
-                <div class="input">
-                  <div class="input__header">
-                    <label>Price (1 {{ selectedCurrency }})</label>
-                    <div class="input-helpers">
-                      <Button :size="'tiny'" :label="'last'" @click.native="handleInputPriceSetPrice('last')"></Button>
-                      <Button :size="'tiny'" :label="'24hr high'" @click.native="handleInputPriceSetPrice('high')"></Button>
-                      <Button :size="'tiny'" :label="'24hr low'" @click.native="handleInputPriceSetPrice('low')"></Button>
-                    </div>
+                <div class="input__body">
+                  <div class="input-group">
+                    <Button :label="'-'" @click.native="handleInputPriceDecreace()"></Button>
+                    <input type="text" name="price" ref="inputPrice" :placeholder="`Price in ${selectedMainPair} for one ${selectedCurrency}`" v-model="formData.price" />
+                    <Button :label="'+'" @click.native="handleInputPriceIncreace()"></Button>
                   </div>
-                  <div class="input__body">
-                    <div class="input-group">
-                      <Button :label="'-'" @click.native="handleInputPriceDecreace()"></Button>
-                      <input type="text" name="price" ref="inputPrice" :placeholder="`Price in ${selectedMainPair} for one ${selectedCurrency}`" v-model="formData.price" />
-                      <Button :label="'+'" @click.native="handleInputPriceIncreace()"></Button>
-                    </div>
-                    <small v-if="formData.price" v-html="belowOrAboveCurrentMarket"></small>
+                  <small v-if="formData.price" v-html="belowOrAboveCurrentMarket"></small>
 
+                </div>
+              </div>
+
+              <div class="input">
+                <div class="input__header">
+                  <label>Amount</label>
+                  <div class="input-helpers">
+                    <Button :size="'tiny'" :label="'10%'" @click.native="handleInputAmountSetAmountPercentage(10)"></Button>
+                    <Button :size="'tiny'" :label="'25%'" @click.native="handleInputAmountSetAmountPercentage(20)"></Button>
+                    <Button :size="'tiny'" :label="'50%'" @click.native="handleInputAmountSetAmountPercentage(50)"></Button>
+                    <Button :size="'tiny'" :label="'75%'" @click.native="handleInputAmountSetAmountPercentage(75)"></Button>
+                    <Button :size="'tiny'" :label="'100%'" @click.native="handleInputAmountSetAmountPercentage(100)"></Button>
                   </div>
                 </div>
-                <div class="input">
-                  <div class="input__header">
-                    <label>Amount</label>
-                    <div class="input-helpers">
-                      <Button :size="'tiny'" :label="'10%'" @click.native="handleInputAmountSetAmountPercentage(10)"></Button>
-                      <Button :size="'tiny'" :label="'25%'" @click.native="handleInputAmountSetAmountPercentage(20)"></Button>
-                      <Button :size="'tiny'" :label="'50%'" @click.native="handleInputAmountSetAmountPercentage(50)"></Button>
-                      <Button :size="'tiny'" :label="'75%'" @click.native="handleInputAmountSetAmountPercentage(75)"></Button>
-                      <Button :size="'tiny'" :label="'100%'" @click.native="handleInputAmountSetAmountPercentage(100)"></Button>
-                    </div>
-                  </div>
-                  <div class="input__body">
-                    <div class="input-group input-group--suffix">
-                      <input type="text" name="amount" :placeholder="`Amount of ${selectedCurrency} you want`" v-model="formData.amount" />
-                      <Button :label="'Round'" @click.native="roundAmount()"></Button>
-                    </div>
-
-
-                    <!-- <small>Maximum amount with given price: 1.000</small> -->
-                    <!-- <small v-if="mainPairInBalance"><br/>{{ mainPairInBalance.free }} {{ selectedMainPair }} available</small> -->
+                <div class="input__body">
+                  <div class="input-group input-group--suffix">
+                    <input type="text" name="amount" :placeholder="`Amount of ${selectedCurrency} you want`" v-model="formData.amount" />
+                    <Button :label="'Round'" @click.native="roundAmount()"></Button>
                   </div>
                 </div>
               </div>
-              <!-- <div>
-                <label>OrderType</label>
-                <input type="text" name="amount" v-model="formData.OrderType" />
-              </div>
-              <div>
-                <label>TimeInEffect</label>
-                <input type="text" name="amount" v-model="formData.TimeInEffect" />
-              </div>
-              <div>
-                <label>ConditionType</label>
-                <input type="text" name="amount" v-model="formData.ConditionType" />
-              </div>
-              <div>
-                <label>ConditionTarget</label>
-                <input type="text" name="amount" v-model="formData.Target" />
-              </div> -->
 
               <div class="order-summary">
-                  <header class="order-summary__header">
-                    <h3>{{ readableType }} order summary</h3>
-                  </header>
-                  <div class="order-summary__body">
-                    <ul>
-                      <li><span>Total {{ selectedCurrency }}:</span> {{ formData.amount }}</li>
-                      <li><span>Price per {{ selectedCurrency }}:</span> {{ formData.price }} {{ selectedMainPair }} ({{ calculateUsdPrice(formData.price, selectedMainPair) | currency }})</li>
-                      <li><span>Bittrex Fee:</span> {{ feeInCurrency | toFixed }} {{ selectedCurrency }} ({{ calculateUsdPrice((feeInCurrency * this.market.last), selectedMainPair) | currency }}) <!-- ({{ calculateUsdPrice(0.15, selectedMainPair) | currency }}) --></li>
-                      <li><span>Total costs:</span> {{ totalCostsBTC | toFixed }} {{ selectedMainPair }} ({{ calculateUsdPrice(totalCostsBTC, selectedMainPair) | currency }})</li>
-                    </ul>
-                  </div>
-                  <div class="order-summary__footer">
-                    <ErrorMessage v-if="buyOrderServerError" :message="buyOrderServerError" @close="removeError()"></ErrorMessage>
-                    <Button :label="'Cancel'" :className="'danger'" @click.native="$emit('close')" v-if="!isLoadingOpenOrders && !isLoading"></Button>
-                    <Button :typeName="'submit'" :label="buyButtonLabel" :className="'success'" :disabled="isLoading || isLoadingOpenOrders"></Button>
-                  </div>
-
+                <header class="order-summary__header">
+                  <h3>{{ readableType }} limit order summary</h3>
+                </header>
+                <div class="order-summary__body">
+                  <ul>
+                    <li><span>Total {{ selectedCurrency }}:</span> {{ formData.amount }}</li>
+                    <li><span>Price per {{ selectedCurrency }}:</span> {{ formData.price }} {{ selectedMainPair }} ({{ calculateUsdPrice(formData.price, selectedMainPair) | currency }})</li>
+                    <li><span>Bittrex Fee:</span> {{ feeInCurrency | toFixed }} {{ selectedCurrency }} ({{ calculateUsdPrice((feeInCurrency * this.market.last), selectedMainPair) | currency }}) <!-- ({{ calculateUsdPrice(0.15, selectedMainPair) | currency }}) --></li>
+                    <li><span>Total costs:</span> {{ totalCostsBTC | toFixed }} {{ selectedMainPair }} ({{ calculateUsdPrice(totalCostsBTC, selectedMainPair) | currency }})</li>
+                  </ul>
                 </div>
+                <div class="order-summary__footer">
+                  <ErrorMessage v-if="buyOrderServerError" :message="buyOrderServerError" @close="removeError()"></ErrorMessage>
+                  <Button :label="'Cancel'" :className="'outlined-white'" @click.native="handleClose()" v-if="!isLoadingOpenOrders && !isLoading"></Button>
+                  <Button :typeName="'submit'" :label="buyButtonLabel" :className="'success'" :disabled="isLoading || isLoadingOpenOrders"></Button>
+                </div>
+              </div>
+
             </div>
+
           </fieldset>
+
         </div>
+
       </form>
+
     </div>
 
   </div>
@@ -137,6 +110,7 @@ import Search from '@/components/Search.vue'
 import ChartOverlay from '@/components/ChartOverlay.vue'
 import Market from '@/components/Market.vue'
 import ErrorMessage from '@/components/ErrorMessage.vue'
+import MarketsSelector from '@/components/form/MarketsSelector.vue'
 import pickBy from 'lodash/pickBy'
 
 // Placing orders with CCXT: https://github.com/ccxt/ccxt/wiki/Manual#placing-orders
@@ -149,7 +123,8 @@ export default {
     Search,
     ChartOverlay,
     Market,
-    ErrorMessage
+    ErrorMessage,
+    MarketsSelector
   },
   data () {
     return {
@@ -157,7 +132,7 @@ export default {
       isSuccess: false,
       isLoadingOpenOrders: false,
       searchQuery: null,
-      showMarketsSearch: true,
+      showMarketsSelector: true,
       exchangeFees: {
         bittrex: 0.25
       },
@@ -181,6 +156,23 @@ export default {
       allMarkets: 'markets/allMarkets',
       buyOrderServerError: 'orders/buyOrderServerError'
     }),
+    headerTitle () {
+      if (this.selectedCurrency) {
+        return `${this.readableType} ${this.selectedCurrency} with ${this.selectedMainPair}`
+      } else {
+        return this.readableType
+      }
+    },
+    headerAvailable () {
+      if (this.type === 'sell') {
+        return `${this.currencyInBalance.free} available`
+      } else if (this.mainPairInBalance) {
+        return `${this.mainPairInBalance.free} ${this.selectedMainPair} available`
+      }
+    },
+    formDisabled () {
+      return this.isLoading || this.isSuccess || this.isLoadingOpenOrders
+    },
     belowOrAboveCurrentMarket () {
       if (this.priceMarketDifferencePercentage < 0) {
         return `Your price is ${this.priceMarketDifferencePercentage}% <strong>below</strong> current market.`
@@ -215,7 +207,8 @@ export default {
       } else if (this.isLoadingOpenOrders) {
         return 'Order placed! Getting open orders...'
       } else {
-        return `${this.readableType} ${this.formData.amount} ${this.selectedCurrency}`
+        const amount = (this.formData.amount !== null) ? this.formData.amount : ''
+        return `${this.readableType} ${amount} ${this.selectedCurrency}`
       }
     },
     selectedCurrency () {
@@ -314,12 +307,12 @@ export default {
     handleSubmit () {
       this.removeError()
       this.isLoading = true
-      if (this.priceMarketDifferencePercentage < -10) {
-        if (window.confirm(`Your buy price is ${this.priceMarketDifferencePercentage}% below the current market price. Are you sure you want to do this?`)) {
+      if (this.type === 'sell' && this.priceMarketDifferencePercentage < -10) {
+        if (window.confirm(`Your sell price is ${this.priceMarketDifferencePercentage}% below the current market price. Are you sure you want to do this?`)) {
           this.createOrder()
         }
       } else {
-        if (window.confirm(`Are you sure you want to place this order?`)) {
+        if (window.confirm(`Are you sure you want to ${this.type} ${this.formData.amount} ${this.selectedCurrency}?`)) {
           this.createOrder()
         }
       }
@@ -355,7 +348,7 @@ export default {
   },
   watch: {
     'formData.symbol': function (newValue, oldValue) {
-      this.showMarketsSearch = false
+      this.showMarketsSelector = false
       Vue.nextTick(() => {
         this.$refs.inputPrice.focus()
       })
@@ -367,7 +360,7 @@ export default {
 <style lang="scss" scoped>
 .modal {
   position: fixed;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba($color-black ,0.7);
   width: 100%;
   height: 100%;
   top: 0;
@@ -415,6 +408,14 @@ export default {
       background-color: $color-white;
       z-index: 10;
 
+      > div {
+        margin-left: 10px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+
       .modal-popup__header-change {
         button {
           position: relative;
@@ -455,64 +456,6 @@ export default {
       border: 0;
     }
   }
-
-  .markets-search {
-    background-color: $color-athens-gray;
-    padding: 12px 15px 15px 15px;
-    margin: -15px;
-  }
-
-  .markets-results {
-    margin-top: 12px;
-
-    .markets-results__header {
-      //
-    }
-
-    .markets-results__body {
-      //
-    }
-
-    .markets-results__market {
-      position: relative;
-
-      input {
-        position: absolute;
-        right: 20px;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-      }
-
-      label {
-        width: 100%;
-        display: block;
-        background: $color-white;
-        padding: 10px;
-        border: 1px $color-loblolly solid;
-        margin-bottom: -1px;
-        font-weight: normal;
-
-        strong {
-          display: inline-block;
-          width: 100px;
-        }
-
-        span {
-          opacity: 0.5;
-        }
-      }
-
-      input {
-        &:checked + label {
-          background-color: $color-azure-radiance;
-          color: $color-white;
-          border-color: $color-azure-radiance;
-        }
-      }
-    }
-  }
-
 
   .input-group {
     position: relative;
@@ -609,6 +552,10 @@ export default {
     .order-summary__footer {
       padding-top: 30px;
       text-align: right;
+
+      button {
+        margin-left: 10px;
+      }
     }
 
     .order-summary__body {

@@ -54,11 +54,10 @@ export default {
       state.serverErrors.buy = error
     },
     removeServerErrors (state) {
-      state.serverErrors = {
-        history: null,
-        open: null,
-        buy: null
-      }
+      console.log('remove server errors')
+      state.serverErrors.history = null
+      state.serverErrors.open = null
+      state.serverErrors.buy = null
     }
   },
   getters: {

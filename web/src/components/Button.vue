@@ -5,6 +5,7 @@
     'button--success': className === 'success',
     'button--warning': className === 'warning',
     'button--outlined': className === 'outlined',
+    'button--outlined-white': className === 'outlined-white',
     'button--link': className === 'link',
     'button--link-gray': className === 'link-gray',
     'button--size--tiny': size === 'tiny'
@@ -98,6 +99,18 @@ export default {
     .button__icon {
       svg {
         fill: $color-azure-radiance;
+      }
+    }
+  }
+
+  &.button--outlined-white {
+    background: transparent;
+    color: $color-white;
+    border-color: $color-white;
+
+    .button__icon {
+      svg {
+        fill: $color-white;
       }
     }
   }
