@@ -349,9 +349,6 @@ export default {
   watch: {
     'formData.symbol': function (newValue, oldValue) {
       this.showMarketsSelector = false
-      Vue.nextTick(() => {
-        this.$refs.inputPrice.focus()
-      })
     }
   }
 }
