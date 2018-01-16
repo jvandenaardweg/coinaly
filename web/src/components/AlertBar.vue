@@ -16,7 +16,11 @@ export default {
       btcUsdMarket: 'markets/btcUsdMarket'
     }),
     oneDayDiffPercentage () {
-      return (((this.btcUsdMarket.last - this.btcUsdMarket.info.PrevDay) / this.btcUsdMarket.info.PrevDay) * 100).toFixed(2)
+      if (this.btcUsdMarket) {
+        return (((this.btcUsdMarket.last - this.btcUsdMarket.info.PrevDay) / this.btcUsdMarket.info.PrevDay) * 100).toFixed(2)
+      } else {
+        return null
+      }
     },
     isRedAlert () {
       return this.oneDayDiffPercentage < -20
