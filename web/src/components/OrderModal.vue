@@ -8,9 +8,6 @@
           <div class="modal-popup__header-title">
             <h2>{{ headerTitle }}</h2>
           </div>
-          <!-- <div class="modal-popup__header-available">
-            <small>{{ headerAvailable }}</small>
-          </div> -->
           <div class="modal-popup__header-control">
             <button class="modal-popup__control" type="button" @click.prevent="handleClose()">&times;</button>
           </div>
@@ -24,34 +21,31 @@
 
             <div v-if="formData.symbol && !showMarketsSelector">
 
-              <div class="availability">
-                <p v-html="availability"></p>
-              </div>
-
-              <!-- <div class="input">
-                <div class="input__body">
-                  <Market :market="market"></Market>
+              <div class="balance-availability">
+                <div>
+                  <p v-html="balanceAvailability"></p>
+                </div>
+                <div>
                   <Button :className="'link'" :label="'Change market'" @click.native="showMarketsSelector = true, searchQuery = null"></Button>
                 </div>
-              </div> -->
+              </div>
 
               <div class="input">
                 <div class="input__header">
                   <label>Price (1 {{ selectedCurrency }})</label>
                   <div class="input-helpers">
-                    <Button :size="'tiny'" :label="'last'" @click.native="handleInputPriceSetPrice('last')"></Button>
-                    <Button :size="'tiny'" :label="'24hr high'" @click.native="handleInputPriceSetPrice('high')"></Button>
-                    <Button :size="'tiny'" :label="'24hr low'" @click.native="handleInputPriceSetPrice('low')"></Button>
+                    <Button :size="'tiny'" :label="'last'" @click.native="HandleSetMarketPrice('last')"></Button>
+                    <Button :size="'tiny'" :label="'24hr high'" @click.native="HandleSetMarketPrice('high')"></Button>
+                    <Button :size="'tiny'" :label="'24hr low'" @click.native="HandleSetMarketPrice('low')"></Button>
                   </div>
                 </div>
                 <div class="input__body">
                   <div class="input-group">
-                    <Button :label="'-'" @click.native="handleInputPriceDecreace()"></Button>
+                    <Button :label="'-'" @click.native="handleInputPriceAdjust('decrease')"></Button>
                     <input type="text" name="price" ref="inputPrice" :placeholder="`Price in ${selectedMainPair} for one ${selectedCurrency}`" v-model="formData.price" />
-                    <Button :label="'+'" @click.native="handleInputPriceIncreace()"></Button>
+                    <Button :label="'+'" @click.native="handleInputPriceAdjust('increase')"></Button>
                   </div>
                   <small v-if="formData.price" v-html="belowOrAboveCurrentMarket"></small>
-
                 </div>
               </div>
 
@@ -80,10 +74,10 @@
                 </header>
                 <div class="order-summary__body">
                   <ul>
-                    <li><span>Total {{ selectedCurrency }}:</span> {{ formData.amount }}</li>
-                    <li><span>Price per {{ selectedCurrency }}:</span> {{ formData.price }} {{ selectedMainPair }} ({{ calculateUsdPrice(formData.price, selectedMainPair) | currency }})</li>
-                    <li><span>Bittrex Fee:</span> {{ feeInCurrency | toFixed }} {{ selectedMainPair }} ({{ calculateUsdPrice(feeInCurrency, selectedMainPair) | currency }}) <!-- ({{ calculateUsdPrice(0.15, selectedMainPair) | currency }}) --></li>
-                    <li><span>Total costs:</span> {{ totalCostsBTC | toFixed }} {{ selectedMainPair }} ({{ calculateUsdPrice(totalCostsBTC, selectedMainPair) | currency }})</li>
+                    <li><span>Total {{ selectedCurrency }}:</span> {{ orderSummaryAmount }}</li>
+                    <li><span>Price per {{ selectedCurrency }}:</span> {{ orderSummaryPricePerOne }}</li>
+                    <li><span>Bittrex Fee:</span> {{ orderSummaryFee }}</li>
+                    <li><span>Total costs:</span> {{ orderSummaryTotalCosts }}</li>
                   </ul>
                 </div>
                 <div class="order-summary__footer">
@@ -154,7 +148,6 @@ export default {
   computed: {
     ...mapGetters({
       priceIndexes: 'markets/priceIndexes',
-      allFilledBalances: 'balances/allFilledCurrencies',
       allBalances: 'balances/allCurrencies',
       allMarkets: 'markets/allMarkets',
       buyOrderServerError: 'orders/buyOrderServerError'
@@ -166,11 +159,13 @@ export default {
         return this.readableType
       }
     },
-    availability () {
-      if (this.type === 'sell') {
-        return `${this.currencyInBalance.free} available`
-      } else if (this.mainPairInBalance) {
+    balanceAvailability () {
+      if (this.type === 'sell') return 'TODO'
+
+      if (this.mainPairInBalance && this.mainPairInBalance.free) {
         return `<strong>${this.selectedMainPair} available:</strong> ${this.mainPairInBalance.free}`
+      } else {
+        return `<strong>${this.selectedMainPair} available:</strong> 0 available.`
       }
     },
     formDisabled () {
@@ -185,8 +180,8 @@ export default {
         return `Your price is <strong>the same</strong> as the current market.`
       }
     },
-    feeInCurrency () {
-      return this.formData.amount * this.formData.price * this.exchangeFees['bittrex']
+    orderFee () {
+      return (this.formData.amount * this.formData.price * this.exchangeFees['bittrex'])
     },
     currencyInBalance () {
       return pickBy(this.allBalances, (currency, currencyName) => {
@@ -236,16 +231,6 @@ export default {
         return null
       }
     },
-    searchQueryInLowerCase () {
-      return (this.searchQuery ? this.searchQuery.toLowerCase().trim() : null)
-    },
-    filteredMarkets () {
-      if (this.searchQueryInLowerCase) {
-        return this.allMarkets.filter(market => {
-          return market.symbol.toLowerCase().includes(this.searchQueryInLowerCase)
-        })
-      }
-    },
     priceMarketDifference () {
       return this.formData.price - this.market.last
     },
@@ -254,10 +239,42 @@ export default {
     },
     totalCostsBTC () {
       if (this.formData.amount && this.formData.price) {
-        return (this.formData.amount * this.formData.price) + this.feeInCurrency
+        return (this.formData.amount * this.formData.price) + this.orderFee
       } else {
         return null
       }
+    },
+    orderSummaryAmount () {
+      if (this.formData.amount) return this.formData.amount
+      return '-'
+    },
+    orderSummaryPricePerOne () {
+      const price = this.formData.price
+      if (price) {
+        const mainPair = this.selectedMainPair
+        const usdPrice = this.$options.filters.currency(this.calculateUsdPrice(price, mainPair))
+        return `${price} ${mainPair} (${usdPrice})`
+      }
+      return '-'
+    },
+    orderSummaryFee () {
+      const orderFee = this.orderFee
+      if (orderFee) {
+        const orderFeeFixed = this.$options.filters.toFixed(orderFee)
+        const usdPrice = this.$options.filters.currency(this.calculateUsdPrice(orderFee, this.selectedMainPair))
+        return `${orderFeeFixed} ${this.selectedMainPair} (${usdPrice})`
+      }
+      return '-'
+    },
+    orderSummaryTotalCosts () {
+      // TODO: BTC can be ETH or USDT
+      const totalCosts = this.totalCostsBTC
+      if (totalCosts) {
+        const totalCostsFixed = this.$options.filters.toFixed(totalCosts)
+        const usdPrice = this.$options.filters.currency(this.calculateUsdPrice(totalCosts, this.selectedMainPair))
+        return `${totalCostsFixed} ${this.selectedMainPair} (${usdPrice})`
+      }
+      return '-'
     }
   },
   methods: {
@@ -278,22 +295,14 @@ export default {
       this.exchangeFee = amount * 0.0025
       this.formData.amount = (((amountInBalance / price) / 100) * percentage) - this.exchangeFee
     },
-    handleInputPriceSetPrice (type) {
+    HandleSetMarketPrice (type) {
       this.formData.price = this.market[type]
     },
-
-    handleInputPriceIncreace () {
+    handleInputPriceAdjust (type) {
       const price = parseFloat(this.formData.price)
       const decimals = 8
-      const power = Math.pow(.1, decimals)
-      const newPrice = parseFloat(price + power).toFixed(decimals)
-      this.formData.price = newPrice
-    },
-    handleInputPriceDecreace () {
-      const price = parseFloat(this.formData.price)
-      const decimals = 8
-      const power = Math.pow(.1, decimals)
-      const newPrice = parseFloat(price - power).toFixed(decimals)
+      const power = Math.pow(0.1, decimals)
+      const newPrice = (type === 'increase' ? parseFloat(price + power).toFixed(decimals) : parseFloat(price - power).toFixed(decimals))
       this.formData.price = newPrice
     },
     handleClose () {
@@ -405,13 +414,18 @@ export default {
     position: relative;
     height: auto;
     background-color: $color-white;
-    max-width: 500px;
+    max-width: 480px;
     display: inline-block;
     text-align: left;
     margin-bottom: 30px;
 
+    @include breakpoint(tablet) {
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
     .modal-popup__header {
-      max-width: 500px;
+      // max-width: 500px;
       display: flex;
       line-height: 3rem;
       height: 60px;
@@ -586,14 +600,32 @@ export default {
     }
   }
 
-  .availability {
+  .balance-availability {
     background-color: $color-athens-gray;
     padding: 12px 15px;
     margin: -15px -15px 0 -15px;
     border-bottom: 1px $color-loblolly solid;
+    display: flex;
+
+    div {
+      &:first-child {
+        width: 100%;
+      }
+
+      &:last-child {
+        flex-basis: 120px;
+        flex-shrink: 0;
+        text-align: right;
+      }
+    }
 
     p {
       margin: 0;
+    }
+
+    button {
+      padding-top: 0;
+      margin-left: auto;
     }
   }
 }

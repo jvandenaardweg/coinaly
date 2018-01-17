@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .search {
-  // padding: 11px 15px;
+  padding: 11px 15px;
   position: relative;
 
   input[type="search"] {

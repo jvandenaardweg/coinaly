@@ -10,7 +10,12 @@
       <div v-if="filteredMarkets" class="markets-selector__body">
         <div class="markets-selector__market" v-if="filteredMarkets" v-for="market in filteredMarkets" :key="market.symbol">
           <input type="radio" :id="market.symbol" name="selectedMarket" :value="market.symbol" v-model="selectedMarket" />
-          <label :for="market.symbol" v-if="market"><strong>{{ market.symbol }}</strong> <span>{{ market.last | toFixed }}</span></label>
+          <label :for="market.symbol" v-if="market">
+            <strong>{{ market.symbol.split('/')[0] }}
+              <span>/ {{ market.symbol.split('/')[1] }}</span>
+            </strong>
+            <!-- <span>{{ market.last | toFixed }} / {{ currencyInBalance(market.symbol.split('/')[1]) }}</span> -->
+          </label>
         </div>
       </div>
     </div>
@@ -18,6 +23,7 @@
 </template>
 
 <script>
+import pickBy from 'lodash/pickBy'
 import { mapGetters } from 'vuex'
 import Search from '@/components/Search'
 
@@ -34,7 +40,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      allMarkets: 'markets/allMarkets'
+      allMarkets: 'markets/allMarkets',
+      allFilledBalances: 'balances/allFilledCurrencies'
     }),
     searchQueryInLowerCase () {
       return (this.searchQuery ? this.searchQuery.toLowerCase().trim() : null)
@@ -48,6 +55,14 @@ export default {
     }
   },
   methods: {
+    currencyInBalance (currency) {
+      const foundCurrency = pickBy(this.allFilledBalances, (balance, currencyName) => {
+        return currency === currencyName
+      })[currency]
+
+      if (foundCurrency) return `${foundCurrency.free} ${currency}`
+      return `0 ${currency}`
+    },
     handleSelect (symbol) {
       this.$emit('selected', symbol)
     },
@@ -59,9 +74,6 @@ export default {
     selectedMarket: function (newValue, oldValue) {
       this.showMarketsSearch = false
       this.handleSelect(newValue)
-      // Vue.nextTick(() => {
-      //   this.$refs.inputPrice.focus()
-      // })
     }
   }
 }
@@ -74,12 +86,10 @@ export default {
   padding: 12px 15px 15px 15px;
   margin: -15px;
 
-  .markets-selector__header {
-    //
-  }
-
-  .markets-selector__body {
-    //
+  .markets-selector__input {
+    .search {
+      padding: 0;
+    }
   }
 
   .markets-selector__output {
@@ -121,7 +131,14 @@ export default {
 
       strong {
         display: inline-block;
-        width: 100px;
+        width: 90px;
+
+        span {
+          font-weight: normal;
+          font-size: 1.2rem;
+          display: inline-block;
+          margin-left: 3px;
+        }
       }
 
       span {
