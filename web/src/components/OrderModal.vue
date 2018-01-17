@@ -8,9 +8,9 @@
           <div class="modal-popup__header-title">
             <h2>{{ headerTitle }}</h2>
           </div>
-          <div class="modal-popup__header-available">
+          <!-- <div class="modal-popup__header-available">
             <small>{{ headerAvailable }}</small>
-          </div>
+          </div> -->
           <div class="modal-popup__header-control">
             <button class="modal-popup__control" type="button" @click.prevent="handleClose()">&times;</button>
           </div>
@@ -24,12 +24,12 @@
 
             <div v-if="formData.symbol && !showMarketsSelector">
 
-              <div class="input">
+              <!-- <div class="input">
                 <div class="input__body">
                   <Market :market="market"></Market>
                   <Button :className="'link'" :label="'Change market'" @click.native="showMarketsSelector = true, searchQuery = null"></Button>
                 </div>
-              </div>
+              </div> -->
 
               <div class="input">
                 <div class="input__header">
@@ -78,7 +78,7 @@
                   <ul>
                     <li><span>Total {{ selectedCurrency }}:</span> {{ formData.amount }}</li>
                     <li><span>Price per {{ selectedCurrency }}:</span> {{ formData.price }} {{ selectedMainPair }} ({{ calculateUsdPrice(formData.price, selectedMainPair) | currency }})</li>
-                    <li><span>Bittrex Fee:</span> {{ feeInCurrency | toFixed }} {{ selectedCurrency }} ({{ calculateUsdPrice((feeInCurrency * this.market.last), selectedMainPair) | currency }}) <!-- ({{ calculateUsdPrice(0.15, selectedMainPair) | currency }}) --></li>
+                    <li><span>Bittrex Fee:</span> {{ feeInCurrency | toFixed }} {{ selectedMainPair }} ({{ calculateUsdPrice(feeInCurrency, selectedMainPair) | currency }}) <!-- ({{ calculateUsdPrice(0.15, selectedMainPair) | currency }}) --></li>
                     <li><span>Total costs:</span> {{ totalCostsBTC | toFixed }} {{ selectedMainPair }} ({{ calculateUsdPrice(totalCostsBTC, selectedMainPair) | currency }})</li>
                   </ul>
                 </div>
@@ -133,7 +133,7 @@ export default {
       searchQuery: null,
       showMarketsSelector: true,
       exchangeFees: {
-        bittrex: 0.25
+        bittrex: 0.0025 // 0.25%
       },
       formData: {
         symbol: null, // XRP/BTC (currency/main)
@@ -182,7 +182,7 @@ export default {
       }
     },
     feeInCurrency () {
-      return (this.formData.amount / 100) * this.exchangeFees['bittrex']
+      return this.formData.amount * this.formData.price * this.exchangeFees['bittrex']
     },
     currencyInBalance () {
       return pickBy(this.allBalances, (currency, currencyName) => {
@@ -250,7 +250,7 @@ export default {
     },
     totalCostsBTC () {
       if (this.formData.amount && this.formData.price) {
-        return this.formData.amount * this.formData.price
+        return (this.formData.amount * this.formData.price) + this.feeInCurrency
       } else {
         return null
       }
@@ -270,8 +270,9 @@ export default {
     handleInputAmountSetAmountPercentage (percentage) {
       const price = this.formData.price
       const amountInBalance = this.mainPairInBalance.free
-      // const fee = this.feeInCurrency
-      this.formData.amount = (((amountInBalance / price) / 100) * percentage)
+      const amount = (((amountInBalance / price) / 100) * percentage)
+      this.exchangeFee = amount * 0.0025
+      this.formData.amount = (((amountInBalance / price) / 100) * percentage) - this.exchangeFee
     },
     handleInputPriceSetPrice (type) {
       this.formData.price = this.market[type]
@@ -322,6 +323,7 @@ export default {
       .then(response => {
         this.isSuccess = true
         this.isLoadingOpenOrders = true
+
         // Get the open orders from the user and close the modal if we got it
         this.$store.dispatch('orders/getOpenOrders')
         .then(result => {
@@ -330,6 +332,9 @@ export default {
         .finally(() => {
           this.isLoadingOpenOrders = false
         })
+
+        // Also get the order history in parallel
+        this.$store.dispatch('orders/getAllHistory')
       })
       .catch(error => {
         console.error(error)
@@ -498,18 +503,6 @@ export default {
     margin-top: 15px;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    // border-bottom: 1px $color-loblolly solid;
-
-    &:first-child {
-      margin-top: -16px;
-      border-bottom: 0;
-      background-color: $color-athens-gray;
-      margin-left: -15px;
-      margin-right: -15px;
-      padding-top: 15px;
-      padding-left: 15px;
-      padding-right: 15px;
-    }
 
     &:last-child {
       border-bottom: 0;
