@@ -1,7 +1,7 @@
 <template>
   <div class="alert-bar" :class="{'is-red': isRedAlert }" v-if="showAlert">
     <div class="alert-bar__centered">
-      <p><strong>BTC/USDT</strong> is down {{ Math.abs(oneDayDiffPercentage) | percentage }}. Other coins <em>might</em> suffer.</p>
+      <p><strong>BTC</strong> is {{ upDownText }} {{ Math.abs(oneDayDiffPercentage) | percentage }}. Other coins <em>might</em> suffer.</p>
     </div>
   </div>
 </template>
@@ -23,10 +23,19 @@ export default {
       }
     },
     isRedAlert () {
-      return this.oneDayDiffPercentage < -20
+      return this.oneDayDiffPercentage < -20 || this.oneDayDiffPercentage > 20
+    },
+    showDownAlert () {
+      return this.oneDayDiffPercentage < -4
+    },
+    showUpAlert () {
+      return this.oneDayDiffPercentage > 4
     },
     showAlert () {
-      return this.oneDayDiffPercentage < -4
+      return this.showDownAlert || this.showUpAlert
+    },
+    upDownText () {
+      return (this.showUpAlert ? 'up' : 'down')
     }
   }
 }
