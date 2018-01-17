@@ -281,11 +281,20 @@ export default {
     handleInputPriceSetPrice (type) {
       this.formData.price = this.market[type]
     },
+
     handleInputPriceIncreace () {
-      this.formData.price++
+      const price = parseFloat(this.formData.price)
+      const decimals = 8
+      const power = Math.pow(.1, decimals)
+      const newPrice = parseFloat(price + power).toFixed(decimals)
+      this.formData.price = newPrice
     },
     handleInputPriceDecreace () {
-      this.formData.price--
+      const price = parseFloat(this.formData.price)
+      const decimals = 8
+      const power = Math.pow(.1, decimals)
+      const newPrice = parseFloat(price - power).toFixed(decimals)
+      this.formData.price = newPrice
     },
     handleClose () {
       this.removeError()
