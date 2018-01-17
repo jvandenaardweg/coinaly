@@ -237,7 +237,7 @@ export default {
     priceMarketDifferencePercentage () {
       return (((this.priceMarketDifference) / this.market.last) * 100).toFixed(2)
     },
-    totalCostsBTC () {
+    totalCosts () {
       if (this.formData.amount && this.formData.price) {
         return (this.formData.amount * this.formData.price) + this.orderFee
       } else {
@@ -267,8 +267,7 @@ export default {
       return '-'
     },
     orderSummaryTotalCosts () {
-      // TODO: BTC can be ETH or USDT
-      const totalCosts = this.totalCostsBTC
+      const totalCosts = this.totalCosts
       if (totalCosts) {
         const totalCostsFixed = this.$options.filters.toFixed(totalCosts)
         const usdPrice = this.$options.filters.currency(this.calculateUsdPrice(totalCosts, this.selectedMainPair))
