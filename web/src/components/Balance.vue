@@ -26,7 +26,7 @@
         <OrderTable v-if="showOrderHistory && orderHistoryByCurrency" v-for="(order, index) in orderHistoryByCurrency(currencyName)" :key="index" :order="order"></OrderTable>
       </div>
     </div>
-    <Modal :visible="showModal" :type="modalType" @close="showModal = false" :currency="currency"></Modal>
+    <OrderModal v-if="showModal" :type="modalType" @close="showModal = false" :currency="currency"></OrderModal>
     <ChartOverlay v-if="openChart" @close="openChart = false" :exchange="'BITTREX'" :currencyPair="currencyPair"></ChartOverlay>
   </div>
 </template>
@@ -36,7 +36,7 @@ import { mapGetters } from 'vuex'
 
 import Button from '@/components/Button'
 import OrderTable from '@/components/OrderTable'
-import Modal from '@/components/Modal'
+import OrderModal from '@/components/OrderModal'
 import Progress from '@/components/Progress'
 import ChartOverlay from '@/components/ChartOverlay'
 
@@ -46,7 +46,7 @@ export default {
   components: {
     Button,
     OrderTable,
-    Modal,
+    OrderModal,
     Progress,
     ChartOverlay
   },
@@ -242,16 +242,16 @@ export default {
 <style lang="scss" scoped>
 .balance {
   background-color: $color-white;
-  border-top: 1px $color-iron solid;
+  border-top: 1px $color-loblolly solid;
   border-bottom: 0;
 
   @include breakpoint(desktop) {
-    border-left: 1px $color-iron solid;
-    border-right: 1px $color-iron solid;
+    border-left: 1px $color-loblolly solid;
+    border-right: 1px $color-loblolly solid;
   }
 
   &:last-child {
-    border-bottom: 1px $color-iron solid;
+    border-bottom: 1px $color-loblolly solid;
   }
 
   &.is-expanded {
@@ -291,7 +291,7 @@ export default {
 
   .balance__history {
     text-align: center;
-    border-top: 1px $color-iron solid;
+    border-top: 1px $color-loblolly solid;
     padding-top: 5px;
   }
 

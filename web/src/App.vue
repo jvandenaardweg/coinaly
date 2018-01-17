@@ -47,6 +47,7 @@ export default {
     getAllData () {
       // Then we get all market data. We use this throughout the whole website, so we want this to be available after first load
       this.$store.dispatch('markets/getAll')
+      this.$store.dispatch('balances/getAll')
 
       // TODO: do with websockets
       this.marketInterval = setInterval(() => {
@@ -97,13 +98,14 @@ label {
   line-height: 2.4rem;
 }
 
-input[type="text"] {
+input[type=text],
+input[type=number] {
   border-radius: 3px;
   font-size: 1.4rem;
   height: 4rem;
   padding: 0 15px;
   line-height: 4rem;
-  border: 1px $color-iron solid;
+  border: 1px $color-loblolly solid;
   width: 100%;
   appearance: none;
 

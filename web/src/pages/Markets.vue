@@ -4,6 +4,7 @@
       <h2 class="page-header__title">Markets</h2>
     </header>
     <Tabs :items="tabItems"></Tabs>
+
     <router-view></router-view>
   </div>
 </template>
@@ -80,7 +81,7 @@ export default {
 }
 
 .select-box {
-  border: 1px $color-iron solid;
+  border: 1px $color-loblolly solid;
   padding: 0 5px;
     background-color: $color-white;
     border-radius: 3px;

@@ -18,7 +18,7 @@ export default {
 .progress {
   height: 4px;
   width: 100%;
-  background-color: $color-iron;
+  background-color: $color-loblolly;
   border-radius: 2px;
   overflow: hidden;
   display: flex;

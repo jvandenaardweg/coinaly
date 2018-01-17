@@ -95,7 +95,7 @@ export default {
   text-align: left;
   width: 100%;
   margin-top: 15px;
-  border-top: 1px $color-iron solid;
+  border-top: 1px $color-loblolly solid;
   padding-top: 10px;
 
   small {

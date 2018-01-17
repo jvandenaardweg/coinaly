@@ -21,6 +21,7 @@
         <p>Loading your orders...</p>
       </div>
     </div>
+    <OrderModal v-if="showModal" :type="modalType" @close="showModal = false" :currency="'XRP'"></OrderModal>
   </div>
 </template>
 
@@ -28,6 +29,7 @@
 import { mapGetters } from 'vuex'
 import Order from '@/components/Order'
 import Button from '@/components/Button'
+import OrderModal from '@/components/OrderModal'
 import ServerError from '@/components/ServerError'
 
 export default {
@@ -35,7 +37,15 @@ export default {
   components: {
     Order,
     Button,
+    OrderModal,
     ServerError
+  },
+  data () {
+    return {
+      showModal: false,
+      modalType: 'buy',
+      currency: null
+    }
   },
   computed: {
     ...mapGetters({
@@ -55,7 +65,8 @@ export default {
   },
   methods: {
     showOrderModal () {
-      window.alert('This feature does not work yet, sorry!')
+      this.showModal = true
+      // window.alert('This feature does not work yet, sorry!')
     }
   }
 }

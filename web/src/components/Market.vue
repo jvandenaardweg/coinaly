@@ -81,6 +81,7 @@ export default {
       } else {
         volume = this.totalBtcVolume
       }
+      // console.log((this.market.quoteVolume / volume) * 100)
       return ((this.market.quoteVolume / volume) * 100).toFixed(2)
     },
     mainPair () {
@@ -147,18 +148,18 @@ export default {
 
 <style lang="scss" scoped>
 .market {
-  border-top: 1px $color-iron solid;
+  border-top: 1px $color-loblolly solid;
   background-color: $color-white;
   border-bottom: 0;
   position: relative;
 
   @include breakpoint(desktop) {
-    border-left: 1px $color-iron solid;
-    border-right: 1px $color-iron solid;
+    border-left: 1px $color-loblolly solid;
+    border-right: 1px $color-loblolly solid;
   }
 
   &:last-child {
-    border-bottom: 1px $color-iron solid;
+    border-bottom: 1px $color-loblolly solid;
   }
 
   &.is-in-balance {
