@@ -1,4 +1,5 @@
 'use strict'
+require('dotenv').config()
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -35,7 +36,9 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': env
+      'process.env': env,
+      'process.env.ANALYTICS_ID': `"${process.env.ANALYTICS_ID}"`,
+      'process.env.SENTRY_URL': `"${process.env.SENTRY_URL}"`
     }),
     new UglifyJsPlugin({
       uglifyOptions: {
