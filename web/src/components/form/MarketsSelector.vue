@@ -82,6 +82,9 @@ export default {
     //
   }
 
+  .markets-selector__output {
+    margin-top: 12px;
+  }
   .markets-selector__market {
     position: relative;
 
