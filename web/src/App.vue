@@ -4,7 +4,7 @@
     <keep-alive include="HomePage,MarketsPage,OrdersPage,BalancesPage">
       <router-view></router-view>
     </keep-alive>
-    <AlertBar></AlertBar>
+    <AlertBar :btcUsdMarket="btcUsdMarket"></AlertBar>
     <div class="footer" v-if="isAuthorized">
       <Button :label="'Logout'" :className="'link-gray'" @click.native="handleLogout()"></Button> &nbsp;
       <Button :label="'Setup'" :className="'link-gray'" @click.native="handleSetup()"></Button>
@@ -27,7 +27,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isAuthorized: 'auth/isAuthorized'
+      isAuthorized: 'auth/isAuthorized',
+      btcUsdMarket: 'markets/btcUsdMarket'
     })
   },
   created () {

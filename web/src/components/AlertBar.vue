@@ -7,14 +7,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'AlertBar',
+  props: ['btcUsdMarket'],
   computed: {
-    ...mapGetters({
-      btcUsdMarket: 'markets/btcUsdMarket'
-    }),
     oneDayDiffPercentage () {
       if (this.btcUsdMarket) {
         return (((this.btcUsdMarket.last - this.btcUsdMarket.info.PrevDay) / this.btcUsdMarket.info.PrevDay) * 100).toFixed(2)
