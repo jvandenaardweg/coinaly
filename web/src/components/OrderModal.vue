@@ -24,6 +24,10 @@
 
             <div v-if="formData.symbol && !showMarketsSelector">
 
+              <div class="availability">
+                <p v-html="availability"></p>
+              </div>
+
               <!-- <div class="input">
                 <div class="input__body">
                   <Market :market="market"></Market>
@@ -162,11 +166,11 @@ export default {
         return this.readableType
       }
     },
-    headerAvailable () {
+    availability () {
       if (this.type === 'sell') {
         return `${this.currencyInBalance.free} available`
       } else if (this.mainPairInBalance) {
-        return `${this.mainPairInBalance.free} ${this.selectedMainPair} available`
+        return `<strong>${this.selectedMainPair} available:</strong> ${this.mainPairInBalance.free}`
       }
     },
     formDisabled () {
@@ -570,6 +574,17 @@ export default {
           }
         }
       }
+    }
+  }
+
+  .availability {
+    background-color: $color-athens-gray;
+    padding: 12px 15px;
+    margin: -15px -15px 0 -15px;
+    border-bottom: 1px $color-loblolly solid;
+
+    p {
+      margin: 0;
     }
   }
 }
