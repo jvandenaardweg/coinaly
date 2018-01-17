@@ -42,7 +42,7 @@
                 <div class="input__body">
                   <div class="input-group">
                     <Button :label="'-'" @click.native="handleInputPriceAdjust('decrease')"></Button>
-                    <input type="text" name="price" ref="inputPrice" :placeholder="`Price in ${selectedMainPair} for one ${selectedCurrency}`" v-model="formData.price" />
+                    <input type="text" name="price" required ref="inputPrice" :placeholder="`Price in ${selectedMainPair} for one ${selectedCurrency}`" v-model="formData.price" />
                     <Button :label="'+'" @click.native="handleInputPriceAdjust('increase')"></Button>
                   </div>
                   <small v-if="formData.price" v-html="belowOrAboveCurrentMarket"></small>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="input__body">
                   <div class="input-group input-group--suffix">
-                    <input type="text" name="amount" :placeholder="`Amount of ${selectedCurrency} you want`" v-model="formData.amount" />
+                    <input type="text" name="amount" required :placeholder="`Amount of ${selectedCurrency} you want`" v-model="formData.amount" />
                     <Button :label="'Round'" @click.native="roundAmount()"></Button>
                   </div>
                 </div>

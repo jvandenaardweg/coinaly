@@ -98,7 +98,8 @@ label {
   line-height: 2.4rem;
 }
 
-input[type="text"] {
+input[type=text],
+input[type=number] {
   border-radius: 3px;
   font-size: 1.4rem;
   height: 4rem;
