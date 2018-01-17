@@ -4,6 +4,7 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import './filters'
+import './mixins'
 import router from './router'
 import store from './store'
 
