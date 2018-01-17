@@ -416,11 +416,11 @@ export default {
     max-width: 480px;
     display: inline-block;
     text-align: left;
-    margin-bottom: 30px;
 
     @include breakpoint(tablet) {
       border-radius: 3px;
       overflow: hidden;
+      margin-bottom: 30px;
     }
 
     .modal-popup__header {
