@@ -47,6 +47,7 @@ export default {
     getAllData () {
       // Then we get all market data. We use this throughout the whole website, so we want this to be available after first load
       this.$store.dispatch('markets/getAll')
+      this.$store.dispatch('balances/getAll')
 
       // TODO: do with websockets
       this.marketInterval = setInterval(() => {

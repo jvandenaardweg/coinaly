@@ -14,7 +14,6 @@ export default {
   },
   created () {
     console.log('created balances page')
-    this.$store.dispatch('balances/getAll')
     this.$store.dispatch('orders/getAllHistory')
     this.$store.dispatch('orders/getOpenOrders')
     this.$store.dispatch('deposits/getAllHistory')
