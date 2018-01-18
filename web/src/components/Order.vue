@@ -195,10 +195,16 @@ export default {
           this.$store.dispatch('orders/getAllHistory')
 
           // Finally get the open orders. This response should not include our order anymore.
-          this.$store.dispatch('orders/getOpenOrders')
-          .finally(() => {
-            this.isLoading = false
-          })
+          // We use a timeout because it seems Bittrex gives us a cached response after delete an order
+          // This timeout is not optimal, we should create something that validates if the order is really removed
+          // But for now this timeout seems to do the job
+          // TODO: Make better validation
+          setTimeout(() => {
+            this.$store.dispatch('orders/getOpenOrders')
+            .finally(() => {
+              this.isLoading = false
+            })
+          }, 1000)
         })
         .catch(error => {
           let reason
