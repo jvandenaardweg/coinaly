@@ -189,12 +189,12 @@ export default {
         // Cancel the order
         this.$store.dispatch('orders/cancelOrder', uuid)
         .then(response => {
-          // Get the balance and order history after placing the order
+          // Get the balance and order history after cancelling the order
           // so everything is up-to-date again
           this.$store.dispatch('balances/getAll')
           this.$store.dispatch('orders/getAllHistory')
 
-          // Finally get the open orders
+          // Finally get the open orders. This response should not include our order anymore.
           this.$store.dispatch('orders/getOpenOrders')
           .finally(() => {
             this.isLoading = false
