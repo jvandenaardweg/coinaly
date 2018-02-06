@@ -154,7 +154,10 @@ export default {
     }),
     headerTitle () {
       if (this.selectedCurrency) {
-        return `${this.readableType} ${this.selectedCurrency} with ${this.selectedMainPair}`
+        let title = `${this.readableType} ${this.selectedCurrency} `
+            title += this.type === 'buy' ? ` with ` : ` for `
+            title += `${this.selectedMainPair}`;
+        return title
       } else {
         return this.readableType
       }
