@@ -245,7 +245,7 @@ router.get('/cancelorder', (request, response, next) => {
   })()
 })
 
-router.post('/markets/buy', (request, response, next) => {
+router.post('/markets/:type(type|sell)', (request, response, next) => {
   // More info about creating buy/sell orders: https://github.com/ccxt/ccxt/wiki/Manual#placing-orders
   const symbol = request.body.symbol;
   const amount = request.body.amount;
@@ -254,7 +254,12 @@ router.post('/markets/buy', (request, response, next) => {
   (async () => {
     try {
       const exchange = createExchangeInstance(request.query, request.cookies)
-      const result = await exchange.createLimitBuyOrder(symbol, amount, price, {})
+      let result = null
+      if (request.param.type === 'buy') {
+        result = await exchange.createLimitBuyOrder(symbol, amount, price, {})
+      } else {
+        result = await exchange.createLimitSellOrder(symbol, amount, price, {})
+      }
       response.json(result)
     } catch (e) {
       handleExchangeError(ccxt, e, response)
