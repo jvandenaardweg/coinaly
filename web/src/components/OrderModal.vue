@@ -163,7 +163,9 @@ export default {
       }
     },
     balanceAvailability () {
-      if (this.type === 'sell') return 'TODO'
+      if (this.type === 'sell') {
+        return `<strong>${this.selectedCurrency} available:</strong> ${this.currencyInBalance.free}`
+      }
 
       if (this.mainPairInBalance && this.mainPairInBalance.free) {
         return `<strong>${this.selectedMainPair} available:</strong> ${this.mainPairInBalance.free}`
