@@ -135,7 +135,7 @@ export default {
       },
       formData: {
         symbol: null, // XRP/BTC (currency/main)
-        side: 'buy', // buy or sell
+        side: this.type, // buy or sell
         type: 'limit', // limit or market
         amount: null, // amount of coins you want to buy
         price: null // price of a single coin in BTC/ETH/USDT
@@ -344,8 +344,9 @@ export default {
       }
     },
     createOrder () {
+      const action = this.type === 'buy' ? 'orders/createBuyOrder' : 'orders/createSellOrder'
       // TODO: if API times out, validate if order is placed or not. IF not, try again one more time.
-      this.$store.dispatch('orders/createBuyOrder', this.formData)
+      this.$store.dispatch(action, this.formData)
       .then(response => {
         this.isSuccess = true
         this.isLoadingOpenOrders = true
