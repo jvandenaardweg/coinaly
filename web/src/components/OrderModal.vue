@@ -17,16 +17,17 @@
 
           <fieldset :disabled="formDisabled">
 
-            <MarketsSelector v-if="showMarketsSelector" @selected="handleSelectMarket"></MarketsSelector>
+            <MarketsSelector v-if="showCurrencySelector && type !== 'sell'" @selected="handleSelectMarket"></MarketsSelector>
+            <BalancesSelector v-if="showCurrencySelector && type === 'sell'" @selected="handleSelectBalance"></BalancesSelector>
 
-            <div v-if="formData.symbol && !showMarketsSelector">
+            <div v-if="formData.symbol && !showCurrencySelector">
 
               <div class="balance-availability">
                 <div>
                   <p v-html="balanceAvailability"></p>
                 </div>
                 <div>
-                  <Button :className="'link'" :label="'Change market'" @click.native="showMarketsSelector = true, searchQuery = null"></Button>
+                  <Button :className="'link'" :label="'Change market'" @click.native="showCurrencySelector = true, searchQuery = null"></Button>
                 </div>
               </div>
 
@@ -108,6 +109,7 @@ import ChartOverlay from '@/components/ChartOverlay.vue'
 import Market from '@/components/Market.vue'
 import ErrorMessage from '@/components/ErrorMessage.vue'
 import MarketsSelector from '@/components/form/MarketsSelector.vue'
+import BalancesSelector from '@/components/form/BalancesSelector.vue'
 import pickBy from 'lodash/pickBy'
 
 // Placing orders with CCXT: https://github.com/ccxt/ccxt/wiki/Manual#placing-orders
@@ -121,7 +123,8 @@ export default {
     ChartOverlay,
     Market,
     ErrorMessage,
-    MarketsSelector
+    MarketsSelector,
+    BalancesSelector
   },
   data () {
     return {
@@ -129,7 +132,8 @@ export default {
       isSuccess: false,
       isLoadingOpenOrders: false,
       searchQuery: null,
-      showMarketsSelector: true,
+      showCurrencySelector: true,
+      selectedBalance: null,
       exchangeFees: {
         bittrex: 0.0025 // 0.25%
       },
@@ -154,9 +158,10 @@ export default {
     }),
     headerTitle () {
       if (this.selectedCurrency) {
-        let title = `${this.readableType} ${this.selectedCurrency} `
-            title += this.type === 'buy' ? ` with ` : ` for `
-            title += `${this.selectedMainPair}`;
+        let title
+        title = `${this.readableType} ${this.selectedCurrency} `
+        title += this.type === 'buy' ? ` with ` : ` for `
+        title += `${this.selectedMainPair}`
         return title
       } else {
         return this.readableType
@@ -316,6 +321,9 @@ export default {
     handleSelectMarket (symbol) {
       this.formData.symbol = symbol
     },
+    handleSelectBalance (symbol) {
+      this.selectedBalance = symbol
+    },
     handleMarketSearchQuery (searchQuery) {
       this.searchQuery = searchQuery
     },
@@ -379,7 +387,7 @@ export default {
   },
   watch: {
     'formData.symbol': function (newValue, oldValue) {
-      this.showMarketsSelector = false
+      this.showCurrencySelector = false
     }
   }
 }
