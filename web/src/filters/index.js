@@ -3,7 +3,7 @@ import numeral from 'numeral'
 const moment = require('moment')
 
 Vue.filter('capitalize', function (value) {
-  return value.toUpperCase()
+  return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
 Vue.filter('currency', function (value, prefix) {

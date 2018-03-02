@@ -77,7 +77,7 @@
                   <ul>
                     <li><span>Total {{ selectedCurrency }}:</span> {{ orderSummaryAmount }}</li>
                     <li><span>Price per {{ selectedCurrency }}:</span> {{ orderSummaryPricePerOne }}</li>
-                    <li><span>Bittrex Fee:</span> {{ orderSummaryFee }}</li>
+                    <li><span>{{ selectedExchange | capitalize }} Fee:</span> {{ orderSummaryFee }}</li>
                     <li><span>{{ totalCostsLabel }}:</span> {{ orderSummaryTotalCosts }}</li>
                   </ul>
                 </div>
@@ -192,7 +192,7 @@ export default {
       }
     },
     orderFee () {
-      return (this.formData.amount * this.formData.price * this.exchangeFees['bittrex'])
+      return (this.formData.amount * this.formData.price * this.exchangeFees[this.selectedExchange])
     },
     currencyInBalance () {
       return pickBy(this.allBalances, (currency, currencyName) => {
