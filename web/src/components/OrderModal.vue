@@ -134,6 +134,7 @@ export default {
       searchQuery: null,
       showCurrencySelector: true,
       selectedBalance: null,
+      selectedExchange: 'bittrex', // TODO: We can make this dynamic later to use the correct fee
       exchangeFees: {
         bittrex: 0.0025 // 0.25%
       },
@@ -314,13 +315,13 @@ export default {
       if (this.type === 'sell') {
         amountInBalance = this.currencyInBalance.free
         amount = (((amountInBalance * price) / 100) * percentage)
-        exchangeFee = amount * 0.0025
+        exchangeFee = amount * this.exchangeFees[this.selectedExchange]
         // calculatedAmount = (((amountInBalance * price) / 100) * percentage) - exchangeFee
         calculatedAmount = (amountInBalance / 100) * percentage
       } else {
         amountInBalance = this.mainPairInBalance.free
         amount = (((amountInBalance / price) / 100) * percentage)
-        exchangeFee = amount * 0.0025
+        exchangeFee = amount * this.exchangeFees[this.selectedExchange]
         calculatedAmount = (((amountInBalance / price) / 100) * percentage) - exchangeFee
       }
 
@@ -364,7 +365,6 @@ export default {
     },
     handleSubmit () {
       this.removeError()
-      this.isLoading = true
       if (this.type === 'sell' && this.priceMarketDifferencePercentage < -10) {
         if (window.confirm(`Your sell price is ${this.priceMarketDifferencePercentage}% below the current market price. Are you sure you want to do this?`)) {
           this.createOrder()
@@ -376,6 +376,7 @@ export default {
       }
     },
     createOrder () {
+      this.isLoading = true
       const action = this.type === 'buy' ? 'orders/createBuyOrder' : 'orders/createSellOrder'
       // TODO: if API times out, validate if order is placed or not. IF not, try again one more time.
       this.$store.dispatch(action, this.formData)
