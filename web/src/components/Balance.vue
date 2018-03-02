@@ -3,7 +3,12 @@
     <div class="balance__header" @click.prevent="toggleExpand()">
       <div class="balance__symbol"><strong>{{ currencyName }}</strong></div>
       <div class="balance__meta">{{ currency.total }}</div>
-      <div class="balance__percentage" :class="{'is-positive': currentWorthChangeIsPositive === true, 'is-negative': currentWorthChangeIsPositive === false }"><span v-if="allMarkets">{{ currentWorthUsd | currency('$') }}</span></div>
+      <div class="balance__worth" :class="{'is-positive': currentWorthChangeIsPositive === true, 'is-negative': currentWorthChangeIsPositive === false }">
+        <span v-if="allMarkets">{{ currentWorthUsd | currency('$') }}</span>
+      </div>
+      <div class="balance__percentage" :class="{'is-positive': differencePercentageWithYesterday >= 0, 'is-negative': differencePercentageWithYesterday < 0 }">
+        <span>{{ differencePercentageWithYesterday | percentage }}</span>
+      </div>
     </div>
     <div class="balance__stats">
       <Progress :blue="stats.first" :orange="stats.second" :green="0"></Progress>
@@ -114,6 +119,19 @@ export default {
       } else {
         return null
       }
+    },
+    yesterdayWorthUsd () {
+      if (this.allWorth[this.currencyName]) {
+        return this.allWorth[this.currencyName].yesterday.usd
+      } else {
+        return null
+      }
+    },
+    differencePercentageWithYesterday () {
+      const percentage = (((this.currentWorthUsd - this.yesterdayWorthUsd) / this.yesterdayWorthUsd) * 100)
+
+      if (!isNaN(percentage)) return percentage.toFixed(2)
+      return '0'
     }
   },
   methods: {
@@ -225,12 +243,12 @@ export default {
           this.currentWorthChangeIsPositive = true
           setTimeout(() => {
             this.currentWorthChangeIsPositive = null
-          }, 1000)
+          }, 1500)
         } else if (newValue < oldValue) {
           this.currentWorthChangeIsPositive = false
           setTimeout(() => {
             this.currentWorthChangeIsPositive = null
-          }, 1000)
+          }, 1500)
         }
       }
     }
@@ -339,16 +357,44 @@ export default {
   .balance__meta {
     opacity: 0.5;
     padding-right: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80px;
+  }
+
+  .balance__worth {
+    align-self: right;
+    margin-left: auto;
+
+    &.is-negative {
+      span {
+        background-color: $color-alizarin-crimson;
+        color: $color-white;
+      }
+    }
+
+    &.is-positive {
+      span {
+        background-color: $color-chateau-green;
+        color: $color-white;
+      }
+    }
+
+    span {
+      background-color: $color-athens-gray;
+      border-radius: 3px;
+      padding: 0 7px;
+      color: rgba(44, 62, 80, 0.8);
+      display: inline-block;
+    }
   }
 
   .balance__percentage {
     align-self: right;
-    margin-left: auto;
-
-    span {
-      transition: 100ms color;
-      color: rgba(44, 62, 80, 0.5);
-    }
+    margin-left: 20px;
+    width: 55px;
+    text-align: right;
 
     &.is-negative {
       span {
@@ -360,6 +406,18 @@ export default {
       span {
         color: $color-chateau-green;
       }
+    }
+
+    span {
+      color: rgba(44, 62, 80, 0.5);
+    }
+  }
+
+  .balance__worth,
+  .balance__percentage {
+
+    span {
+      transition: 100ms all;
     }
   }
 
