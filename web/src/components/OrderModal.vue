@@ -78,7 +78,7 @@
                     <li><span>Total {{ selectedCurrency }}:</span> {{ orderSummaryAmount }}</li>
                     <li><span>Price per {{ selectedCurrency }}:</span> {{ orderSummaryPricePerOne }}</li>
                     <li><span>Bittrex Fee:</span> {{ orderSummaryFee }}</li>
-                    <li><span>Total costs:</span> {{ orderSummaryTotalCosts }}</li>
+                    <li><span>{{ totalCostsLabel }}:</span> {{ orderSummaryTotalCosts }}</li>
                   </ul>
                 </div>
                 <div class="order-summary__footer">
@@ -252,6 +252,13 @@ export default {
         return (this.formData.amount * this.formData.price) + this.orderFee
       } else {
         return null
+      }
+    },
+    totalCostsLabel () {
+      if (this.type === 'sell') {
+        return 'Total gains'
+      } else {
+        return 'Total costs'
       }
     },
     orderSummaryAmount () {
