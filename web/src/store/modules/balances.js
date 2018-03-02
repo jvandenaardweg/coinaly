@@ -41,6 +41,9 @@ export default {
     }
   },
   getters: {
+    hasCalculatedWorths: state => {
+      return Object.keys(state.worth).length
+    },
     allWorth: state => {
       return state.worth
     },

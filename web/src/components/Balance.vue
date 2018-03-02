@@ -4,10 +4,10 @@
       <div class="balance__symbol"><strong>{{ currencyName }}</strong></div>
       <div class="balance__meta">{{ currency.total }}</div>
       <div class="balance__worth" :class="{'is-positive': currentWorthChangeIsPositive === true, 'is-negative': currentWorthChangeIsPositive === false }">
-        <span v-if="allMarkets">{{ currentWorthUsd | currency('$') }}</span>
+        <span v-if="hasCalculatedWorths">{{ currentWorthUsd | currency('$') }}</span>
       </div>
       <div class="balance__percentage" :class="{'is-positive': differencePercentageWithYesterday >= 0, 'is-negative': differencePercentageWithYesterday < 0 }">
-        <span>{{ differencePercentageWithYesterday | percentage }}</span>
+        <span v-if="differencePercentageWithYesterday">{{ differencePercentageWithYesterday | percentage }}</span>
       </div>
     </div>
     <div class="balance__stats">
@@ -73,7 +73,8 @@ export default {
       allDepositsHistory: 'deposits/getAllHistory',
       allWithdrawalsHistory: 'withdrawals/getAllHistory',
       allSellHistory: 'orders/getAllSellHistory',
-      allBuyHistory: 'orders/getAllBuyHistory'
+      allBuyHistory: 'orders/getAllBuyHistory',
+      hasCalculatedWorths: 'balances/hasCalculatedWorths'
     }),
     currencyPair () {
       const currency = this.currencyName
@@ -128,10 +129,13 @@ export default {
       }
     },
     differencePercentageWithYesterday () {
-      const percentage = (((this.currentWorthUsd - this.yesterdayWorthUsd) / this.yesterdayWorthUsd) * 100)
-
-      if (!isNaN(percentage)) return percentage.toFixed(2)
-      return '0'
+      if (this.currentWorthUsd && this.yesterdayWorthUsd) {
+        const percentage = (((this.currentWorthUsd - this.yesterdayWorthUsd) / this.yesterdayWorthUsd) * 100)
+        if (!isNaN(percentage)) return percentage.toFixed(2)
+        return '0'
+      } else {
+        return null
+      }
     }
   },
   methods: {
