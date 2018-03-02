@@ -299,10 +299,26 @@ export default {
     },
     handleInputAmountSetAmountPercentage (percentage) {
       const price = this.formData.price
-      const amountInBalance = this.mainPairInBalance.free
-      const amount = (((amountInBalance / price) / 100) * percentage)
-      this.exchangeFee = amount * 0.0025
-      this.formData.amount = (((amountInBalance / price) / 100) * percentage) - this.exchangeFee
+      let amountInBalance
+      let amount
+      let exchangeFee
+      let calculatedAmount
+
+      if (this.type === 'sell') {
+        amountInBalance = this.currencyInBalance.free
+        amount = (((amountInBalance * price) / 100) * percentage)
+        exchangeFee = amount * 0.0025
+        // calculatedAmount = (((amountInBalance * price) / 100) * percentage) - exchangeFee
+        calculatedAmount = (amountInBalance / 100) * percentage
+      } else {
+        amountInBalance = this.mainPairInBalance.free
+        amount = (((amountInBalance / price) / 100) * percentage)
+        exchangeFee = amount * 0.0025
+        calculatedAmount = (((amountInBalance / price) / 100) * percentage) - exchangeFee
+      }
+
+      this.exchangeFee = exchangeFee
+      this.formData.amount = calculatedAmount
     },
     HandleSetMarketPrice (type) {
       this.formData.price = this.market[type]
@@ -323,6 +339,7 @@ export default {
     },
     handleSelectBalance (symbol) {
       this.selectedBalance = symbol
+      this.formData.symbol = symbol + '/BTC'
     },
     handleMarketSearchQuery (searchQuery) {
       this.searchQuery = searchQuery
