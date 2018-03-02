@@ -61,7 +61,10 @@ export default {
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'markets/addAllMarkets') {
         this.setBalanceWorth()
-        if (this.isCalculatingWorth) this.isCalculatingWorth = false
+      }
+
+      if (mutation.type === 'balances/setWorth' && this.$store.getters['balances/hasCalculatedWorths'] && this.isCalculatingWorth) {
+        this.isCalculatingWorth = false
       }
     })
   },
