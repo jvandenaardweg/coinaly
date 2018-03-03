@@ -92,8 +92,11 @@ export default {
 
   .markets__legend {
     display: flex;
-    padding: 6px 45px 10px 15px;
+    padding: 1px 45px 5px 15px;
     width: 100%;
+    color: $color-gray-chateau;
+    text-transform: uppercase;
+    font-size: 1.2rem;
 
     > div {
       font-weight: bold;

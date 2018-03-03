@@ -266,8 +266,11 @@ export default {
   .balances__legend {
     display: flex;
     width: 100%;
-    padding: 10px 15px;
+    padding: 5px 15px;
     font-weight: bold;
+    color: $color-gray-chateau;
+    text-transform: uppercase;
+    font-size: 1.2rem;
 
     .balances__legend-symbol {
       flex-basis: 60px;
