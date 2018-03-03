@@ -33,6 +33,7 @@ export default {
   },
   created () {
     if (this.isAuthorized) {
+      this.$store.commit('exchanges/setSelected', 'bittrex')
       this.getAllData()
     }
   },
