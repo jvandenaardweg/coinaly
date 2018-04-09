@@ -1,4 +1,13 @@
 # Coinaly
+
+## IMPORTANT:
+Project goes private, [read our announcement](https://github.com/jvandenaardweg/coinaly/issues/48). 
+
+Request an invite to be the first you use Coinaly: https://coinaly.io/
+
+------
+
+
 [![Build Status](https://travis-ci.org/jvandenaardweg/coinaly.svg?branch=master)](https://travis-ci.org/jvandenaardweg/coinaly)&nbsp;&nbsp;[![Join Coinaly on Slack](https://img.shields.io/badge/chat-on%20slack-brightgreen.svg)](https://join.slack.com/t/coinaly/shared_invite/enQtMjk1OTcxMTc2MTE4LWJjMzJkOTg2ODY4MzI4MzRiNmMxNmRlODY1OWZjNjA0MGVlOWFkNGJiNjMyYjNhNzRjMjY4YmI2MzI5MTFiMzg)
 
 Fast and easy to use mobile trade interface for cryptocurrencies. Track your trades to the moon and beyond. Better insights in your cryptocurrency endeavours.
