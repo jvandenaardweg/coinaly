@@ -2,7 +2,7 @@
   "name": "coinaly",
   "version": "1.0.0",
   "description": "Fast and easy to use mobile trade interface for cryptocurrencies",
-  "author": "Jordy van den Aardweg <jordyvandenaardweg@gmail.com>",
+  "author": "Jordy van den Aardweg",
   "private": true,
   "engines": {
     "node": "8.9.4",
