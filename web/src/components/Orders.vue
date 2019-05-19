@@ -3,7 +3,8 @@
     <header class="orders__header">
       <h2 class="orders__header-title">Open orders <span v-if="totalOpenOrders">({{ totalOpenOrders }})</span></h2>
       <div class="orders__header-control">
-        <Button :label="'New order'" @click.native="showOrderModal()"></Button>
+        <Button :label="'Buy'" @click.native="showOrderModal('buy')"></Button>
+        <Button :label="'Sell'" @click.native="showOrderModal('sell')"></Button>
       </div>
     </header>
     <div class="orders__body">
@@ -21,7 +22,7 @@
         <p>Loading your orders...</p>
       </div>
     </div>
-    <OrderModal v-if="showModal" :type="modalType" @close="showModal = false" :currency="'XRP'"></OrderModal>
+    <OrderModal v-if="showModal" :type="modalType" @close="showModal = false"></OrderModal>
   </div>
 </template>
 
@@ -43,7 +44,6 @@ export default {
   data () {
     return {
       showModal: false,
-      modalType: 'buy',
       currency: null
     }
   },
@@ -64,9 +64,9 @@ export default {
     }
   },
   methods: {
-    showOrderModal () {
+    showOrderModal (type) {
+      this.modalType = type
       this.showModal = true
-      // window.alert('This feature does not work yet, sorry!')
     }
   }
 }

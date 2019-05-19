@@ -17,16 +17,17 @@
 
           <fieldset :disabled="formDisabled">
 
-            <MarketsSelector v-if="showMarketsSelector" @selected="handleSelectMarket"></MarketsSelector>
+            <MarketsSelector v-if="showCurrencySelector && type !== 'sell'" @selected="handleSelectMarket"></MarketsSelector>
+            <BalancesSelector v-if="showCurrencySelector && type === 'sell'" @selected="handleSelectBalance"></BalancesSelector>
 
-            <div v-if="formData.symbol && !showMarketsSelector">
+            <div v-if="formData.symbol && !showCurrencySelector">
 
               <div class="balance-availability">
                 <div>
                   <p v-html="balanceAvailability"></p>
                 </div>
                 <div>
-                  <Button :className="'link'" :label="'Change market'" @click.native="showMarketsSelector = true, searchQuery = null"></Button>
+                  <Button :className="'link'" :label="'Change market'" @click.native="showCurrencySelector = true, searchQuery = null"></Button>
                 </div>
               </div>
 
@@ -76,8 +77,8 @@
                   <ul>
                     <li><span>Total {{ selectedCurrency }}:</span> {{ orderSummaryAmount }}</li>
                     <li><span>Price per {{ selectedCurrency }}:</span> {{ orderSummaryPricePerOne }}</li>
-                    <li><span>Bittrex Fee:</span> {{ orderSummaryFee }}</li>
-                    <li><span>Total costs:</span> {{ orderSummaryTotalCosts }}</li>
+                    <li><span>{{ selectedExchange | capitalize }} Fee:</span> {{ orderSummaryFee }}</li>
+                    <li><span>{{ totalCostsLabel }}:</span> {{ orderSummaryTotalCosts }}</li>
                   </ul>
                 </div>
                 <div class="order-summary__footer">
@@ -108,6 +109,7 @@ import ChartOverlay from '@/components/ChartOverlay.vue'
 import Market from '@/components/Market.vue'
 import ErrorMessage from '@/components/ErrorMessage.vue'
 import MarketsSelector from '@/components/form/MarketsSelector.vue'
+import BalancesSelector from '@/components/form/BalancesSelector.vue'
 import pickBy from 'lodash/pickBy'
 
 // Placing orders with CCXT: https://github.com/ccxt/ccxt/wiki/Manual#placing-orders
@@ -121,7 +123,8 @@ export default {
     ChartOverlay,
     Market,
     ErrorMessage,
-    MarketsSelector
+    MarketsSelector,
+    BalancesSelector
   },
   data () {
     return {
@@ -129,13 +132,15 @@ export default {
       isSuccess: false,
       isLoadingOpenOrders: false,
       searchQuery: null,
-      showMarketsSelector: true,
+      showCurrencySelector: true,
+      selectedBalance: null,
+      selectedExchange: 'bittrex', // TODO: We can make this dynamic later to use the correct fee
       exchangeFees: {
         bittrex: 0.0025 // 0.25%
       },
       formData: {
         symbol: null, // XRP/BTC (currency/main)
-        side: 'buy', // buy or sell
+        side: this.type, // buy or sell
         type: 'limit', // limit or market
         amount: null, // amount of coins you want to buy
         price: null // price of a single coin in BTC/ETH/USDT
@@ -154,13 +159,19 @@ export default {
     }),
     headerTitle () {
       if (this.selectedCurrency) {
-        return `${this.readableType} ${this.selectedCurrency} with ${this.selectedMainPair}`
+        let title
+        title = `${this.readableType} ${this.selectedCurrency} `
+        title += this.type === 'buy' ? ` with ` : ` for `
+        title += `${this.selectedMainPair}`
+        return title
       } else {
         return this.readableType
       }
     },
     balanceAvailability () {
-      if (this.type === 'sell') return 'TODO'
+      if (this.type === 'sell') {
+        return `<strong>${this.selectedCurrency} available:</strong> ${this.currencyInBalance.free}`
+      }
 
       if (this.mainPairInBalance && this.mainPairInBalance.free) {
         return `<strong>${this.selectedMainPair} available:</strong> ${this.mainPairInBalance.free}`
@@ -181,7 +192,7 @@ export default {
       }
     },
     orderFee () {
-      return (this.formData.amount * this.formData.price * this.exchangeFees['bittrex'])
+      return (this.formData.amount * this.formData.price * this.exchangeFees[this.selectedExchange])
     },
     currencyInBalance () {
       return pickBy(this.allBalances, (currency, currencyName) => {
@@ -244,6 +255,13 @@ export default {
         return null
       }
     },
+    totalCostsLabel () {
+      if (this.type === 'sell') {
+        return 'Total gains'
+      } else {
+        return 'Total costs'
+      }
+    },
     orderSummaryAmount () {
       if (this.formData.amount) return this.formData.amount
       return '-'
@@ -289,10 +307,26 @@ export default {
     },
     handleInputAmountSetAmountPercentage (percentage) {
       const price = this.formData.price
-      const amountInBalance = this.mainPairInBalance.free
-      const amount = (((amountInBalance / price) / 100) * percentage)
-      this.exchangeFee = amount * 0.0025
-      this.formData.amount = (((amountInBalance / price) / 100) * percentage) - this.exchangeFee
+      let amountInBalance
+      let amount
+      let exchangeFee
+      let calculatedAmount
+
+      if (this.type === 'sell') {
+        amountInBalance = this.currencyInBalance.free
+        amount = (((amountInBalance * price) / 100) * percentage)
+        exchangeFee = amount * this.exchangeFees[this.selectedExchange]
+        // calculatedAmount = (((amountInBalance * price) / 100) * percentage) - exchangeFee
+        calculatedAmount = (amountInBalance / 100) * percentage
+      } else {
+        amountInBalance = this.mainPairInBalance.free
+        amount = (((amountInBalance / price) / 100) * percentage)
+        exchangeFee = amount * this.exchangeFees[this.selectedExchange]
+        calculatedAmount = (((amountInBalance / price) / 100) * percentage) - exchangeFee
+      }
+
+      this.exchangeFee = exchangeFee
+      this.formData.amount = calculatedAmount
     },
     HandleSetMarketPrice (type) {
       this.formData.price = this.market[type]
@@ -311,6 +345,10 @@ export default {
     handleSelectMarket (symbol) {
       this.formData.symbol = symbol
     },
+    handleSelectBalance (symbol) {
+      this.selectedBalance = symbol
+      this.formData.symbol = symbol + '/BTC'
+    },
     handleMarketSearchQuery (searchQuery) {
       this.searchQuery = searchQuery
     },
@@ -327,7 +365,6 @@ export default {
     },
     handleSubmit () {
       this.removeError()
-      this.isLoading = true
       if (this.type === 'sell' && this.priceMarketDifferencePercentage < -10) {
         if (window.confirm(`Your sell price is ${this.priceMarketDifferencePercentage}% below the current market price. Are you sure you want to do this?`)) {
           this.createOrder()
@@ -339,8 +376,10 @@ export default {
       }
     },
     createOrder () {
+      this.isLoading = true
+      const action = this.type === 'buy' ? 'orders/createBuyOrder' : 'orders/createSellOrder'
       // TODO: if API times out, validate if order is placed or not. IF not, try again one more time.
-      this.$store.dispatch('orders/createBuyOrder', this.formData)
+      this.$store.dispatch(action, this.formData)
       .then(response => {
         this.isSuccess = true
         this.isLoadingOpenOrders = true
@@ -373,7 +412,7 @@ export default {
   },
   watch: {
     'formData.symbol': function (newValue, oldValue) {
-      this.showMarketsSelector = false
+      this.showCurrencySelector = false
     }
   }
 }

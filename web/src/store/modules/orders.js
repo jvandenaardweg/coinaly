@@ -143,6 +143,9 @@ export default {
     },
     createBuyOrder (context, formData) {
       return axios.post(`markets/buy`, formData)
+    },
+    createSellOrder (context, formData) {
+      return axios.post(`markets/sell`, formData)
     }
   }
 }
